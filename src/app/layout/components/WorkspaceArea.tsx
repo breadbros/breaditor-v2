@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 import {Dockable, PanelState} from 'react-dockable-ts';
 import {DocumentInfo, WidgetInfo} from '../../../../types/global';
-
-import {dispatch} from '../../state-management/in-memory/dispatch';
+import css from "./WorkspaceArea.module.css";
+import { dispatch } from "../../state-management/in-memory/dispatch";
 
 interface WorkspaceAreaProps {
   style: any;
@@ -19,6 +19,7 @@ interface WorkspaceAreaProps {
 
   documents: DocumentInfo[];
   panels: WidgetInfo[];
+  themeClass: string;
 }
 const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
   const [layoutState, setLayoutState] = useState<PanelState[]>([
@@ -26,7 +27,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
       windows: [
         {
           selected: 0,
-          widgets: ['documents-container'],
+          widgets: ["documents-container"],
           hideTabs: true,
         },
       ],
@@ -35,7 +36,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
       windows: [
         {
           selected: 0,
-          widgets: ['panels-container'],
+          widgets: ["panels-container"],
           hideTabs: true,
         },
       ],
@@ -43,60 +44,71 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
   ]);
 
   return (
-    <Dockable
-      initialState={layoutState}
-      onUpdate={(state) => {
-        setLayoutState(state);
-      }}
-      spacing={3}
-      testId="breaditor-browser-workspacearea"
-    >
-      <div
-        title={'Documents (Should Be Hidden)'}
-        id={'documents-container'}
-        style={{
-          display: 'flex',
-          flexGrow: 1,
-          width: '100%',
-          height: '100%',
+    <div style={props.style}>
+      <Dockable
+        initialState={layoutState}
+        onUpdate={(state) => {
+          setLayoutState(state);
         }}
+        spacing={3}
+        testId="breaditor-browser-workspacearea"
+        themeClass={css.rootTheme}
       >
-        <Dockable
-          initialState={props.initialDocumentsState}
-          onUpdate={(state) => {
-            props.setDocumentState(state);
-          }}
-          onActive={(id) => {
-            dispatch({type: 'DOC_FOCUS', document_id: id});
+        <div
+          title={"Documents (Should Be Hidden)"}
+          id={"documents-container"}
+          style={{
+            display: "flex",
+            flexGrow: 1,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "var(--borderColor)",
           }}
         >
-          {props.documents.map((doc) => {
-            return <Widget key={doc.id} id={doc.id} title={doc.title} />;
-          })}
-        </Dockable>
-      </div>
-      <div
-        title={'Panels (Should Be Hidden)'}
-        id={'panels-container'}
-        style={{
-          display: 'flex',
-          flexGrow: 1,
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <Dockable
-          initialState={props.initialPanelState}
-          onUpdate={(state) => {
-            props.setPanelState(state);
+          <Dockable
+            initialState={props.initialDocumentsState}
+            onUpdate={(state) => {
+              props.setDocumentState(state);
+            }}
+            onActive={(id) => {
+              dispatch({ type: "DOC_FOCUS", document_id: id });
+            }}
+            spacing={3}
+            themeClass={props.themeClass}
+          >
+            {props.documents.map((doc) => {
+              return <Widget key={doc.id} id={doc.id} title={doc.title} />;
+            })}
+          </Dockable>
+        </div>
+        <div
+          title={"Panels (Should Be Hidden)"}
+          id={"panels-container"}
+          style={{
+            display: "flex",
+            flexGrow: 1,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "var(--borderColor)",
           }}
         >
-          {props.panels.map((panel) => {
-            return <Widget id={panel.id} key={panel.id} title={panel.title} />;
-          })}
-        </Dockable>
-      </div>
-    </Dockable>
+          <Dockable
+            initialState={props.initialPanelState}
+            onUpdate={(state) => {
+              props.setPanelState(state);
+            }}
+            spacing={3}
+            themeClass={props.themeClass}
+          >
+            {props.panels.map((panel) => {
+              return (
+                <Widget id={panel.id} key={panel.id} title={panel.title} />
+              );
+            })}
+          </Dockable>
+        </div>
+      </Dockable>
+    </div>
   );
 };
 

@@ -210,15 +210,15 @@ function App() {
       <div
         className={css.App}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           // Dark Theme
         }}
         data-testid="breaditor-browser-app"
       >
         <MenuBar
           dispatch={(foo: any) => {
-            console.log('I am a fake dispatch in ReactDockableApp.  Yay.', foo);
+            console.log("I am a fake dispatch in ReactDockableApp.  Yay.", foo);
           }}
           widgets={getCurrentPanels()}
           hidden={
@@ -231,7 +231,7 @@ function App() {
         <PropertyBar
           state={{}}
           dispatch={(bar) => {
-            console.log('Another fake dispatch that was passed: ', bar);
+            console.log("Another fake dispatch that was passed: ", bar);
           }}
           tool={TOOLS.Brush}
           view={{}}
@@ -239,26 +239,27 @@ function App() {
         <div
           style={{
             flexGrow: 1,
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'row',
-            height: 'calc(100vh - 128px)',
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "row",
+            height: "calc(100vh - 117px)",
           }}
         >
           <ToolBar
             selected={{}}
             dispatch={(foo) => {
-              console.log('A fake dispatch that was passed: ', foo);
+              console.log("A fake dispatch that was passed: ", foo);
             }}
           />
           <WorkspaceArea
-            key={'main_workspace'}
+            key={"main_workspace"}
             style={{
               flexGrow: 1,
-              maxWidth: `calc(100% - 47px)`,
+              // maxWidth: `calc(100% - 47px)`,
 
-              margin: '1px 0 0 1px',
-              // margin: 3,
+              // margin: "1px 0 0 1px",
+              // boxSizing: "border-box",
+              padding: 1,
             }}
             initialPanelState={panelState}
             setPanelState={setPanelState}
@@ -266,9 +267,10 @@ function App() {
             setDocumentState={setDocumentState}
             documents={getCurrentDocuments()}
             panels={getCurrentPanels()}
+            themeClass={"nullTheme"}
           />
         </div>
-        <StatusBar initialStatuses={['Welcome to the Breaditor', '❤', '🦵']} />
+        <StatusBar initialStatuses={["Welcome to the Breaditor", "❤", "🦵"]} />
       </div>
     </WindowProxy>
   );

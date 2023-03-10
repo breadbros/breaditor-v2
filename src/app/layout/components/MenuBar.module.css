@@ -45,7 +45,7 @@
 }
 
 .menu {
-  --windowRadius: 8px;
+  --windowRadius: 4px;
   display: flex;
   align-items: stretch;
   background-color: var(--primary);
