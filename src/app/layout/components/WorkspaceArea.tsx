@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 import {Dockable, PanelState} from 'react-dockable-ts';
 import {DocumentInfo, WidgetInfo} from '../../../../types/global';
-import css from "./WorkspaceArea.module.css";
-import { dispatch } from "../../state-management/in-memory/dispatch";
+import css from './WorkspaceArea.module.css';
+import {dispatch} from '../../state-management/in-memory/dispatch';
 
 interface WorkspaceAreaProps {
   style: any;
@@ -27,7 +27,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
       windows: [
         {
           selected: 0,
-          widgets: ["documents-container"],
+          widgets: ['documents-container'],
           hideTabs: true,
         },
       ],
@@ -36,7 +36,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
       windows: [
         {
           selected: 0,
-          widgets: ["panels-container"],
+          widgets: ['panels-container'],
           hideTabs: true,
         },
       ],
@@ -55,14 +55,14 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
         themeClass={css.rootTheme}
       >
         <div
-          title={"Documents (Should Be Hidden)"}
-          id={"documents-container"}
+          title={'Documents (Should Be Hidden)'}
+          id={'documents-container'}
           style={{
-            display: "flex",
+            display: 'flex',
             flexGrow: 1,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "var(--borderColor)",
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'var(--borderColor)',
           }}
         >
           <Dockable
@@ -71,7 +71,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
               props.setDocumentState(state);
             }}
             onActive={(id) => {
-              dispatch({ type: "DOC_FOCUS", document_id: id });
+              dispatch({type: 'DOC_FOCUS', document_id: id});
             }}
             spacing={3}
             themeClass={props.themeClass}
@@ -82,14 +82,14 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
           </Dockable>
         </div>
         <div
-          title={"Panels (Should Be Hidden)"}
-          id={"panels-container"}
+          title={'Panels (Should Be Hidden)'}
+          id={'panels-container'}
           style={{
-            display: "flex",
+            display: 'flex',
             flexGrow: 1,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "var(--borderColor)",
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'var(--borderColor)',
           }}
         >
           <Dockable
