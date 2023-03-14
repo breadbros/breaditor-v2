@@ -10,7 +10,7 @@ import css from './MenuBar.module.css';
 interface MenuBarProps {
   dispatch: ({}: any) => void;
   widgets: WidgetInfo[];
-  hidden: {};
+  hidden: any;
   getMenu: () => any;
 }
 

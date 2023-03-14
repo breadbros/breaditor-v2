@@ -9,18 +9,35 @@ import css from './PropertyBar.module.css';
 
 import * as icons from '../../ui/icons';
 
+// interface BrushToolState {}
+
+interface PropertyBarState {
+  tool: {
+    activeTool: number;
+    brush?: any; //BrushToolState;
+  };
+}
+
 interface PropertyBarProps {
   dispatch: ({}: any) => void;
-  state: {};
-  tool: {};
-  view: {};
+  state: PropertyBarState;
+  view: any;
 }
 
 const PropertyBar: React.FC<PropertyBarProps> = (props) => {
   function getProperties() {
-    switch (props.tool) {
+    const {activeTool} = props.state.tool;
+    const {dispatch, state, view} = props;
+
+    switch (activeTool) {
       case TOOLS.Brush:
-        return <BrushProperties {...props} />;
+        return (
+          <BrushProperties
+            {...{dispatch}}
+            state={state.tool.brush}
+            {...{view}}
+          />
+        );
       /*        
       case TOOLS.Zoom:
         return <ZoomProperties {...props} />;
@@ -77,7 +94,7 @@ interface BrushPropertiesProps {
 }
 const BrushProperties: React.FC<BrushPropertiesProps> = (props) => {
   let brush: BrushToolProps;
-  if (props.state.brush) {
+  if (props.state && props.state.brush) {
     brush = props.state.brush;
   } else {
     brush = {

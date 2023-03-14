@@ -1,4 +1,4 @@
-import React, {useState /*, useReducer*/} from 'react';
+import React, {useState, useReducer} from 'react';
 import {createRoot} from 'react-dom/client';
 import {PanelState} from 'react-dockable-ts';
 
@@ -22,7 +22,12 @@ import {
 import {mapMaker} from './breaditor/documents/MapDocument';
 import {textMaker} from './breaditor/documents/TextDocument';
 import {spriteMaker} from './breaditor/documents/SpriteDocument';
-import {TOOLS} from './breaditor/tools/constants';
+// import {TOOLS} from './breaditor/tools/constants';
+
+import {
+  breaditorReducer,
+  getInitialState,
+} from './state-management/in-memory/main_reducer';
 
 import {DocumentInfo, WidgetInfo} from '../../types/global';
 
@@ -192,6 +197,12 @@ function getDocumentState() {
 }
 
 function App() {
+  const [state, dispatch] = useReducer(breaditorReducer, getInitialState());
+
+  if (dispatch == undefined) {
+    console.info(state);
+  }
+
   const [panelState, setPanelState] = useState<PanelState[]>(
     createInitialPanelState(),
   );
@@ -225,9 +236,7 @@ function App() {
         data-testid="breaditor-browser-app"
       >
         <MenuBar
-          dispatch={(foo: any) => {
-            console.log('I am a fake dispatch in ReactDockableApp.  Yay.', foo);
-          }}
+          dispatch={dispatch}
           widgets={getCurrentPanels()}
           hidden={
             {
@@ -237,11 +246,8 @@ function App() {
           getMenu={getMenu}
         />
         <PropertyBar
-          state={{}}
-          dispatch={(bar) => {
-            console.log('Another fake dispatch that was passed: ', bar);
-          }}
-          tool={TOOLS.Brush}
+          state={{tool: {activeTool: 0}}}
+          dispatch={dispatch}
           view={{}}
         />
         <div
@@ -253,12 +259,7 @@ function App() {
             height: 'calc(100vh - 117px)',
           }}
         >
-          <ToolBar
-            selected={{}}
-            dispatch={(foo) => {
-              console.log('A fake dispatch that was passed: ', foo);
-            }}
-          />
+          <ToolBar selected={{}} dispatch={dispatch} />
           <WorkspaceArea
             key={'main_workspace'}
             style={{
@@ -278,7 +279,10 @@ function App() {
             themeClass={'nullTheme'}
           />
         </div>
-        <StatusBar initialStatuses={['Welcome to the Breaditor', '❤', '🦵']} />
+        <StatusBar
+          initialStatuses={['Welcome to the Breaditor', '❤', '🦵']}
+          dispatch={dispatch}
+        />
       </div>
     </WindowProxy>
   );

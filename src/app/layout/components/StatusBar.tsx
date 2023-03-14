@@ -6,6 +6,7 @@ import css from './PropertyBar.module.css';
 
 interface StatusBarProps {
   initialStatuses: string[];
+  dispatch: ({}: any) => void;
 }
 
 let _stateUpdate = (data: any) => {
