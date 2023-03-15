@@ -20,13 +20,15 @@ function createReducer(
   handlers: GenericReducerMap,
 ): GenericReducer {
   const myHandlers = handlers;
+  const myInitialState = initialState;
 
   return function (
-    state = initialState,
+    state: GenericState = myInitialState,
     action: GenericAction,
-  ): GenericReducerMap {
+  ): GenericState {
     if (action && myHandlers.hasOwnProperty(action.type)) {
-      return myHandlers[action.type](state, action);
+      const myReducer = myHandlers[action.type];
+      return myReducer(state, action);
     } else {
       // console.error(`Unhandled action: ${action.type} `);
     }
