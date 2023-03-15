@@ -1,12 +1,12 @@
 type StringToAnyMap = {[key: string]: any};
 type GenericState = StringToAnyMap;
 
-// type GenericAction = {
-//   [key: string]: any;
-//   type: string;
-// };
+type GenericAction = {
+  [key: string]: any;
+  type: string;
+};
 
-type GenericAction = any;
+//type GenericAction = any;
 
 type GenericReducerMap = {
   [key: string]: (state: GenericState, action: GenericAction) => GenericState;
