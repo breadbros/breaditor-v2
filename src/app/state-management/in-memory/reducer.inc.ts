@@ -1,19 +1,19 @@
 type StringToAnyMap = {[key: string]: any};
 type GenericState = StringToAnyMap;
 
-type GenericAction = {
-  [key: string]: any;
-  type: string;
-};
+// type GenericAction = {
+//   [key: string]: any;
+//   type: string;
+// };
 
-//type GenericAction = any;
+type GenericAction = any;
 
 type GenericReducerMap = {
   [key: string]: (state: GenericState, action: GenericAction) => GenericState;
 };
 
 type Reducer<S, A> = (state: S, action: A) => S;
-type GenericReducer = Reducer<any, any>; //TODO: GenericReducer will die shortly.  But for now...
+type GenericReducer = Reducer<GenericAction, GenericState>; //TODO: GenericReducer will die shortly.  But for now...
 
 function createReducer(
   initialState: GenericState,
