@@ -11,7 +11,7 @@ interface MenuBarProps {
   dispatch: ({}: any) => void;
   widgets: WidgetInfo[];
   hidden: any;
-  getMenu: () => any;
+  getMenu: (dispatch: ({}: any) => void) => any;
 }
 
 interface SelectableMenuItemState {
@@ -26,6 +26,7 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
   };
 
   const [state, setState] = useState<SelectableMenuItemState>(initialState);
+  const {dispatch} = props;
 
   let handleMouseDown = function (e: any, idx: number) {
     e.stopPropagation();
@@ -69,7 +70,7 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
     <div className={css.container} data-testid="breaditor-browser-menubar">
       {/* Menu Items */}
       <div className={css.menu} style={{zIndex: 1000}}>
-        {props.getMenu().map((control: any, i: any) => {
+        {props.getMenu(dispatch).map((control: any, i: any) => {
           return (
             <div
               key={i}
@@ -101,7 +102,7 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
           testId="breaditor-menubar-contextmenu"
           left={state.contextPos.x}
           top={state.contextPos.y}
-          actions={props.getMenu()[state.selected].actions}
+          actions={props.getMenu(dispatch)[state.selected].actions}
           onClickOut={() => {
             setState((prevState) => ({
               ...prevState,

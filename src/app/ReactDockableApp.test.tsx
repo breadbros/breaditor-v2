@@ -15,11 +15,6 @@ import {
 // import {addDocument} from './breaditor/DocumentManager';
 // import {mapMaker} from './breaditor/documents/MapDocument';
 
-import {
-  _TEST_CAPTURE,
-  _TEST_CLEAR,
-} from './state-management/in-memory/dispatch';
-
 describe('App', () => {
   it('renders the component correctly', () => {
     render(<App />);

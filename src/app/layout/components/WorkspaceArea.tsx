@@ -11,7 +11,7 @@ import {Widget} from './Widget';
 
 // @ts-ignore
 import css from './WorkspaceArea.module.css';
-import {dispatch} from '../../state-management/in-memory/dispatch';
+//import {dispatch} from '../../state-management/in-memory/dispatch';
 
 interface WorkspaceAreaProps {
   style: any;
@@ -23,8 +23,12 @@ interface WorkspaceAreaProps {
   documents: DocumentInfo[];
   panels: WidgetInfo[];
   themeClass: string;
+
+  dispatch: ({}: any) => void;
 }
 const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
+  const {dispatch} = props;
+
   const [layoutState, setLayoutState] = useState<PanelState[]>([
     {
       windows: [

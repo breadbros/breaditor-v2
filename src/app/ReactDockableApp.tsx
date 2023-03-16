@@ -196,6 +196,22 @@ function getDocumentState() {
   return _DocumentState;
 }
 
+const ModalClickShield = () => {
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 1000,
+      }}
+    />
+  );
+};
+
 function App() {
   const [state, dispatch] = useReducer(breaditorReducer, getInitialState());
 
@@ -226,6 +242,12 @@ function App() {
         }
       }
     >
+      {state.app.isLoading && (
+        <>
+          <ModalClickShield />
+        </>
+      )}
+
       <div
         className={css.App}
         style={{
@@ -258,6 +280,7 @@ function App() {
           <ToolBar selected={{}} dispatch={dispatch} />
           <WorkspaceArea
             key={'main_workspace'}
+            dispatch={dispatch}
             style={{
               flexGrow: 1,
               // maxWidth: `calc(100% - 47px)`,

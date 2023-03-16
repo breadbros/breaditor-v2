@@ -1,5 +1,5 @@
 {
-  "name": "electron-from-scratch",
+  "name": "breaditor",
   "version": "1.0.0",
   "description": "DXM & GRU try to make a first-principles minimal electron buddy",
   "main": "dist/main/index.js",

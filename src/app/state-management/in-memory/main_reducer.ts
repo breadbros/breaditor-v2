@@ -1,8 +1,10 @@
 import {createReducer, GenericAction, GenericState} from './reducer.inc';
+import {appReducer} from './reducers/app.reducer';
 import {toolsReducer} from './reducers/tools.reducer';
 
 const breaditorReducer = function (state: GenericState, action: GenericAction) {
   return {
+    app: appReducer(state && state.tools, action),
     tools: toolsReducer(state && state.tools, action),
     // documents: documentsReducer(state && state.documents, action, ...rest),
     // nestedState: nestedReducer(state && nestedState, action, ...rest),
