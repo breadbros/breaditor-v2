@@ -91,7 +91,9 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
         })}
       </div>
       {/* Title bar */}
-      <div className={css.dragBar}>{renderTitle(false)}</div>
+      <div className={css.dragBar} style={{zIndex: 300}}>
+        {renderTitle(false)}
+      </div>
 
       {/* Window COntrols */}
       {isElectron() && <WindowsControls />}
@@ -120,7 +122,7 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
  */
 function WindowsControls() {
   return (
-    <div className={css.windowsControls}>
+    <div className={css.windowsControls} style={{zIndex: 400}}>
       <div
         className={css.button}
         onClick={() => {

@@ -23,12 +23,13 @@
   align-items: center;
   justify-content: center;
   font-size: 10pt;
-  /* font-weight: bold; */
-  /* color: #ccc; */
-  /* text-shadow: 0 -1px 0px black; */
+
   margin-top: 4px;
   padding-bottom: 4px;
-  /* background-color: red; */
+  width: calc(100% - 128px);
+  height: 28px;
+  position: absolute;
+  /* background-color: #e81123; */
 }
 
 .container::after {
