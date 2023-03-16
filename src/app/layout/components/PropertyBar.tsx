@@ -12,10 +12,8 @@ import * as icons from '../../ui/icons';
 // interface BrushToolState {}
 
 interface PropertyBarState {
-  tool: {
-    activeTool: number;
-    brush?: any; //BrushToolState;
-  };
+  activeTool: number;
+  brush?: any; //BrushToolState;
 }
 
 interface PropertyBarProps {
@@ -26,18 +24,12 @@ interface PropertyBarProps {
 
 const PropertyBar: React.FC<PropertyBarProps> = (props) => {
   function getProperties() {
-    const {activeTool} = props.state.tool;
     const {dispatch, state, view} = props;
+    const {activeTool, brush} = state;
 
     switch (activeTool) {
       case TOOLS.Brush:
-        return (
-          <BrushProperties
-            {...{dispatch}}
-            state={state.tool.brush}
-            {...{view}}
-          />
-        );
+        return <BrushProperties {...{dispatch}} state={brush} {...{view}} />;
       /*        
       case TOOLS.Zoom:
         return <ZoomProperties {...props} />;
@@ -47,6 +39,7 @@ const PropertyBar: React.FC<PropertyBarProps> = (props) => {
         return <EyedropperProperties {...props} />;
 */
       default:
+        debugger;
         alert('NO TOOL');
         return null;
     }

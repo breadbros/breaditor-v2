@@ -245,11 +245,7 @@ function App() {
           }
           getMenu={getMenu}
         />
-        <PropertyBar
-          state={{tool: {activeTool: 0}}}
-          dispatch={dispatch}
-          view={{}}
-        />
+        <PropertyBar state={state.tools} dispatch={dispatch} view={{}} />
         <div
           style={{
             flexGrow: 1,
