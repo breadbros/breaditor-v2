@@ -12,8 +12,11 @@ type GenericReducerMap = {
   [key: string]: (state: GenericState, action: GenericAction) => GenericState;
 };
 
-type Reducer<S, A extends GenericAction> = (state: S, action: A) => S;
-type GenericReducer = Reducer<GenericAction, GenericState>; //TODO: GenericReducer will die shortly.  But for now...
+type Reducer<S extends GenericState, A extends GenericAction> = (
+  state: S,
+  action: A,
+) => S;
+type GenericReducer = Reducer<GenericState, GenericAction>; //TODO: GenericReducer will die shortly.  But for now...
 
 function createReducer(
   initialState: GenericState,
