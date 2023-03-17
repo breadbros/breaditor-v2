@@ -1,4 +1,11 @@
-import {BrowserWindow, app, ipcMain, session} from 'electron';
+import {
+  BrowserWindow,
+  app,
+  ipcMain,
+  session,
+  OpenDialogOptions,
+} from 'electron';
+import {dialog} from 'electron';
 /*import {
   default as installExtension,
   REACT_DEVELOPER_TOOLS,
@@ -45,6 +52,25 @@ function createWindow() {
   });
   ipcMain.on('app-close', () => {
     mainWindow.close();
+  });
+
+  ipcMain.on('open-file-dialog', (_options: any) => {
+    const options: OpenDialogOptions = _options;
+
+    console.log('MAIN open-file-dialog');
+    dialog
+      .showOpenDialog(options)
+      .then((result) => {
+        if (!result.canceled && result.filePaths.length > 0) {
+          const filePath = result.filePaths[0];
+          console.log('filePath', filePath);
+          //dispatch({type: 'OPEN_FILE_SUCCESS', payload: filePath});
+        }
+      })
+      .catch((error) => {
+        console.log('error', error);
+        //dispatch({type: 'OPEN_FILE_FAILURE', payload: error});
+      });
   });
 
   mainWindow.on('closed', function () {

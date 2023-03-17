@@ -73,6 +73,7 @@ function getMenu(dispatch: ({}: any) => void) {
             'Open Document': () => {
               dispatch({
                 type: 'DOC_OPEN_EXISTING',
+                thunkDispatch: dispatch,
               });
             },
           },
@@ -86,10 +87,12 @@ function getMenu(dispatch: ({}: any) => void) {
           type: 'actions',
           actions: {
             'Panels on': function () {
-              dispatch({type: 'TEST_ON'});
+              alert('currently disabled');
+              // dispatch({type: 'TEST_ON'});
             },
             'Panels off': function () {
-              dispatch({type: 'TEST_OFF'});
+              alert('currently disabled');
+              // dispatch({type: 'TEST_OFF'});
             },
           },
         },

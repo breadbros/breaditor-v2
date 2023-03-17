@@ -1,14 +1,23 @@
 import {createReducer, GenericAction, GenericState} from './reducer.inc';
 import {appReducer} from './reducers/app.reducer';
 import {toolsReducer} from './reducers/tools.reducer';
+import {fileMenuReducer} from './reducers/filemenu.reducer';
 
 const breaditorReducer = function (state: GenericState, action: GenericAction) {
-  return {
-    app: appReducer(state && state.tools, action),
+  console.log('breaditorReducer!');
+  console.log(action, state);
+
+  const newState = {
+    app: appReducer(state && state.app, action),
+    topmenu: fileMenuReducer(state && state.topmenu, action),
     tools: toolsReducer(state && state.tools, action),
     // documents: documentsReducer(state && state.documents, action, ...rest),
     // nestedState: nestedReducer(state && nestedState, action, ...rest),
   };
+
+  console.log(newState);
+
+  return newState;
 };
 
 // function nestedReducer(state, action) {

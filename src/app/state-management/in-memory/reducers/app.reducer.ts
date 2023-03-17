@@ -22,6 +22,7 @@ const appReducer: Reducer<AppState, AppAction> = createReducer(
   initialAppState,
   {
     SET_IS_LOADING: (state, action: SetIsLoadingAction) => {
+      console.log('state: ', state);
       return {...state, isLoading: action.newState};
     },
   },

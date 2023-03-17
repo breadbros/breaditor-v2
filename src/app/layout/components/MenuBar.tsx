@@ -8,10 +8,10 @@ import {WidgetInfo, Vec2xy} from '../../../../types/global';
 import css from './MenuBar.module.css';
 
 interface MenuBarProps {
-  dispatch: ({}: any) => void;
+  dispatch: React.Dispatch<any>;
   widgets: WidgetInfo[];
   hidden: any;
-  getMenu: (dispatch: ({}: any) => void) => any;
+  getMenu: (dispatch: React.Dispatch<any>) => any;
 }
 
 interface SelectableMenuItemState {

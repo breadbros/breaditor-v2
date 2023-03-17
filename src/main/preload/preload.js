@@ -1,5 +1,9 @@
 /* special file. Whee. */
-const {contextBridge, ipcRenderer /*, ipcMain*/} = require('electron');
+const {
+  contextBridge,
+  ipcRenderer,
+  OpenDialogOptions /*, ipcMain*/,
+} = require('electron');
 
 console.log('preload.ts!');
 
@@ -12,5 +16,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   appMaximize: () => {
     ipcRenderer.send('app-maximize');
+  },
+  openFileDialog: (options /* OpenDialogOptions */) => {
+    ipcRenderer.send('open-file-dialog', options);
   },
 });
