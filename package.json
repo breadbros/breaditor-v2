@@ -2,7 +2,7 @@
   "name": "breaditor",
   "version": "1.0.0",
   "description": "DXM & GRU try to make a first-principles minimal electron buddy",
-  "main": "dist/main/index.js",
+  "main": "dist/main/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/mcgrue/electron-from-scratch.git"

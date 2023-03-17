@@ -50,8 +50,8 @@ const minify = false;
       watch,
       metafile: true,
       platform: 'node',
-      entryPoints: ['src/main/index.ts'],
-      outfile: 'dist/main/index.js',
+      entryPoints: ['src/main/main.ts'],
+      outfile: 'dist/main/main.js',
       external: ['electron'],
       plugins: [
         copyPlugin.copy({
