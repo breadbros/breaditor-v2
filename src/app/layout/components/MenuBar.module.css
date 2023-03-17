@@ -26,9 +26,15 @@
 
   margin-top: 4px;
   padding-bottom: 4px;
-  width: calc(100% - 128px);
+
+  /* get out of the way of the menubar */
+  left: var(--topmenu-container-width);
+
+  width: calc(100% - var(--topmenu-container-width) - 128px);
+
   height: 28px;
   position: absolute;
+
   /* background-color: #e81123; */
 }
 

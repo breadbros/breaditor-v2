@@ -15,6 +15,9 @@
   --borderColor: #2c2c2c;
   --windowRadius: 2px;
   background-color: var(--borderColor);
+
+  /* for horrible runtime calculation tricks (see MenuBar.module.css) */
+  --topmenu-container-width: 0;
 }
 
 body {
@@ -51,12 +54,15 @@ svg {
   justify-content: center;
   align-items: center;
 }
+
 .button.selected {
   background-color: rgba(0, 0, 0, 0.25);
 }
+
 .button:not(.selected):hover {
   background-color: rgba(0, 0, 0, 0.125);
 }
+
 .button svg {
   width: 100%;
   height: 100%;
@@ -67,6 +73,7 @@ svg {
   width: 16px;
   /* height: 8px; */
 }
+
 ::-webkit-scrollbar-thumb {
   position: relative;
   height: 6px;
@@ -83,6 +90,7 @@ svg {
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-track {
   /* background: var(--secondary); */
   /* border-left: 1px solid var(--secondary); */

@@ -199,13 +199,14 @@ function getDocumentState() {
 const ModalClickShield = () => {
   return (
     <div
+      id="click-shield"
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(1, 0, 0, 0.5)',
         zIndex: 1000,
       }}
     />
@@ -232,6 +233,8 @@ function App() {
 
   _PanelState = panelState;
   _DocumentState = documentState;
+
+  console.log('state.app.isLoading' + state.app.isLoading);
 
   return (
     <WindowProxy

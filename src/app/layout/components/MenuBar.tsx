@@ -1,4 +1,4 @@
-import React, {useState, MouseEvent} from 'react';
+import React, {useState, MouseEvent, useEffect, useRef} from 'react';
 import {ContextMenu} from '../../ui/widgets/ContextMenu';
 import isElectron from 'is-electron';
 
@@ -66,10 +66,30 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
     );
   }
 
+  const elementRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (elementRef != null && elementRef.current != null) {
+      // code to execute after the layout has updated
+      const width = elementRef.current.offsetWidth;
+
+      const root = document.documentElement;
+      root.style.setProperty(
+        '--topmenu-container-width',
+        `${elementRef.current.clientWidth}px`,
+      );
+
+      console.log(`Element width is ${width}px`);
+    } else {
+      console.error(
+        `Could not set --topmenu-container-width.  elementRef was inexplicably null.`,
+      );
+    }
+  }, []);
+
   return (
     <div className={css.container} data-testid="breaditor-browser-menubar">
       {/* Menu Items */}
-      <div className={css.menu} style={{zIndex: 1000}}>
+      <div className={css.menu} ref={elementRef} style={{zIndex: 1000}}>
         {props.getMenu(dispatch).map((control: any, i: any) => {
           return (
             <div
@@ -90,7 +110,7 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
           );
         })}
       </div>
-      {/* Title bar */}
+      {/* Drag bar - the horrible thing that keeps getting in the way of widgetry */}
       <div className={css.dragBar} style={{zIndex: 300}}>
         {renderTitle(false)}
       </div>
