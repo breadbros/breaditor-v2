@@ -1,6 +1,7 @@
 import {
   createReducer,
-  Reducer /*GenericAction, Reducer*/,
+  // GenericAction,
+  Reducer /*, Reducer*/,
 } from '../reducer.inc';
 
 import {TOOLS} from '../../../breaditor/tools/constants'; //TODO: This should be in *THIS* file, right?
@@ -43,5 +44,14 @@ const toolsReducer: Reducer<ToolState, ToolAction> = createReducer(
     },
   },
 );
+
+// type ActionsForReducer<T extends Reducer<any, any>> = T extends Reducer<
+//   any,
+//   infer ActionsUnion
+// >
+//   ? ActionsUnion
+//   : never;
+
+// type Test = ActionsForReducer<typeof toolsReducer>;
 
 export {initialToolState, toolsReducer};
