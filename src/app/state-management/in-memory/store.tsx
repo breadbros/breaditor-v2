@@ -1,5 +1,5 @@
 import React from 'react';
-import reducer from './main_reducer.js';
+import reducer from './app_reducer.js';
 
 class Store {
   state = reducer(null, {}); // initialize?
