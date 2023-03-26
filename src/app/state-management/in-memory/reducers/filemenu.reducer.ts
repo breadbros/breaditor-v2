@@ -1,7 +1,7 @@
 import {
   createReducer,
   Reducer /*GenericAction, Reducer*/,
-} from '../reducer.inc';
+} from '../../../../shared/reducer/reducer.inc';
 
 interface OpenDocumentAction {
   thunkDispatch: React.Dispatch<any>;

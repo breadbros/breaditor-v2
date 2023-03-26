@@ -2,7 +2,7 @@ import {
   createReducer,
   // GenericAction,
   Reducer /*, Reducer*/,
-} from '../reducer.inc';
+} from '../../../../shared/reducer/reducer.inc';
 
 import {TOOLS} from '../../../breaditor/tools/constants'; //TODO: This should be in *THIS* file, right?
 // TODO: and should have a concrete union type I think?

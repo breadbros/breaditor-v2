@@ -3,7 +3,7 @@ import {
   // GenericAction,
   GenericState,
   type Reducer,
-} from './reducer.inc';
+} from '../../../shared/reducer/reducer.inc';
 import {appReducer} from './reducers/app.reducer';
 import {toolsReducer} from './reducers/tools.reducer';
 import {fileMenuReducer} from './reducers/filemenu.reducer';
