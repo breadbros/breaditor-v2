@@ -25,7 +25,7 @@ import {spriteMaker} from './breaditor/documents/SpriteDocument';
 // import {TOOLS} from './breaditor/tools/constants';
 
 import {
-  breaditorReducer,
+  breaditorAppReducer,
   getInitialState,
 } from './state-management/in-memory/app_reducer';
 
@@ -214,7 +214,7 @@ const ModalClickShield = () => {
 };
 
 function App() {
-  const [state, dispatch] = useReducer(breaditorReducer, getInitialState());
+  const [state, dispatch] = useReducer(breaditorAppReducer, getInitialState());
 
   if (dispatch == undefined) {
     console.info(state);

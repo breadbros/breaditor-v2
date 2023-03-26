@@ -36,6 +36,19 @@ function createReducer(
   };
 }
 
+interface BreaditorInitializeAction {
+  type: 'INITIALIZE_STATE';
+}
+
+type ActionsForReducer<T extends Reducer<any, any>> = T extends Reducer<
+  any,
+  infer ActionsUnion
+>
+  ? ActionsUnion
+  : never;
+
+export type BreaditorDispatchType = React.Dispatch<GlobalActions>;
+
 export type {
   StringToAnyMap,
   GenericState,
@@ -43,5 +56,7 @@ export type {
   GenericReducerMap,
   Reducer,
   GenericReducer,
+  ActionsForReducer,
+  BreaditorInitializeAction,
 };
 export {createReducer};

@@ -1,23 +1,12 @@
 import {
   createReducer,
-  // GenericAction,
-  GenericState,
-  type Reducer,
+  type ActionsForReducer,
+  type GenericState,
+  type BreaditorInitializeAction,
 } from '../../../shared/reducer/reducer.inc';
 import {appReducer} from './reducers/app.reducer';
 import {toolsReducer} from './reducers/tools.reducer';
 import {fileMenuReducer} from './reducers/filemenu.reducer';
-
-type ActionsForReducer<T extends Reducer<any, any>> = T extends Reducer<
-  any,
-  infer ActionsUnion
->
-  ? ActionsUnion
-  : never;
-
-interface BreaditorInitializeAction {
-  type: 'INITIALIZE_STATE';
-}
 
 type GlobalActions =
   | BreaditorInitializeAction
@@ -25,10 +14,13 @@ type GlobalActions =
   | ActionsForReducer<typeof toolsReducer>
   | ActionsForReducer<typeof fileMenuReducer>;
 
-export type BreaditorDispatchType = React.Dispatch<GlobalActions>;
+type BreaditorAppDispatchType = React.Dispatch<GlobalActions>;
 
-const breaditorReducer = function (state: GenericState, action: GlobalActions) {
-  console.log('breaditorReducer!');
+const breaditorAppReducer = function (
+  state: GenericState,
+  action: GlobalActions,
+) {
+  console.log('breaditorAppReducer!');
   console.log(action, state);
 
   const newState = {
@@ -52,7 +44,9 @@ const breaditorReducer = function (state: GenericState, action: GlobalActions) {
 // }
 
 const getInitialState = function () {
-  return breaditorReducer({}, {type: 'INITIALIZE_STATE'});
+  return breaditorAppReducer({}, {type: 'INITIALIZE_STATE'});
 };
 
-export {breaditorReducer, getInitialState, createReducer};
+export type {BreaditorAppDispatchType};
+
+export {breaditorAppReducer, getInitialState, createReducer};
