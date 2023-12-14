@@ -4,9 +4,10 @@ import {
   type GenericState,
   type BreaditorInitializeAction,
 } from '../../../shared/reducer/reducer.inc';
-import {appReducer} from './reducers/app.reducer';
-import {toolsReducer} from './reducers/tools.reducer';
-import {fileMenuReducer} from './reducers/filemenu.reducer';
+import { appReducer } from './reducers/app.reducer';
+import { toolsReducer } from './reducers/tools.reducer';
+import { fileMenuReducer } from './reducers/filemenu.reducer';
+import { documentsReducer } from './reducers/documents.reducer';
 
 export type GlobalActions =
   | BreaditorInitializeAction
@@ -24,7 +25,7 @@ const breaditorAppReducer = function (
     app: appReducer(state && state.app, action as any),
     topmenu: fileMenuReducer(state && state.topmenu, action as any),
     tools: toolsReducer(state && state.tools, action as any),
-    // documents: documentsReducer(state && state.documents, action, ...rest),
+    documents: documentsReducer(state && state.documents, action as any),
     // nestedState: nestedReducer(state && nestedState, action, ...rest),
   };
 
