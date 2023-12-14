@@ -20,9 +20,6 @@ const breaditorAppReducer = function (
   state: GenericState,
   action: GlobalActions,
 ) {
-  console.log('breaditorAppReducer!');
-  console.log(action, state);
-
   const newState = {
     app: appReducer(state && state.app, action as any),
     topmenu: fileMenuReducer(state && state.topmenu, action as any),
@@ -30,8 +27,6 @@ const breaditorAppReducer = function (
     // documents: documentsReducer(state && state.documents, action, ...rest),
     // nestedState: nestedReducer(state && nestedState, action, ...rest),
   };
-
-  console.log(newState);
 
   return newState;
 };

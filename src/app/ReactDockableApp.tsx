@@ -178,8 +178,6 @@ function setOnOrOff(onOrOff: boolean) {
     newDocState = [];
   }
 
-  console.log(newPanelState);
-
   updateDocumentManagerState(newDocState, newPanelState);
 }
 
