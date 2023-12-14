@@ -13,10 +13,12 @@ import {getMenu} from './breaditor/menu';
 import {
   activeDocument,
   addDocument,
+  getDocuments,
   getWidgetInfo,
   getDocumentInfo,
   createInitialDocumentInfoForLoadedDocuments,
   createInitialPanelInfoForDocumentType,
+  focusDocument,
 } from './breaditor/DocumentManager';
 
 import {mapMaker} from './breaditor/documents/MapDocument';
@@ -185,8 +187,9 @@ function updateDocumentManagerState(
   documentState: PanelState[],
   panelState: PanelState[],
 ) {
-  if (!_setPanelState) {
+  if (_setPanelState === undefined) {
     debugger;
+    throw new Error("_setPanelState not yet initialized; was the app mounted correctly before calling for a focused document?");
   }
   _setPanelState(panelState);
   _setDocPanelState(documentState);
@@ -224,6 +227,8 @@ function doAppDispatch(data:any) {
   }
 }
 
+let _firstTimeFocus = false;
+
 function App() {
   const [state, dispatch] = useReducer(breaditorAppReducer, getInitialState());
   appDispatch = dispatch;
@@ -246,7 +251,12 @@ function App() {
   _PanelState = panelState;
   _DocumentState = documentState;
 
-  console.log('state.app.isLoading' + state.app.isLoading);
+  const docs = getDocuments();
+  if(!_firstTimeFocus && docs.length > 0) {
+    setOnOrOff(true);
+    focusDocument(docs[0].info.id);
+  }
+  _firstTimeFocus = true;
 
   return (
     <WindowProxy
