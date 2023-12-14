@@ -1,3 +1,5 @@
+import {type GlobalActions} from '../../app/state-management/in-memory/app_reducer';
+
 type StringToAnyMap = {[key: string]: any};
 // type GenericState = StringToAnyMap;
 type GenericState = any;

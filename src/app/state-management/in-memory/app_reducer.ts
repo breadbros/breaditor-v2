@@ -8,7 +8,7 @@ import {appReducer} from './reducers/app.reducer';
 import {toolsReducer} from './reducers/tools.reducer';
 import {fileMenuReducer} from './reducers/filemenu.reducer';
 
-type GlobalActions =
+export type GlobalActions =
   | BreaditorInitializeAction
   | ActionsForReducer<typeof appReducer>
   | ActionsForReducer<typeof toolsReducer>
