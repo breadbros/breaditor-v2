@@ -9,6 +9,11 @@ import {Dockable, PanelState} from 'react-dockable-ts';
 import {DocumentInfo, WidgetInfo} from '../../../../types/global';
 import {Widget} from './Widget';
 
+
+import {
+  focusDocument,
+} from '../../breaditor/DocumentManager';
+
 // @ts-ignore
 import css from './WorkspaceArea.module.css';
 //import {dispatch} from '../../state-management/in-memory/dispatch';
@@ -78,7 +83,8 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
               props.setDocumentState(state);
             }}
             onActive={(id) => {
-              dispatch({type: 'DOC_FOCUS', document_id: id});
+              // dispatch({type: 'DOC_FOCUS', document_id: id});
+              focusDocument(id);
             }}
             spacing={3}
             themeClass={props.themeClass}

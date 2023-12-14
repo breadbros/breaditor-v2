@@ -23,6 +23,7 @@ const documentsReducer: Reducer<DocumentsState, DocumentsAction> = createReducer
   initialDocumentsState,
   {
     DOC_FOCUS: (state, action: DocumentFocusAction) => {
+      console.warn("this... does nothing?");
       return {...state, activeDoc: action.document_id };
     }
   },
