@@ -2,10 +2,8 @@
 const {
   contextBridge,
   ipcRenderer,
-  OpenDialogOptions /*, ipcMain*/,
+  OpenDialogOptions
 } = require('electron');
-
-console.log('preload.ts!');
 
 contextBridge.exposeInMainWorld('electronAPI', {
   appClose: () => {
@@ -20,4 +18,19 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFileDialog: (options /* OpenDialogOptions */) => {
     ipcRenderer.send('open-file-dialog', options);
   },
+});
+
+
+ipcRenderer.on('OPEN_FILE_SUCCESS', (e, msg) => {
+  document.getElementById('react-root').dispatchEvent(
+    new CustomEvent('OPEN_FILE_SUCCESS', {
+    detail: { filePath: msg.payload }
+  }));
+});
+
+ipcRenderer.on('OPEN_FILE_FAILURE', (e, msg) => {
+  document.getElementById('react-root').dispatchEvent(
+    new CustomEvent('OPEN_FILE_FAILURE', {
+    detail: { filePath: msg.payload }
+  }));
 });

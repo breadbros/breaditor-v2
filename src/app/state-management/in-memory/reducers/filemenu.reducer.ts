@@ -31,12 +31,14 @@ const initialFileMenuState: FileMenuState = {};
 const fileMenuReducer: Reducer<FileMenuState, FileMenuAction> = createReducer(
   initialFileMenuState,
   {
-    DOC_OPEN_FILE_FOUND: (state, action: OpenFileCancelledAction) => {
+    DOC_OPEN_FILE_FOUND: (state, action: OpenFileFoundAction) => {
       action.thunkDispatch({type: 'SET_IS_LOADING', newState: false});
+      alert("now load: " +  action.filePath);
       return {...state};
     },
-    DOC_OPEN_FILE_FAILURE: (state, action: OpenFileFoundAction) => {
+    DOC_OPEN_FILE_FAILURE: (state, action: OpenFileCancelledAction) => {
       action.thunkDispatch({type: 'SET_IS_LOADING', newState: false});
+      alert("failed to load load: " + action.error);
       return {...state};
     },
     DOC_OPEN_EXISTING: (state, action: OpenDocumentAction) => {
@@ -51,31 +53,9 @@ const fileMenuReducer: Reducer<FileMenuState, FileMenuAction> = createReducer(
         };
 
         console.log('INVOKING window.electronAPI.openFileDialog');
+        
         // @ts-ignore
         window.electronAPI.openFileDialog(options);
-        console.log('bueller?');
-
-        /*
-        dialog
-          .showOpenDialog(options)
-          .then((result: any) => {
-            if (!result.canceled && result.filePaths.length > 0) {
-              const filePath = result.filePaths[0];
-              dispatch({
-                type: 'OPEN_FILE_FOUND',
-                payload: filePath,
-                thunkDispatch: dispatch,
-              });
-            }
-          })
-          .catch((error: any) => {
-            dispatch({
-              type: 'OPEN_FILE_FAILURE',
-              payload: error,
-              thunkDispatch: dispatch,
-            });
-          });
-      */
       };
 
       thunk(action.thunkDispatch);

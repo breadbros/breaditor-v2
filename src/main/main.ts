@@ -54,22 +54,21 @@ function createWindow() {
     mainWindow.close();
   });
 
-  ipcMain.on('open-file-dialog', (_options: any) => {
-    const options: OpenDialogOptions = _options;
+  ipcMain.on('open-file-dialog', (event:Electron.IpcMainEvent, arg:any[]) => {
+    const options: OpenDialogOptions = arg[0];
+    const senderWebContents = event.sender;
 
-    console.log('MAIN open-file-dialog');
     dialog
       .showOpenDialog(options)
       .then((result) => {
         if (!result.canceled && result.filePaths.length > 0) {
           const filePath = result.filePaths[0];
-          console.log('filePath', filePath);
-          //dispatch({type: 'OPEN_FILE_SUCCESS', payload: filePath});
+
+          senderWebContents.send('OPEN_FILE_SUCCESS', {type: 'OPEN_FILE_SUCCESS', payload: filePath});
         }
       })
       .catch((error) => {
-        console.log('error', error);
-        //dispatch({type: 'OPEN_FILE_FAILURE', payload: error});
+        senderWebContents.send('OPEN_FILE_FAILURE', {type: 'OPEN_FILE_FAILURE', payload: error});
       });
   });
 

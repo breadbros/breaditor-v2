@@ -213,8 +213,20 @@ const ModalClickShield = () => {
   );
 };
 
+let appDispatch: any = undefined;
+
+function doAppDispatch(data:any) {
+
+  if(appDispatch === undefined) {
+    console.error('appDispatch was not set');
+  } else {
+    appDispatch(data);
+  }
+}
+
 function App() {
   const [state, dispatch] = useReducer(breaditorAppReducer, getInitialState());
+  appDispatch = dispatch;
 
   if (dispatch == undefined) {
     console.info(state);
@@ -311,7 +323,7 @@ function App() {
 }
 
 function init() {
-  const domNode = document.getElementById('react-root') as Element;
+  const domNode = document.getElementById('react-root') as HTMLElement;
 
   const root = createRoot(domNode);
 
@@ -319,6 +331,24 @@ function init() {
   addDocument(textMaker('Text B'));
   addDocument(spriteMaker('Sprite C'));
   addDocument(mapMaker('Map D'));
+
+  /// MAIN<->RENDERER handlers
+  domNode.addEventListener('OPEN_FILE_SUCCESS', (event:any) => {
+    debugger;
+    doAppDispatch({
+      type: 'DOC_OPEN_FILE_FOUND',
+      thunkDispatch: doAppDispatch,
+      filePath: event.detail.filePath
+    });
+  });
+
+  domNode.addEventListener('OPEN_FILE_FAILURE', (event:any) => {
+    doAppDispatch({
+      type: 'DOC_OPEN_FILE_FAILURE',
+      thunkDispatch: doAppDispatch,
+      error: 'failed to load' + event.detail.filePath
+    });
+  });
 
   root.render(<App />);
 }
