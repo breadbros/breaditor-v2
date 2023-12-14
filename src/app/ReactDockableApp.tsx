@@ -227,8 +227,6 @@ function doAppDispatch(data:any) {
   }
 }
 
-let _firstTimeFocus = false;
-
 function App() {
   const [state, dispatch] = useReducer(breaditorAppReducer, getInitialState());
   appDispatch = dispatch;
@@ -250,13 +248,6 @@ function App() {
 
   _PanelState = panelState;
   _DocumentState = documentState;
-
-  const docs = getDocuments();
-  if(!_firstTimeFocus && docs.length > 0) {
-    setOnOrOff(true);
-    focusDocument(docs[0].info.id);
-  }
-  _firstTimeFocus = true;
 
   return (
     <WindowProxy
