@@ -344,7 +344,6 @@ function init() {
 
   /// MAIN<->RENDERER handlers
   domNode.addEventListener('OPEN_FILE_SUCCESS', (event:any) => {
-    debugger;
     doAppDispatch({
       type: 'DOC_OPEN_FILE_FOUND',
       thunkDispatch: doAppDispatch,

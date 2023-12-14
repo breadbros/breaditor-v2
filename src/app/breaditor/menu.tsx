@@ -87,10 +87,10 @@ function getMenu(dispatch: ({}: any) => void) {
           type: 'actions',
           actions: {
             'Panels on': function () {
-              dispatch({type: 'TEST_ON'});
+              dispatch({type: 'TEST_PANELS_ON', isOn: true});
             },
             'Panels off': function () {
-              dispatch({type: 'TEST_OFF'});
+              dispatch({type: 'TEST_PANELS_ON', isOn: false});
             },
           },
         },
