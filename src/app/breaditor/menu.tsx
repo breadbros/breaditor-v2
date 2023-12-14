@@ -87,12 +87,10 @@ function getMenu(dispatch: ({}: any) => void) {
           type: 'actions',
           actions: {
             'Panels on': function () {
-              alert('currently disabled');
-              // dispatch({type: 'TEST_ON'});
+              dispatch({type: 'TEST_ON'});
             },
             'Panels off': function () {
-              alert('currently disabled');
-              // dispatch({type: 'TEST_OFF'});
+              dispatch({type: 'TEST_OFF'});
             },
           },
         },
@@ -105,8 +103,7 @@ function getMenu(dispatch: ({}: any) => void) {
           type: 'actions',
           actions: {
             About: function () {
-              alert('Fuck tiled.');
-              //dispatch({type: 'TEST_ON'});
+              alert('TODO: About');
             },
           },
         },
