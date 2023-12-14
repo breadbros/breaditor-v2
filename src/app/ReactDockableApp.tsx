@@ -349,6 +349,8 @@ function init() {
   });
 
   root.render(<App />);
+
+  setOnOrOff(true);
 }
 
 export {
