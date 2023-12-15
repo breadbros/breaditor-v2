@@ -6,7 +6,10 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react",
-    "lib": ["dom", "es2017"],
+    "lib": [
+      "dom",
+      "es2017"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": false,
@@ -17,12 +20,36 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-
     "outDir": "fuck-tsc", // shouldnt happen unless you do a `yarn tsc --project ./`
-
-    "plugins": [{"name": "typescript-plugin-css-modules"}]
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "shared/*": [
+        "shared/*"
+      ],
+      "app/*": [
+        "app/*"
+      ],
+      "main/*": [
+        "main/*"
+      ],
+    }
   },
-  "exclude": ["node_modules/**"],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.css"],
-  "typeRoots": ["src/node_modules/@types", "types"]
+  "exclude": [
+    "node_modules/**"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.css"
+  ],
+  "typeRoots": [
+    "src/node_modules/@types",
+    "types"
+  ]
 }
