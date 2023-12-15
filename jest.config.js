@@ -3,15 +3,20 @@ module.exports = {
     __TEST__: true,
     TextEncoder,
     TextDecoder,
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
+    "ts-jest": {
+      tsconfig: "tsconfig.json",
     },
   },
   cache: false,
   //testEnvironment: 'jsdom',
   transform: {
-    '.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
-    '.+\\.(css|styl|less|sass|scss)$': 'jest-css-modules-transform',
+    ".+\\.(ts|tsx|js|jsx)$": "ts-jest",
+    ".+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform",
   },
-  setupFiles: ['<rootDir>/test-infrastructure/globalInclude.js'],
+  moduleNameMapper: {
+    "^shared/(.*)$": "<rootDir>/src/shared/$1",
+    "^app/(.*)$": "<rootDir>/src/app/$1",
+    "^main/(.*)$": "<rootDir>/src/main/$1",
+  },
+  setupFiles: ["<rootDir>/test-infrastructure/globalInclude.js"],
 };
