@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import {appendGlobalCss} from './index';
+import {appendGlobalCss} from './renderer';
 import {JSDOM} from 'jsdom';
 
 // Define a global variable to store the JSDOM instance

@@ -4,3 +4,9 @@ import assertType from 'assert'
 declare global {
   var assert: typeof assertType
 }
+
+type DocumentTypeType = 'MAP'|'SPRITE'|'TEXT';
+
+type DocumentType  = {
+  id: string, title: string, type: DocumentTypeType
+}

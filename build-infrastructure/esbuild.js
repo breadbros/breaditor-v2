@@ -1,5 +1,6 @@
 const esbuild = require("esbuild");
 const pluginCopy = require("esbuild-plugin-copy");
+const cssModulesPlugin = require("esbuild-css-modules-plugin");
 
 // TODO: make these settable from args
 const sourcemap = true;
@@ -101,6 +102,7 @@ const minify = false;
           },
           watch: true,
         }),
+        cssModulesPlugin(),
       ],
     })
     .catch(function () {

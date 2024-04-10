@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "lib": ["dom", "es2017"],
     "module": "commonjs",
     "moduleResolution": "node",
@@ -17,9 +17,34 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-
-    "outDir": "../main"
+    "outDir": "../main",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "shared/*": [
+        "shared/*"
+      ],
+      "app/*": [
+        "app/*"
+      ],
+      "main/*": [
+        "main/*"
+      ],
+    }
   },
   "exclude": ["node_modules/**"],
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.css"
+  ],
+  "typeRoots": [
+    "src/node_modules/@types",
+    "types"
+  ]
 }

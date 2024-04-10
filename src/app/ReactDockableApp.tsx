@@ -31,7 +31,7 @@ import {
   getInitialState,
 } from "./state-management/in-memory/app_reducer";
 
-import { DocumentInfo, WidgetInfo } from "../../types/global";
+import type { DocumentInfo, WidgetInfo } from "../../types/global";
 
 // @ts-ignore
 import css from "./ReactDockableApp.module.css";
