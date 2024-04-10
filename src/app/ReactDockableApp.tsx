@@ -1,15 +1,15 @@
-import React, {useState, useReducer} from 'react';
-import {createRoot} from 'react-dom/client';
-import {PanelState} from 'react-dockable-ts';
+import React, { useState, useReducer } from "react";
+import { createRoot } from "react-dom/client";
+import { PanelState } from "react-dockable-ts";
 
-import {WindowProxy} from './layout/components/WindowProxy';
-import {MenuBar} from './layout/components/MenuBar';
-import {ToolBar} from './layout/components/ToolBar';
-import {PropertyBar} from './layout/components/PropertyBar';
-import {StatusBar} from './layout/components/StatusBar';
-import {WorkspaceArea} from './layout/components/WorkspaceArea';
+import { WindowProxy } from "./layout/components/WindowProxy";
+import { MenuBar } from "./layout/components/MenuBar";
+import { ToolBar } from "./layout/components/ToolBar";
+import { PropertyBar } from "./layout/components/PropertyBar";
+import { StatusBar } from "./layout/components/StatusBar";
+import { WorkspaceArea } from "./layout/components/WorkspaceArea";
 
-import {getMenu} from './breaditor/menu';
+import { getMenu } from "./breaditor/menu";
 import {
   activeDocument,
   addDocument,
@@ -19,22 +19,22 @@ import {
   createInitialDocumentInfoForLoadedDocuments,
   createInitialPanelInfoForDocumentType,
   focusDocument,
-} from './breaditor/DocumentManager';
+} from "./breaditor/DocumentManager";
 
-import {mapMaker} from './breaditor/documents/MapDocument';
-import {textMaker} from './breaditor/documents/TextDocument';
-import {spriteMaker} from './breaditor/documents/SpriteDocument';
+import { mapMaker } from "./breaditor/documents/MapDocument";
+import { textMaker } from "./breaditor/documents/TextDocument";
+import { spriteMaker } from "./breaditor/documents/SpriteDocument";
 // import {TOOLS} from './breaditor/tools/constants';
 
 import {
   breaditorAppReducer,
   getInitialState,
-} from './state-management/in-memory/app_reducer';
+} from "./state-management/in-memory/app_reducer";
 
-import {DocumentInfo, WidgetInfo} from '../../types/global';
+import { DocumentInfo, WidgetInfo } from "../../types/global";
 
 // @ts-ignore
-import css from './ReactDockableApp.module.css';
+import css from "./ReactDockableApp.module.css";
 
 let docLoaded = false;
 
@@ -99,7 +99,7 @@ function createPanelStateForWidgetInfoList(info: WidgetInfo[]): PanelState[] {
     }
   }
 
-  let ret = [{windows: []}];
+  let ret = [{ windows: [] }];
 
   const windows: any[] = [];
 
@@ -181,13 +181,22 @@ function setOnOrOff(onOrOff: boolean) {
   updateDocumentManagerState(newDocState, newPanelState);
 }
 
+let error_happened = false;
 function updateDocumentManagerState(
   documentState: PanelState[],
   panelState: PanelState[],
 ) {
   if (_setPanelState === undefined) {
     debugger;
-    throw new Error("_setPanelState not yet initialized; was the app mounted correctly before calling for a focused document?");
+    error_happened = true;
+    throw new Error(
+      "_setPanelState not yet initialized; was the app mounted correctly before calling for a focused document?",
+    );
+  }
+
+  if (error_happened) {
+    console.error("but we got happy in the end...");
+    error_happened = false;
   }
   _setPanelState(panelState);
   _setDocPanelState(documentState);
@@ -202,12 +211,12 @@ const ModalClickShield = () => {
     <div
       id="click-shield"
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(1, 0, 0, 0.5)',
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(1, 0, 0, 0.5)",
         zIndex: 1000,
       }}
     />
@@ -216,10 +225,9 @@ const ModalClickShield = () => {
 
 let appDispatch: any = undefined;
 
-function doAppDispatch(data:any) {
-
-  if(appDispatch === undefined) {
-    console.error('appDispatch was not set');
+function doAppDispatch(data: any) {
+  if (appDispatch === undefined) {
+    console.error("appDispatch was not set");
   } else {
     appDispatch(data);
   }
@@ -265,8 +273,8 @@ function App() {
       <div
         className={css.App}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           // Dark Theme
         }}
         data-testid="breaditor-browser-app"
@@ -285,15 +293,15 @@ function App() {
         <div
           style={{
             flexGrow: 1,
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'row',
-            height: 'calc(100vh - 117px)',
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "row",
+            height: "calc(100vh - 117px)",
           }}
         >
           <ToolBar selected={{}} dispatch={dispatch} />
           <WorkspaceArea
-            key={'main_workspace'}
+            key={"main_workspace"}
             dispatch={dispatch}
             style={{
               flexGrow: 1,
@@ -309,11 +317,11 @@ function App() {
             setDocumentState={setDocumentState}
             documents={getCurrentDocuments()}
             panels={getCurrentPanels()}
-            themeClass={'nullTheme'}
+            themeClass={"nullTheme"}
           />
         </div>
         <StatusBar
-          initialStatuses={['Welcome to the Breaditor', '❤', '🦵']}
+          initialStatuses={["Welcome to the Breaditor", "❤", "🦵"]}
           dispatch={dispatch}
         />
       </div>
@@ -322,29 +330,29 @@ function App() {
 }
 
 function init() {
-  const domNode = document.getElementById('react-root') as HTMLElement;
+  const domNode = document.getElementById("react-root") as HTMLElement;
 
   const root = createRoot(domNode);
 
-  addDocument(mapMaker('Map A'));
-  addDocument(textMaker('Text B'));
-  addDocument(spriteMaker('Sprite C'));
-  addDocument(mapMaker('Map D'));
+  addDocument(mapMaker("Map A"));
+  addDocument(textMaker("Text B"));
+  addDocument(spriteMaker("Sprite C"));
+  addDocument(mapMaker("Map D"));
 
   /// MAIN<->RENDERER handlers
-  domNode.addEventListener('OPEN_FILE_SUCCESS', (event:any) => {
+  domNode.addEventListener("OPEN_FILE_SUCCESS", (event: any) => {
     doAppDispatch({
-      type: 'DOC_OPEN_FILE_FOUND',
+      type: "DOC_OPEN_FILE_FOUND",
       thunkDispatch: doAppDispatch,
-      filePath: event.detail.filePath
+      filePath: event.detail.filePath,
     });
   });
 
-  domNode.addEventListener('OPEN_FILE_FAILURE', (event:any) => {
+  domNode.addEventListener("OPEN_FILE_FAILURE", (event: any) => {
     doAppDispatch({
-      type: 'DOC_OPEN_FILE_FAILURE',
+      type: "DOC_OPEN_FILE_FAILURE",
       thunkDispatch: doAppDispatch,
-      error: 'failed to load' + event.detail.filePath
+      error: "failed to load" + event.detail.filePath,
     });
   });
 
