@@ -1,0 +1,21 @@
+on: ["push", "pull_request"]
+
+name: Test
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js 16.x
+      uses: actions/setup-node@v2
+      with:
+        cache: yarn
+        node-version: 16.x
+
+    - name: Install and Test
+      run: |
+        yarn
+        yarn test
