@@ -1,0 +1,131 @@
+.container {
+  background-color: var(--secondary);
+  /* background-color: #383838; */
+  /* box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.125) inset; */
+  /* padding: 4px; */
+  display: flex;
+  align-items: stretch;
+  /* margin-bottom: 1px; */
+  height: 36px;
+  min-height: 36px;
+  position: relative;
+  /* background-color: red; */
+
+  font-size: 9pt;
+  /* box-shadow: 0 16px 32px rgba(0, 0, 0, 0.125) inset,
+    0 -1px 1px rgba(0, 0, 0, 0.25) inset; */
+}
+
+.dragBar {
+  flex-grow: 1;
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10pt;
+
+  margin-top: 4px;
+  padding-bottom: 4px;
+
+  /* get out of the way of the menubar */
+  left: var(--topmenu-container-width);
+
+  width: calc(100% - var(--topmenu-container-width) - 128px);
+
+  height: 28px;
+  position: absolute;
+
+  /* background-color: #e81123; */
+}
+
+.container::after {
+  /* background-color: red; */
+  content: '';
+  width: calc(100% - 8px - 128px);
+  height: calc(100% - 4px);
+  margin: 4px 4px 0 4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: -100;
+}
+
+.menu {
+  --windowRadius: 4px;
+  display: flex;
+  align-items: stretch;
+  background-color: var(--primary);
+  padding-right: 6px;
+  /* border-right: 1px solid rgba(0, 0, 0, 0.5); */
+  border-radius: 0 var(--windowRadius) 0 0;
+  /* box-shadow: 1px -1px 1px rgba(0, 0, 0, 0.25); */
+  position: relative;
+}
+
+.menu::before {
+  content: '';
+  position: absolute;
+  width: var(--windowRadius);
+  height: var(--windowRadius);
+  bottom: 0;
+  right: calc(0px - var(--windowRadius));
+  background-color: var(--primary);
+  -webkit-mask-image: radial-gradient(circle 10px at var(--windowRadius) 0,
+      transparent 0,
+      transparent calc(var(--windowRadius) - 1px),
+      black calc(var(--windowRadius) + 0px));
+}
+
+.menuItem {
+  margin: 4px 0 0;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.menuItem:hover {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+
+.menuItem.selected {
+  background-color: var(--secondary);
+}
+
+.windowsControls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 128px;
+  min-width: 128px;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  /* height: 24px;
+  margin-right: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 0 0 4px 4px;
+  border-top: none;
+  overflow: hidden; */
+}
+
+.windowsControls .button {
+  /* background-color: red; */
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.15s background-color;
+}
+
+.windowsControls .button:hover {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+
+.windowsControls .button.close:hover {
+  background-color: #e81123;
+}

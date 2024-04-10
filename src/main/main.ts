@@ -1,25 +1,30 @@
-import { BrowserWindow, ipcMain, app, session, Tray } from "electron";
+import { dialog, BrowserWindow, ipcMain, app, session, OpenDialogOptions, Tray } from "electron";
+
 import { setWindow } from "./renderer-window";
 import { doInspectorSetupOnStart } from "./dev-mode";
 import { setupTray } from "./tray";
 import { createServer } from "./webserver";
+
 const dotenv = require("dotenv").config();
 const path = require("node:path");
 
-let tray: Tray;
+let tray: Tray | null;
 
 let server = createServer(22222);
 
+let mainWindow: BrowserWindow;
+
 app.on("ready", (event) => {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
       preload: path.join(__dirname, "preload_js.js"),
     },
   });
+  
+  mainWindow.setMenu(null); // No system menu.
 
-  // mainWindow.setMenu(null); // No system menu.
   mainWindow.loadFile("dist/app/index.html"); // cwd is wherever you called `electron start` from.
   setWindow(mainWindow);
 
@@ -27,11 +32,13 @@ app.on("ready", (event) => {
 
   tray = setupTray();
   // Show the window when the tray icon is clicked
-
-  tray.on("click", function () {
-    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
-  });
-
+  if(tray)
+  {
+    tray.on("click", function () {
+      mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+    });
+  }
+  
   mainWindow.on("minimize", function (event) {
     event.preventDefault();
     mainWindow.hide();
@@ -45,11 +52,13 @@ app.on("ready", (event) => {
     callback({
       responseHeaders: {
         ...details.responseHeaders,
-        "Content-Security-Policy": [""], // "default-src 'self' *" //'unsafe-inline', ???
+        "Content-Security-Policy": ["unsafe-inline"], // "default-src 'self' *" //'unsafe-inline', ???
       },
     });
   });
 
+  //////////////////////////////
+  // From Tray
   ipcMain.on("set-title", (event, title) => {
     const webContents = event.sender;
     let win = BrowserWindow.fromWebContents(webContents) as any;
@@ -75,4 +84,41 @@ app.on("ready", (event) => {
     let win = BrowserWindow.fromWebContents(webContents) as any;
     (win as any).sayWords(text);
   });
+  // From Tray
+  //////////////////////////////////////
+  // From Breaditor
+  ipcMain.on('app-minimize', () => {
+    console.log('app-minimize');
+    mainWindow.minimize();
+  });
+  ipcMain.on('app-maximize', () => {
+    console.log('app-maximize');
+    if (mainWindow.isMaximized()) mainWindow.unmaximize();
+    else mainWindow.maximize();
+  });
+  ipcMain.on('app-close', () => {
+    mainWindow.close();
+  });
+
+  ipcMain.on('open-file-dialog', (event: Electron.IpcMainEvent, arg: any[]) => {
+    const options: OpenDialogOptions = arg[0];
+    const senderWebContents = event.sender;
+
+    dialog
+      .showOpenDialog(options)
+      .then((result) => {
+        if (!result.canceled && result.filePaths.length > 0) {
+          const filePath = result.filePaths[0];
+
+          senderWebContents.send('OPEN_FILE_SUCCESS', { type: 'OPEN_FILE_SUCCESS', payload: filePath });
+        }
+      })
+      .catch((error) => {
+        senderWebContents.send('OPEN_FILE_FAILURE', { type: 'OPEN_FILE_FAILURE', payload: error });
+      });
+  });
+  mainWindow.on('closed', function () {
+    if (process.platform !== 'darwin') app.quit();
+  });
+
 });

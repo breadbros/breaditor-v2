@@ -1,0 +1,12 @@
+.container {
+  background-color: var(--primary);
+  padding: 6px 4px;
+  /* height: 45px;
+  align-items: stretch; */
+  display: flex;
+  margin-bottom: 1px;
+  align-items: center;
+  /* margin: 2px; */
+  /* border-radius: var(--windowRadius); */
+  height: 48px;
+}

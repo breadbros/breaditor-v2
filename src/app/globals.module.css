@@ -1,0 +1,98 @@
+:root {
+  --primary: rgba(56, 57, 60, 1);
+  --primaryAlpha: rgba(56, 57, 60, 0.5);
+  --secondary: rgb(40, 41, 45);
+  --text: #e6e6e6;
+  --textAlpha: #e6e6e680;
+  --borderColor: #1c1d20;
+  --windowRadius: 4px;
+
+  --primary: rgba(75, 75, 75, 1);
+  --primaryAlpha: rgba(75, 75, 75, 0.5);
+  --secondary: rgb(60, 60, 60);
+  --text: #e6e6e6;
+  --textAlpha: #e6e6e680;
+  --borderColor: #2c2c2c;
+  --windowRadius: 2px;
+  background-color: var(--borderColor);
+
+  /* for horrible runtime calculation tricks (see MenuBar.module.css) */
+  --topmenu-container-width: 0;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: none;
+  user-select: none;
+  color: var(--text);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+svg {
+  display: block;
+  /* filter: invert(0.75); */
+}
+
+.button {
+  /* width: 36px; */
+  /* height: 36px; */
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button.selected {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.button:not(.selected):hover {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+
+.button svg {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+  /* height: 8px; */
+}
+
+::-webkit-scrollbar-thumb {
+  position: relative;
+  height: 6px;
+  /* border: 4px solid rgba(0, 0, 0, 0); */
+  border-left: 8px solid transparent;
+  background-clip: padding-box;
+  /* -webkit-border-radius: 16px; */
+  background-color: var(--secondary);
+
+  /* background-color: var(--primary); */
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); */
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  /* background: var(--secondary); */
+  /* border-left: 1px solid var(--secondary); */
+  /* box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5); */
+}

@@ -1,17 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';"
     />
 
-    <style>
-      body {
-        background-color: gray;
-      }
-    </style>
+    <title></title>
   </head>
-  <body></body>
+  <body>
+    <div id="react-root">I am also a react mountpoint</div>
+  </body>
+  <script src="./index.js"></script>
+  <script src="./start.js"></script>
+  <!-- ^^^ this is what the whole app transpiled to, lol-->
 </html>
-<script src="./index.js"></script>
