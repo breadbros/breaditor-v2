@@ -14,7 +14,7 @@
     "debug-in-chrome": "electron . --inspect-brk",
     "test": "jest  --verbose --runInBand --detectOpenHandles --forceExit --bail=false",
     "test-watch": "jest --watch",
-    "test-ts": "ts-jest --verbose --runInBand --detectOpenHandles --forceExit --bail=false"
+    "configure-ts-jest": "ts-jest"
   },
   "author": "",
   "license": "MIT",

@@ -11,7 +11,7 @@ const minify = false;
   /// server translation
   const result = await esbuild
     .build({
-      tsconfig: "build-infrastructure/tsconfig.json",
+      tsconfig: "tsconfig.json",
 
       // logLevel: 'verbose',
 
@@ -69,7 +69,7 @@ const minify = false;
   /// client translation
   const result = await esbuild
     .build({
-      tsconfig: "build-infrastructure/tsconfig.json",
+      tsconfig: "tsconfig.json",
 
       // logLevel: 'verbose',
 
