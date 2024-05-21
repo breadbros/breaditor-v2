@@ -4,8 +4,8 @@ import {
   ipcMain,
   session,
   OpenDialogOptions,
-} from 'electron';
-import {dialog} from 'electron';
+} from "electron";
+import { dialog } from "electron";
 /*import {
   default as installExtension,
   REACT_DEVELOPER_TOOLS,
@@ -13,9 +13,9 @@ import {dialog} from 'electron';
   REDUX_DEVTOOLS,
 } from 'electron-devtools-installer';
 */
-import path from 'path';
+import path from "path";
 
-const dotenv = require('dotenv').config();
+const dotenv = require("dotenv").config();
 
 let mainWindow: BrowserWindow;
 
@@ -25,36 +25,36 @@ function createWindow() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
-      preload: path.join(__dirname, '../app/', 'preload.js'), // for all those main/renderer bridge things
+      preload: path.join(__dirname, "../app/", "preload.js"), // for all those main/renderer bridge things
       // enableRemoteModule: true,
     },
   });
   mainWindow.setMenu(null); // No system menu.
-  mainWindow.loadFile('dist/app/index.html'); // cwd is wherever you called `electron start` from.
+  mainWindow.loadFile("dist/app/index.html"); // cwd is wherever you called `electron start` from.
 
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {
         ...details.responseHeaders,
-        'Content-Security-Policy': [''], // "default-src 'self' *" //'unsafe-inline', ???
+        "Content-Security-Policy": [""], // "default-src 'self' *" //'unsafe-inline', ???
       },
     });
   });
 
-  ipcMain.on('app-minimize', () => {
-    console.log('app-minimize');
+  ipcMain.on("app-minimize", () => {
+    console.log("app-minimize");
     mainWindow.minimize();
   });
-  ipcMain.on('app-maximize', () => {
-    console.log('app-maximize');
+  ipcMain.on("app-maximize", () => {
+    console.log("app-maximize");
     if (mainWindow.isMaximized()) mainWindow.unmaximize();
     else mainWindow.maximize();
   });
-  ipcMain.on('app-close', () => {
+  ipcMain.on("app-close", () => {
     mainWindow.close();
   });
 
-  ipcMain.on('open-file-dialog', (event:Electron.IpcMainEvent, arg:any[]) => {
+  ipcMain.on("open-file-dialog", (event: Electron.IpcMainEvent, arg: any[]) => {
     const options: OpenDialogOptions = arg[0];
     const senderWebContents = event.sender;
 
@@ -64,26 +64,32 @@ function createWindow() {
         if (!result.canceled && result.filePaths.length > 0) {
           const filePath = result.filePaths[0];
 
-          senderWebContents.send('OPEN_FILE_SUCCESS', {type: 'OPEN_FILE_SUCCESS', payload: filePath});
+          senderWebContents.send("OPEN_FILE_SUCCESS", {
+            type: "OPEN_FILE_SUCCESS",
+            payload: filePath,
+          });
         }
       })
       .catch((error) => {
-        senderWebContents.send('OPEN_FILE_FAILURE', {type: 'OPEN_FILE_FAILURE', payload: error});
+        senderWebContents.send("OPEN_FILE_FAILURE", {
+          type: "OPEN_FILE_FAILURE",
+          payload: error,
+        });
       });
   });
 
-  mainWindow.on('closed', function () {
-    if (process.platform !== 'darwin') app.quit();
+  mainWindow.on("closed", function () {
+    if (process.platform !== "darwin") app.quit();
   });
 
   if (dotenv.parsed.BREADITOR_DEV_MODE) {
     const devtoolsWindow = new BrowserWindow();
     mainWindow.webContents.setDevToolsWebContents(devtoolsWindow.webContents);
-    mainWindow.webContents.openDevTools({mode: 'detach'});
+    mainWindow.webContents.openDevTools({ mode: "detach" });
 
     // Set the devtools position when the parent window has finished loading.
-    mainWindow.webContents.once('did-finish-load', function () {
-      console.log('Main window did-finish-load.');
+    mainWindow.webContents.once("did-finish-load", function () {
+      console.log("Main window did-finish-load.");
 
       if (
         dotenv.parsed.MAIN_WINDOW_X != undefined &&
@@ -91,7 +97,7 @@ function createWindow() {
         dotenv.parsed.MAIN_WINDOW_W != undefined &&
         dotenv.parsed.MAIN_WINDOW_H != undefined
       ) {
-        console.log('Main window set size.');
+        console.log("Main window set size.");
 
         const x = parseInt(dotenv.parsed.MAIN_WINDOW_X, 10);
         const y = parseInt(dotenv.parsed.MAIN_WINDOW_Y, 10);
@@ -103,15 +109,15 @@ function createWindow() {
       }
     });
 
-    devtoolsWindow.webContents.once('did-finish-load', function () {
-      console.log('devtoolsWindow did-finish-load.');
+    devtoolsWindow.webContents.once("did-finish-load", function () {
+      console.log("devtoolsWindow did-finish-load.");
       if (
         dotenv.parsed.INSPECTOR_WINDOW_X != undefined &&
         dotenv.parsed.INSPECTOR_WINDOW_Y != undefined &&
         dotenv.parsed.INSPECTOR_WINDOW_W != undefined &&
         dotenv.parsed.INSPECTOR_WINDOW_H != undefined
       ) {
-        console.log('devtoolsWindow set size.');
+        console.log("devtoolsWindow set size.");
 
         const x = parseInt(dotenv.parsed.INSPECTOR_WINDOW_X, 10);
         const y = parseInt(dotenv.parsed.INSPECTOR_WINDOW_Y, 10);
@@ -123,9 +129,9 @@ function createWindow() {
       }
     });
 
-    console.log('Lol, Development.');
+    console.log("Lol, Development.");
   } else {
-    console.log('Lol, Production.');
+    console.log("Lol, Production.");
   }
 }
 
@@ -136,14 +142,14 @@ function createWindow() {
 //     .catch((err) => console.log('An error occurred: ', err));
 // });
 
-app.on('ready', async () => {
+app.on("ready", async () => {
   createWindow();
 
-  app.on('activate', function () {
+  app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit();
+app.on("window-all-closed", function () {
+  if (process.platform !== "darwin") app.quit();
 });

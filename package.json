@@ -22,18 +22,7 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@types/fb-watchman": "^2.0.4",
-    "dotenv": "^16.0.1",
-    "emoji-dictionary": "^1.0.11",
-    "fb-watchman": "^2.0.2",
-    "fs": "^0.0.1-security",
-    "is-electron": "^2.2.2",
-    "path": "^0.12.7",
-    "react": "^18.2.0",
-    "react-dockable-ts": "https://github.com/breadbros/react-dockable-ts2#v0.0.18",
-    "react-dom": "^18.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",

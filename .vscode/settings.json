@@ -1,15 +1,25 @@
 {
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact"
-    ],
-    "editor.fontFamily": "'Operator Mono', Consolas, 'Courier New', monospace",
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnPaste": true,
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.fontFamily": "'Operator Mono', Consolas, 'Courier New', monospace",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#c10505",
+    "titleBar.activeBackground": "#820707",
+    "titleBar.activeForeground": "#FFFBFB",
+    "titleBar.inactiveBackground": "#820707",
+    "titleBar.inactiveForeground": "#FFFBFB"
+  },
+
+  "window.title": "🍞 Breaditor 2.0"
 }
