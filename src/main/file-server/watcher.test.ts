@@ -1,59 +1,78 @@
-import * as Watchman from "fb-watchman";
+const capabilityCheck = jest.fn();
+const command = jest.fn();
+let watcher: typeof import('./watcher');
 
-import { debug } from "shared/debug";
+beforeEach(() => {
+  jest.resetModules();
+  capabilityCheck.mockReset();
+  command.mockReset();
+  jest.doMock('fb-watchman', () => ({
+    Client: jest.fn(() => ({capabilityCheck, command})),
+  }));
+  watcher = require('./watcher');
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+});
 
-// Initialize Watchman client
-const client = new Watchman.Client();
+afterEach(() => jest.restoreAllMocks());
 
-let _isInitialized = false;
-
-let _watching = new Set<string>([]);
-
-export function initialize() {
-  client.capabilityCheck({ optional: [], required: [] }, (error, response) => {
-    if (error) {
-      console.error("Error connecting to Watchman:", error);
-      throw error;
-    }
-
-    _isInitialized = true;
-
-    debug.watchman && console.log(`watchman init: ${response}`);
-  });
+function initialize() {
+  watcher.initialize();
+  capabilityCheck.mock.calls[0][1](null, {});
 }
 
-export function watch(watchPath: string) {
-  if (!_isInitialized) {
-    throw new Error("Watchman Client not initialized");
-  }
+test('rejects watches before initialization', () => {
+  expect(() => watcher.watch('/project')).toThrow('Watchman Client not initialized');
+  expect(command).not.toHaveBeenCalled();
+});
 
-  if (_watching.has(watchPath)) {
-    throw new Error(`already watching '${watchPath}'`);
-  }
+test('initialization requests a capability check', () => {
+  watcher.initialize();
+  expect(capabilityCheck).toHaveBeenCalledWith(
+    {optional: [], required: []}, expect.any(Function),
+  );
+});
 
-  client.command(["watch-project", dir_of_interest], function (error, resp) {
-    if (error) {
-      console.error("Error initiating watch:", error);
-      return;
-    }
+test('failed initialization surfaces the error and keeps watches disabled', () => {
+  watcher.initialize();
+  const error = new Error('Watchman unavailable');
+  expect(() => capabilityCheck.mock.calls[0][1](error)).toThrow(error);
+  expect(() => watcher.watch('/project')).toThrow('Watchman Client not initialized');
+});
 
-    // It is considered to be best practice to show any 'warning' or
-    // 'error' information to the user, as it may suggest steps
-    // for remediation
-    if ("warning" in resp) {
-      console.log("warning: ", resp.warning);
-    }
+test('watches the requested path and rejects duplicates after success', () => {
+  initialize();
+  watcher.watch('/project/subdir');
+  expect(command).toHaveBeenCalledWith(
+    ['watch-project', '/project/subdir'], expect.any(Function),
+  );
+  command.mock.calls[0][1](null, {watch: '/project', relative_path: 'subdir'});
+  expect(() => watcher.watch('/project/subdir')).toThrow("already watching '/project/subdir'");
+  expect(command).toHaveBeenCalledTimes(1);
+  watcher.watch('/other-project');
+  expect(command).toHaveBeenCalledTimes(2);
+});
 
-    // `watch-project` can consolidate the watch for your
-    // dir_of_interest with another watch at a higher level in the
-    // tree, so it is very important to record the `relative_path`
-    // returned in resp
+test('failed watches log the error and can be retried', () => {
+  initialize();
+  watcher.watch('/project');
+  const error = new Error('Permission denied');
+  command.mock.calls[0][1](error);
+  expect(console.error).toHaveBeenCalledWith('Error initiating watch:', error);
+  watcher.watch('/project');
+  expect(command).toHaveBeenCalledTimes(2);
+});
 
-    console.log(
-      "watch established on ",
-      resp.watch,
-      " relative_path",
-      resp.relative_path
-    );
+test('reports Watchman warnings and consolidated watch paths', () => {
+  initialize();
+  watcher.watch('/project/subdir');
+  command.mock.calls[0][1](null, {
+    watch: '/project', relative_path: 'subdir', warning: 'Recrawled',
   });
-}
+  expect(console.log).toHaveBeenCalledWith('warning: ', 'Recrawled');
+  expect(console.log).toHaveBeenCalledWith(
+    'watch established on ', '/project', ' relative_path', 'subdir',
+  );
+});
+
+export {};

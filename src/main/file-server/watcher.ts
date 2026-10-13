@@ -32,12 +32,14 @@ export function watch(watchPath: string) {
     throw new Error(`already watching '${watchPath}'`);
   }
 
-  client.command(['watch-project', dir_of_interest],
+  client.command(['watch-project', watchPath],
   function (error, resp) {
     if (error) {
       console.error('Error initiating watch:', error);
       return;
     }
+
+    _watching.add(watchPath);
 
     // It is considered to be best practice to show any 'warning' or
     // 'error' information to the user, as it may suggest steps
