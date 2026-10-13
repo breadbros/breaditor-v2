@@ -14,10 +14,12 @@ import { dialog } from "electron";
 } from 'electron-devtools-installer';
 */
 import path from "path";
+import {connectDevelopment} from './development';
 
 const dotenv = require("dotenv").config();
 
 let mainWindow: BrowserWindow;
+connectDevelopment(() => mainWindow);
 
 function createWindow() {
   mainWindow = new BrowserWindow({

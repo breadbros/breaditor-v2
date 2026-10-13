@@ -18,9 +18,13 @@ with the appropriate values so they auto-spawn iun a convenient place.
 4. `yarn start` launches the app. For development, `yarn dev` builds, launches
    Electron, and watches for edits.
    Saving files under `src/` (including CSS, HTML, and preload scripts), `.env`,
-   `tsconfig.json`, or the esbuild configuration rebuilds and restarts the app.
-   This is a full restart, so in-memory editor state resets. Failed builds keep
-   the running app open and retry on the next edit. Closing the app or pressing
+   `tsconfig.json`, or the esbuild configuration rebuilds and shows a
+   "New changes are available" toast. Click **Reload** to apply the changes.
+   Renderer and preload edits reload the view in the existing window, keeping
+   Electron and DevTools running. Main-process, shared-code, or configuration
+   edits offer **Restart app** instead. In-memory renderer state resets on reload.
+   Failed builds keep the running app open and retry on the next edit; the action
+   is offered only after a successful build. Closing the app or pressing
    Ctrl+C stops the watcher. Use `yarn iterate` to also run React DevTools.
 
 

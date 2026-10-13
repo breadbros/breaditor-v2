@@ -8,6 +8,7 @@ import {ToolBar} from './layout/components/ToolBar';
 import {PropertyBar} from './layout/components/PropertyBar';
 import {StatusBar} from './layout/components/StatusBar';
 import {WorkspaceArea} from './layout/components/WorkspaceArea';
+import {DevelopmentUpdateToast} from './ui/DevelopmentUpdateToast';
 
 import {getMenu} from './breaditor/menu';
 import {
@@ -318,6 +319,7 @@ function App() {
           initialStatuses={['Welcome to the Breaditor', '❤', '🦵']}
           dispatch={dispatch}
         />
+        <DevelopmentUpdateToast />
       </div>
     </WindowProxy>
   );

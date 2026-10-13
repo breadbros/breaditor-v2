@@ -8,6 +8,8 @@ function appProcess() {
   const child = new EventEmitter();
   child.exitCode = null;
   child.signalCode = null;
+  child.connected = true;
+  child.send = jest.fn();
   child.kill = jest.fn(() => {
     child.signalCode = 'SIGTERM';
     child.emit('exit', null, 'SIGTERM');
@@ -50,19 +52,24 @@ describe('development rebuilds', () => {
     expect(launch).toHaveBeenCalledTimes(1);
   });
 
-  test('debounces save notifications and replaces only its own app process', async () => {
+  test('debounces saves and replaces only its own app when reload is requested', async () => {
     await start();
     const oldApp = launch.mock.results[0].value;
     changed(); changed(); changed();
     jest.runOnlyPendingTimers();
     await settle();
     expect(build).toHaveBeenCalledTimes(2);
+    expect(launch).toHaveBeenCalledTimes(1);
+    expect(oldApp.kill).not.toHaveBeenCalled();
+    expect(oldApp.send).toHaveBeenLastCalledWith({type: 'dev-update', available: true, restartRequired: true}, expect.any(Function));
+    oldApp.emit('message', {type: 'dev-reload'});
+    await settle();
     expect(launch).toHaveBeenCalledTimes(2);
     expect(oldApp.kill).toHaveBeenCalledTimes(1);
     expect(launch.mock.results[1].value.kill).not.toHaveBeenCalled();
   });
 
-  test('serializes edits during a build and skips launching stale output', async () => {
+  test('serializes edits during a build and offers only the latest output for reload', async () => {
     await start();
     let finishBuild;
     build.mockImplementationOnce(() => new Promise(resolve => {finishBuild = resolve;}));
@@ -74,6 +81,11 @@ describe('development rebuilds', () => {
     finishBuild();
     await settle();
     expect(build).toHaveBeenCalledTimes(3);
+    expect(launch).toHaveBeenCalledTimes(1);
+    const oldApp = launch.mock.results[0].value;
+    expect(oldApp.send.mock.calls.filter(([message]) => message.available)).toHaveLength(1);
+    oldApp.emit('message', {type: 'dev-reload'});
+    await settle();
     expect(launch).toHaveBeenCalledTimes(2);
   });
 
@@ -89,6 +101,10 @@ describe('development rebuilds', () => {
 
     changed();
     jest.runOnlyPendingTimers();
+    await settle();
+    expect(launch).toHaveBeenCalledTimes(1);
+    expect(oldApp.kill).not.toHaveBeenCalled();
+    oldApp.emit('message', {type: 'dev-reload'});
     await settle();
     expect(launch).toHaveBeenCalledTimes(2);
     expect(oldApp.kill).toHaveBeenCalledTimes(1);

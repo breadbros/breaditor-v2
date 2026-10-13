@@ -18,6 +18,15 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFileDialog: (options /* OpenDialogOptions */) => {
     ipcRenderer.send('open-file-dialog', options);
   },
+  onDevelopmentUpdate: (callback) => {
+    const listener = (_event, available, restartRequired) => callback(available, restartRequired);
+    ipcRenderer.on('dev-update', listener);
+    ipcRenderer.send('dev-update-check');
+    return () => ipcRenderer.removeListener('dev-update', listener);
+  },
+  reloadDevelopment: () => {
+    ipcRenderer.send('dev-reload');
+  },
 });
 
 
