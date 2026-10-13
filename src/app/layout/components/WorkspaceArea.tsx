@@ -32,8 +32,6 @@ interface WorkspaceAreaProps {
   dispatch: ({}: any) => void;
 }
 const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
-  const {dispatch} = props;
-
   const [layoutState, setLayoutState] = useState<PanelState[]>([
     {
       windows: [
