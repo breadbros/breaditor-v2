@@ -184,8 +184,8 @@ function updateDocumentManagerState(
   panelState: PanelState[],
 ) {
   if (_setPanelState === undefined) {
-    debugger;
-    throw new Error("_setPanelState not yet initialized; was the app mounted correctly before calling for a focused document?");
+    console.warn("_setPanelState not yet initialized; was the app mounted correctly before calling for a focused document?");
+    return;
   }
   _setPanelState(panelState);
   _setDocPanelState(documentState);
