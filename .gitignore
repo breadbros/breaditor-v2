@@ -16,3 +16,6 @@ yarn-error.log
 .iterate_pidfile
 .env
 target/
+
+# VS Code debugger session state is specific to the local process.
+/.mcp-debug-tools/
