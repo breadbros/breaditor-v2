@@ -350,9 +350,11 @@ function init() {
     });
   });
 
+  docLoaded = true;
+  _CachedValidPanelState = null;
+  _CachedValidDocumentState = null;
   root.render(<App />);
-
-  setOnOrOff(true);
+  return root;
 }
 
 export {
