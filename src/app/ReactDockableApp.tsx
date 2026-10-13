@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState, useReducer, useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {PanelState} from 'react-dockable-ts';
 
@@ -226,6 +226,10 @@ function doAppDispatch(data:any) {
 function App() {
   const [state, dispatch] = useReducer(breaditorAppReducer, getInitialState());
   appDispatch = dispatch;
+
+  useEffect(() => {
+    if (state.app.isPanelsOn !== undefined) setOnOrOff(state.app.isPanelsOn);
+  }, [state.app.isPanelsOn]);
 
   if (dispatch == undefined) {
     console.info(state);
