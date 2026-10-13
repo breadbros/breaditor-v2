@@ -15,6 +15,14 @@ INSPECTOR_WINDOW_H=
 ```
 with the appropriate values so they auto-spawn iun a convenient place.
 
+4. `yarn start` launches the app. For development, `yarn dev` builds, launches
+   Electron, and watches for edits.
+   Saving files under `src/` (including CSS, HTML, and preload scripts), `.env`,
+   `tsconfig.json`, or the esbuild configuration rebuilds and restarts the app.
+   This is a full restart, so in-memory editor state resets. Failed builds keep
+   the running app open and retry on the next edit. Closing the app or pressing
+   Ctrl+C stops the watcher. Use `yarn iterate` to also run React DevTools.
+
 
 
 # electron-from-scratch

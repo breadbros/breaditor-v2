@@ -2,7 +2,6 @@ const esbuild = require('esbuild');
 const copyPlugin = require('esbuild-plugin-copy');
 const copyStaticFiles = require('esbuild-copy-static-files');
 const cssModulesPlugin = require('esbuild-css-modules-plugin');
-const rimraf = require('rimraf');
 const child_process = require('child_process');
 
 console.log('CWD:', process.cwd());
@@ -30,12 +29,11 @@ if (tsc.status !== 0) {
 
 // TODO: make these settable from args
 const sourcemap = true;
+const analyze = !process.argv.includes("--quiet");
 const watch = false;
 const minify = false;
 
 (async () => {
-  // Remove the 'dist' directory before building
-  rimraf.sync('dist');
 
   /// server translation
   const result = await esbuild
@@ -60,7 +58,7 @@ const minify = false;
             from: ['src/main/preload/*.js'],
             to: ['dist/app/'],
           },
-          verbose: true,
+          verbose: analyze,
           // Copy 'src/main/preload.js' to 'dist/static/preload.js'
           //'src/main/preload.js': 'dist/static/preload.js',
         }),
@@ -70,8 +68,7 @@ const minify = false;
       return process.exit(1);
     });
 
-  let text = await esbuild.analyzeMetafile(result.metafile);
-  console.log(text);
+  if (analyze) console.log(await esbuild.analyzeMetafile(result.metafile));
 })();
 
 (async () => {
@@ -109,6 +106,5 @@ const minify = false;
       return process.exit(2);
     });
 
-  let text = await esbuild.analyzeMetafile(result.metafile);
-  console.log(text);
+  if (analyze) console.log(await esbuild.analyzeMetafile(result.metafile));
 })();
