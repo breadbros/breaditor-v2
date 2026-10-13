@@ -8,7 +8,8 @@
     "url": "https://github.com/mcgrue/electron-from-scratch.git"
   },
   "scripts": {
-    "start": "electron .",
+    "//start": "electron .",
+    "start": "yarn pre-build && electron .",
     "dev": "node build-infrastructure/dev.js",
     "build": "yarn pre-build && echo DONE ESBUILDN && echo START ELECTRON BUILDIN && electron-builder",
     "pre-build": "node build-infrastructure/esbuild.js",
