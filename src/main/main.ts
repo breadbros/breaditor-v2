@@ -54,8 +54,7 @@ function createWindow() {
     mainWindow.close();
   });
 
-  ipcMain.on("open-file-dialog", (event: Electron.IpcMainEvent, arg: any[]) => {
-    const options: OpenDialogOptions = arg[0];
+  ipcMain.on("open-file-dialog", (event: Electron.IpcMainEvent, options: OpenDialogOptions) => {
     const senderWebContents = event.sender;
 
     dialog
@@ -67,6 +66,10 @@ function createWindow() {
           senderWebContents.send("OPEN_FILE_SUCCESS", {
             type: "OPEN_FILE_SUCCESS",
             payload: filePath,
+          });
+        } else {
+          senderWebContents.send("OPEN_FILE_CANCELLED", {
+            type: "OPEN_FILE_CANCELLED",
           });
         }
       })
@@ -82,7 +85,7 @@ function createWindow() {
     if (process.platform !== "darwin") app.quit();
   });
 
-  if (dotenv.parsed.BREADITOR_DEV_MODE) {
+  if (dotenv.parsed?.BREADITOR_DEV_MODE) {
     const devtoolsWindow = new BrowserWindow();
     mainWindow.webContents.setDevToolsWebContents(devtoolsWindow.webContents);
     mainWindow.webContents.openDevTools({ mode: "detach" });

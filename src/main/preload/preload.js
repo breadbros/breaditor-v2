@@ -34,3 +34,9 @@ ipcRenderer.on('OPEN_FILE_FAILURE', (e, msg) => {
     detail: { filePath: msg.payload }
   }));
 });
+
+ipcRenderer.on('OPEN_FILE_CANCELLED', () => {
+  document.getElementById('react-root').dispatchEvent(
+    new CustomEvent('OPEN_FILE_CANCELLED'),
+  );
+});

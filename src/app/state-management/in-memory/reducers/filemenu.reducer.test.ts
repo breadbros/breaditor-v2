@@ -54,3 +54,10 @@ test('unrelated actions preserve state without invoking native APIs', () => {
   expect(openFileDialog).not.toHaveBeenCalled();
   expect(window.alert).not.toHaveBeenCalled();
 });
+
+test('canceling the dialog clears loading without displaying an error', () => {
+  fileMenuReducer(initialFileMenuState, {type: 'DOC_OPEN_FILE_CANCELLED', thunkDispatch});
+  expect(thunkDispatch).toHaveBeenCalledWith({type: 'SET_IS_LOADING', newState: false});
+  expect(window.alert).not.toHaveBeenCalled();
+  expect(openFileDialog).not.toHaveBeenCalled();
+});

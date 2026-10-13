@@ -20,10 +20,16 @@ interface OpenFileCancelledAction {
   error: any; //path?
 }
 
+interface CancelDocumentAction {
+  type: 'DOC_OPEN_FILE_CANCELLED';
+  thunkDispatch: React.Dispatch<any>;
+}
+
 type FileMenuAction =
   | OpenDocumentAction
   | OpenFileFoundAction
-  | OpenFileCancelledAction;
+  | OpenFileCancelledAction
+  | CancelDocumentAction;
 
 interface FileMenuState {}
 const initialFileMenuState: FileMenuState = {};
@@ -31,6 +37,10 @@ const initialFileMenuState: FileMenuState = {};
 const fileMenuReducer: Reducer<FileMenuState, FileMenuAction> = createReducer(
   initialFileMenuState,
   {
+    DOC_OPEN_FILE_CANCELLED: (state, action: CancelDocumentAction) => {
+      action.thunkDispatch({type: 'SET_IS_LOADING', newState: false});
+      return {...state};
+    },
     DOC_OPEN_FILE_FOUND: (state, action: OpenFileFoundAction) => {
       action.thunkDispatch({type: 'SET_IS_LOADING', newState: false});
       alert("now load: " +  action.filePath);

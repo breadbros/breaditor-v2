@@ -350,6 +350,10 @@ function init() {
     });
   });
 
+  domNode.addEventListener('OPEN_FILE_CANCELLED', () => {
+    doAppDispatch({type: 'DOC_OPEN_FILE_CANCELLED', thunkDispatch: doAppDispatch});
+  });
+
   docLoaded = true;
   _CachedValidPanelState = null;
   _CachedValidDocumentState = null;

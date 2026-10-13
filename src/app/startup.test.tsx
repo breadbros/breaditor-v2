@@ -1,6 +1,7 @@
 /** @jest-environment jsdom */
 import {act, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import {init} from './ReactDockableApp';
 import {_TEST_reset, activeDocument, getDocuments} from './breaditor/DocumentManager';
 
@@ -31,4 +32,22 @@ test('startup mounts the seeded documents and active-document panels without ear
   expect(workspace).toHaveTextContent('Map D Document');
   expect(workspace).toHaveTextContent('Layers Panel');
   expect(warning).not.toHaveBeenCalled();
+});
+
+test('canceling a file dialog clears the loading shield without an error alert', async () => {
+  const openFileDialog = jest.fn();
+  (window as any).electronAPI = {openFileDialog};
+  const alert = jest.spyOn(window, 'alert').mockImplementation(() => {});
+  act(() => { root = init(); });
+  const user = userEvent.setup();
+  await user.click(screen.getByText('File'));
+  await user.click(await screen.findByText('Open Document'));
+  expect(openFileDialog).toHaveBeenCalledWith({properties: ['openFile']});
+  expect(document.getElementById('click-shield')).not.toBeNull();
+
+  act(() => {
+    document.getElementById('react-root')!.dispatchEvent(new CustomEvent('OPEN_FILE_CANCELLED'));
+  });
+  expect(document.getElementById('click-shield')).toBeNull();
+  expect(alert).not.toHaveBeenCalled();
 });
