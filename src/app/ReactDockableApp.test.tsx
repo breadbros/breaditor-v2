@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import {
@@ -12,8 +12,11 @@ import {
   createPanelStateForWidgetInfoList,
 } from './ReactDockableApp';
 
-// import {addDocument} from './breaditor/DocumentManager';
-// import {mapMaker} from './breaditor/documents/MapDocument';
+import {addDocument, _TEST_reset} from './breaditor/DocumentManager';
+import {mapMaker} from './breaditor/documents/MapDocument';
+
+beforeEach(() => _TEST_reset());
+afterEach(() => _TEST_reset());
 
 describe('App', () => {
   it('renders the component correctly', () => {
@@ -35,32 +38,39 @@ describe('App', () => {
 
     expect(menuBar).not.toHaveTextContent('Panels on');
 
-    userEvent.click(getByText('Test'));
-    await waitFor(() => screen.findByTestId('breaditor-menubar-contextmenu'));
+    await userEvent.click(getByText('Test'));
+    await screen.findByTestId('breaditor-menubar-contextmenu');
 
     expect(menuBar).toHaveTextContent('Panels on');
     const openMenu = screen.getByTestId('breaditor-menubar-contextmenu');
     expect(openMenu).toHaveTextContent('Panels on');
   });
 
-  // it('Toggle the panels on', async () => {
-  //   const {getByText} = render(<App />);
-  //   addDocument(mapMaker('Map A'));
+  it('toggles panels off and on while restoring the document workspace', async () => {
+    const user = userEvent.setup();
+    addDocument(mapMaker('Map A'));
+    render(<App />);
+    const workspace = screen.getByTestId('breaditor-browser-workspacearea');
+    expect(workspace).not.toHaveTextContent('Layers Panel');
 
-  //   expect(screen.queryByText('Layers Panel')).toBeNull();
+    async function toggle(label: string) {
+      await user.click(screen.getByText('Test'));
+      await user.click(await screen.findByText(label));
+    }
 
-  //   userEvent.click(getByText('Test'));
-  //   // fireEvent.click(getByText('Test'));
-  //   //console.log(fireEvent);
+    await toggle('Panels on');
+    expect(workspace).toHaveTextContent('Layers Panel');
+    expect(workspace).toHaveTextContent('Map A Document');
 
-  //   await waitFor(() => screen.findByTestId('breaditor-menubar-contextmenu'));
-  //   const openMenu = screen.getByTestId('breaditor-menubar-contextmenu');
-  //   expect(openMenu).toHaveTextContent('Panels on');
+    await toggle('Panels off');
+    expect(workspace).not.toHaveTextContent('Layers Panel');
+    expect(workspace).not.toHaveTextContent('Map A Document');
 
-  //   userEvent.click(getByText('Panels on'));
-
-  //   await waitFor(() => screen.findByText('Layers Panel')); // this should fail, needs to be updated to new panel that exists
-  // });
+    await toggle('Panels on');
+    expect(workspace).toHaveTextContent('Layers Panel');
+    expect(workspace).toHaveTextContent('Map A Document');
+    await toggle('Panels off');
+  });
 });
 
 test('createPanelStateForDocumentInfoList', () => {
