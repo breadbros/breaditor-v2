@@ -13,12 +13,10 @@ import {getMenu} from './breaditor/menu';
 import {
   activeDocument,
   addDocument,
-  getDocuments,
   getWidgetInfo,
   getDocumentInfo,
   createInitialDocumentInfoForLoadedDocuments,
   createInitialPanelInfoForDocumentType,
-  focusDocument,
 } from './breaditor/DocumentManager';
 
 import {mapMaker} from './breaditor/documents/MapDocument';
