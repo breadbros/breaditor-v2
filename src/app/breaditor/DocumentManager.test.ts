@@ -164,6 +164,24 @@ test('Deleting the last document will result in a null active document', () => {
   expect(activeDocument()).toBeNull();
 });
 
+test.each([
+  [0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 1],
+])('removing inactive document %i preserves active document %i', (removedIndex, activeIndex) => {
+  const docs = ['A', 'B', 'C'].map(mapMaker);
+  docs.forEach(addDocument);
+  focusDocument(docs[activeIndex].info.id);
+  const setPanels = jest.fn();
+  const setDocuments = jest.fn();
+  _TEST_setStateHandlers(setPanels, setDocuments);
+
+  removeDocument(docs[removedIndex]);
+
+  expect(activeDocument()).toBe(docs[activeIndex]);
+  expect(getDocuments()).toEqual(docs.filter((_, index) => index !== removedIndex));
+  expect(setPanels).not.toHaveBeenCalled();
+  expect(setDocuments).not.toHaveBeenCalled();
+});
+
 test('verify initial panel info for maps', () => {
   const mapPanels = createInitialPanelInfoForDocumentType('MAP');
 

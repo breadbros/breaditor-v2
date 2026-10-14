@@ -1,0 +1,73 @@
+.panel {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  text-align: left;
+  user-select: text;
+}
+
+.properties {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.properties th,
+.properties td {
+  padding: 8px;
+  border-bottom: 1px solid var(--borderColor);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.properties th:first-child {
+  width: 30%;
+}
+
+.properties thead {
+  background: var(--secondary);
+}
+
+.properties tbody th {
+  font-weight: normal;
+  color: var(--textAlpha);
+}
+
+.properties pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font: inherit;
+  font-family: monospace;
+}
+
+.imageValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.imageValue pre {
+  min-width: 0;
+}
+
+.imageValue button {
+  padding: 4px 8px;
+  border: 1px solid var(--borderColor);
+  border-radius: 3px;
+  color: var(--text);
+  background: var(--primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.imageValue button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.imageValue button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}

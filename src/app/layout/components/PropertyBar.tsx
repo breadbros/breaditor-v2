@@ -1,26 +1,42 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {ReactNode} from 'react';
 import {InputScalar} from '../../ui/widgets/InputScalar';
 import {InputButton} from '../../ui/widgets/InputButton';
 import {TOOLS} from '../../breaditor/tools/constants';
+import {DocumentControlsContext} from './DocumentControls';
 
 // @ts-ignore
 import css from './PropertyBar.module.css';
 
 import * as icons from '../../ui/icons';
 
+// interface BrushToolState {}
+
+interface PropertyBarState {
+  activeTool: number;
+  brush?: any; //BrushToolState;
+}
+
 interface PropertyBarProps {
   dispatch: ({}: any) => void;
-  state: {};
-  tool: {};
-  view: {};
+  state: PropertyBarState;
+  view: any;
 }
 
 const PropertyBar: React.FC<PropertyBarProps> = (props) => {
+  const controls = useContext(DocumentControlsContext);
+
+  if (controls && controls.documentId !== null) {
+    return <div ref={controls.setElement} className={css.container} role="toolbar" aria-label="Sprite controls" />;
+  }
+
   function getProperties() {
-    switch (props.tool) {
+    const {dispatch, state, view} = props;
+    const {activeTool, brush} = state;
+
+    switch (activeTool) {
       case TOOLS.Brush:
-        return <BrushProperties {...props} />;
+        return <BrushProperties {...{dispatch}} state={brush} {...{view}} />;
       /*        
       case TOOLS.Zoom:
         return <ZoomProperties {...props} />;
@@ -30,12 +46,13 @@ const PropertyBar: React.FC<PropertyBarProps> = (props) => {
         return <EyedropperProperties {...props} />;
 */
       default:
+        debugger;
         alert('NO TOOL');
         return null;
     }
   }
 
-  return <div className={css.container}>{getProperties()}</div>;
+  return <div className={css.container} role="toolbar" aria-label="Tool properties">{getProperties()}</div>;
 };
 
 interface PropertyGroupProps {
@@ -77,7 +94,7 @@ interface BrushPropertiesProps {
 }
 const BrushProperties: React.FC<BrushPropertiesProps> = (props) => {
   let brush: BrushToolProps;
-  if (props.state.brush) {
+  if (props.state && props.state.brush) {
     brush = props.state.brush;
   } else {
     brush = {

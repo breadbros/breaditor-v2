@@ -1,4 +1,4 @@
-import React, {useState /*, useReducer*/} from 'react';
+import React, {useState, useReducer, useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
 import {PanelState} from 'react-dockable-ts';
 
@@ -6,8 +6,10 @@ import {WindowProxy} from './layout/components/WindowProxy';
 import {MenuBar} from './layout/components/MenuBar';
 import {ToolBar} from './layout/components/ToolBar';
 import {PropertyBar} from './layout/components/PropertyBar';
+import {DocumentControlsProvider} from './layout/components/DocumentControls';
 import {StatusBar} from './layout/components/StatusBar';
 import {WorkspaceArea} from './layout/components/WorkspaceArea';
+import {DevelopmentUpdateToast} from './ui/DevelopmentUpdateToast';
 
 import {getMenu} from './breaditor/menu';
 import {
@@ -22,7 +24,12 @@ import {
 import {mapMaker} from './breaditor/documents/MapDocument';
 import {textMaker} from './breaditor/documents/TextDocument';
 import {spriteMaker} from './breaditor/documents/SpriteDocument';
-import {TOOLS} from './breaditor/tools/constants';
+// import {TOOLS} from './breaditor/tools/constants';
+
+import {
+  breaditorAppReducer,
+  getInitialState,
+} from './state-management/in-memory/app_reducer';
 
 import {DocumentInfo, WidgetInfo} from '../../types/global';
 
@@ -171,8 +178,6 @@ function setOnOrOff(onOrOff: boolean) {
     newDocState = [];
   }
 
-  console.log(newPanelState);
-
   updateDocumentManagerState(newDocState, newPanelState);
 }
 
@@ -180,8 +185,9 @@ function updateDocumentManagerState(
   documentState: PanelState[],
   panelState: PanelState[],
 ) {
-  if (!_setPanelState) {
-    debugger;
+  if (_setPanelState === undefined) {
+    console.warn("_setPanelState not yet initialized; was the app mounted correctly before calling for a focused document?");
+    return;
   }
   _setPanelState(panelState);
   _setDocPanelState(documentState);
@@ -191,7 +197,46 @@ function getDocumentState() {
   return _DocumentState;
 }
 
+const ModalClickShield = () => {
+  return (
+    <div
+      id="click-shield"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(1, 0, 0, 0.5)',
+        zIndex: 1000,
+      }}
+    />
+  );
+};
+
+let appDispatch: any = undefined;
+
+function doAppDispatch(data:any) {
+
+  if(appDispatch === undefined) {
+    console.error('appDispatch was not set');
+  } else {
+    appDispatch(data);
+  }
+}
+
 function App() {
+  const [state, dispatch] = useReducer(breaditorAppReducer, getInitialState());
+  appDispatch = dispatch;
+
+  useEffect(() => {
+    if (state.app.isPanelsOn !== undefined) setOnOrOff(state.app.isPanelsOn);
+  }, [state.app.isPanelsOn]);
+
+  if (dispatch == undefined) {
+    console.info(state);
+  }
+
   const [panelState, setPanelState] = useState<PanelState[]>(
     createInitialPanelState(),
   );
@@ -205,8 +250,10 @@ function App() {
 
   _PanelState = panelState;
   _DocumentState = documentState;
+  const focusedDocument = activeDocument();
 
   return (
+    <DocumentControlsProvider documentId={focusedDocument?.info.type === 'SPRITE' ? focusedDocument.info.id : null}>
     <WindowProxy
       events={
         {
@@ -215,19 +262,24 @@ function App() {
         }
       }
     >
+      {state.app.isLoading && (
+        <>
+          <ModalClickShield />
+        </>
+      )}
+
       <div
         className={css.App}
         style={{
           display: 'flex',
           flexDirection: 'column',
+          height: '100vh',
           // Dark Theme
         }}
         data-testid="breaditor-browser-app"
       >
         <MenuBar
-          dispatch={(foo: any) => {
-            console.log('I am a fake dispatch in ReactDockableApp.  Yay.', foo);
-          }}
+          dispatch={dispatch}
           widgets={getCurrentPanels()}
           hidden={
             {
@@ -236,31 +288,20 @@ function App() {
           }
           getMenu={getMenu}
         />
-        <PropertyBar
-          state={{}}
-          dispatch={(bar) => {
-            console.log('Another fake dispatch that was passed: ', bar);
-          }}
-          tool={TOOLS.Brush}
-          view={{}}
-        />
+        <PropertyBar state={state.tools} dispatch={dispatch} view={{}} />
         <div
           style={{
-            flexGrow: 1,
+            flex: 1,
+            minHeight: 0,
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'row',
-            height: 'calc(100vh - 117px)',
           }}
         >
-          <ToolBar
-            selected={{}}
-            dispatch={(foo) => {
-              console.log('A fake dispatch that was passed: ', foo);
-            }}
-          />
+          <ToolBar selected={{}} dispatch={dispatch} />
           <WorkspaceArea
             key={'main_workspace'}
+            dispatch={dispatch}
             style={{
               flexGrow: 1,
               // maxWidth: `calc(100% - 47px)`,
@@ -278,14 +319,19 @@ function App() {
             themeClass={'nullTheme'}
           />
         </div>
-        <StatusBar initialStatuses={['Welcome to the Breaditor', '❤', '🦵']} />
+        <StatusBar
+          initialStatuses={['Welcome to the Breaditor', '❤', '🦵']}
+          dispatch={dispatch}
+        />
+        <DevelopmentUpdateToast />
       </div>
     </WindowProxy>
+    </DocumentControlsProvider>
   );
 }
 
 function init() {
-  const domNode = document.getElementById('react-root') as Element;
+  const domNode = document.getElementById('react-root') as HTMLElement;
 
   const root = createRoot(domNode);
 
@@ -294,7 +340,32 @@ function init() {
   addDocument(spriteMaker('Sprite C'));
   addDocument(mapMaker('Map D'));
 
+  /// MAIN<->RENDERER handlers
+  domNode.addEventListener('OPEN_FILE_SUCCESS', (event:any) => {
+    doAppDispatch({
+      type: 'DOC_OPEN_FILE_FOUND',
+      thunkDispatch: doAppDispatch,
+      filePath: event.detail.filePath
+    });
+  });
+
+  domNode.addEventListener('OPEN_FILE_FAILURE', (event:any) => {
+    doAppDispatch({
+      type: 'DOC_OPEN_FILE_FAILURE',
+      thunkDispatch: doAppDispatch,
+      error: 'failed to load' + event.detail.filePath
+    });
+  });
+
+  domNode.addEventListener('OPEN_FILE_CANCELLED', () => {
+    doAppDispatch({type: 'DOC_OPEN_FILE_CANCELLED', thunkDispatch: doAppDispatch});
+  });
+
+  docLoaded = true;
+  _CachedValidPanelState = null;
+  _CachedValidDocumentState = null;
   root.render(<App />);
+  return root;
 }
 
 export {

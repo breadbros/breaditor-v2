@@ -151,12 +151,15 @@ function _removeDocumentById(id: string) {
 
   const newActiveObj = // store now while the index makes sense, make active after delete
     indexToBecomeActive === null ? null : _docs[indexToBecomeActive];
+  const removedActiveDocument = _docs[indexToRemove] === _activeDocument;
 
   const oldSize = _docs.length;
   _docs = _docs.filter((obj) => obj.info.id !== id);
   if (oldSize === _docs.length) {
     throw new Error(`Document (${id}) was not in the active document list`);
   }
+
+  if (!removedActiveDocument) return;
 
   if (newActiveObj === null) {
     _activeDocument = null;
@@ -228,6 +231,7 @@ export {
   createInitialPanelInfoForDocumentType,
   createInitialDocumentInfoForLoadedDocuments,
   getDocuments,
+  getDocumentById,
   addDocument,
   removeDocument,
   getWidgetInfo,

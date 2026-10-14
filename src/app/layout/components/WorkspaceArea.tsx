@@ -7,11 +7,17 @@ import React, {
 } from 'react';
 import {Dockable, PanelState} from 'react-dockable-ts';
 import {DocumentInfo, WidgetInfo} from '../../../../types/global';
-import {Widget} from './Widget';
+import {PanelView} from './PanelView';
+import {DocumentView} from './DocumentView';
+
+
+import {
+  focusDocument,
+} from '../../breaditor/DocumentManager';
 
 // @ts-ignore
 import css from './WorkspaceArea.module.css';
-import {dispatch} from '../../state-management/in-memory/dispatch';
+//import {dispatch} from '../../state-management/in-memory/dispatch';
 
 interface WorkspaceAreaProps {
   style: any;
@@ -23,6 +29,8 @@ interface WorkspaceAreaProps {
   documents: DocumentInfo[];
   panels: WidgetInfo[];
   themeClass: string;
+
+  dispatch: ({}: any) => void;
 }
 const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
   const [layoutState, setLayoutState] = useState<PanelState[]>([
@@ -74,13 +82,14 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
               props.setDocumentState(state);
             }}
             onActive={(id) => {
-              dispatch({type: 'DOC_FOCUS', document_id: id});
+              // dispatch({type: 'DOC_FOCUS', document_id: id});
+              focusDocument(id);
             }}
             spacing={3}
             themeClass={props.themeClass}
           >
             {props.documents.map((doc) => {
-              return <Widget key={doc.id} id={doc.id} title={doc.title} />;
+              return <DocumentView key={doc.id} id={doc.id} title={doc.title} />;
             })}
           </Dockable>
         </div>
@@ -105,7 +114,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
           >
             {props.panels.map((panel) => {
               return (
-                <Widget id={panel.id} key={panel.id} title={panel.title} />
+                <PanelView id={panel.id} key={panel.id} title={panel.title} />
               );
             })}
           </Dockable>
