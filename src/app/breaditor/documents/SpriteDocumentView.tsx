@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SpritePlayer, PlayerSnapshot} from 'crustacean-sprite-lib';
-import {WebGLSpriteRenderer, WebGLSprite, WebGLLoadOptions} from 'crustacean-sprite-lib/webgl';
+import {WebGLSpriteRenderer, WebGLSprite} from 'crustacean-sprite-lib/webgl';
 import type {SpriteDocument} from './SpriteDocument';
-import {resolveSpriteUrl} from './spriteSource';
+import {spriteLoadRequest} from './spriteSource';
 
 // @ts-ignore
 import css from './SpriteDocumentView.module.css';
@@ -135,18 +135,7 @@ export function SpriteDocumentView({document: sprite}: {document: SpriteDocument
       const gl = canvas.getContext('webgl2', {alpha: true, premultipliedAlpha: true});
       if (!gl) throw new Error('WebGL 2 is unavailable. Enable hardware acceleration and retry.');
       renderer = new WebGLSpriteRenderer(gl);
-      const url = resolveSpriteUrl(sprite.filepath, document.baseURI);
-      const options: WebGLLoadOptions = {signal: abort.signal};
-      if (sprite.crustacean_json !== null) {
-        const json = typeof sprite.crustacean_json === 'string'
-          ? sprite.crustacean_json : JSON.stringify(sprite.crustacean_json);
-        options.fetch = (input, init) => String(input) === url
-          ? Promise.resolve(new Response(json)) : fetch(input, init);
-      }
-      if (sprite.crustacean_image) {
-        options.resolveImage = (_reference, definitionUrl) =>
-          resolveSpriteUrl(sprite.crustacean_image, definitionUrl);
-      }
+      const {url, options} = spriteLoadRequest(sprite, document.baseURI, abort.signal);
       const loaded = await renderer.loadSprite(url, options);
       if (abort.signal.aborted) {
         loaded.dispose();

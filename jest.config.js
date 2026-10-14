@@ -15,7 +15,7 @@ module.exports = {
   },
   moduleNameMapper: {
     "^crustacean-sprite-lib$": "<rootDir>/node_modules/crustacean-sprite-lib/dist/mod.js",
-    "^crustacean-sprite-lib/webgl$": "<rootDir>/node_modules/crustacean-sprite-lib/dist/webgl.js",
+    "^crustacean-sprite-lib/(webgl|load)$": "<rootDir>/node_modules/crustacean-sprite-lib/dist/$1.js",
     "^shared/(.*)$": "<rootDir>/src/shared/$1",
     "^app/(.*)$": "<rootDir>/src/app/$1",
     "^main/(.*)$": "<rootDir>/src/main/$1",

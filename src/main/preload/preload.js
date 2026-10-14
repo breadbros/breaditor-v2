@@ -2,8 +2,10 @@
 const {
   contextBridge,
   ipcRenderer,
+  shell,
   OpenDialogOptions
 } = require('electron');
+const {fileURLToPath} = require('url');
 
 contextBridge.exposeInMainWorld('electronAPI', {
   appClose: () => {
@@ -17,6 +19,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   openFileDialog: (options /* OpenDialogOptions */) => {
     ipcRenderer.send('open-file-dialog', options);
+  },
+  showImageInFolder: async (imageUrl) => {
+    shell.showItemInFolder(fileURLToPath(imageUrl));
   },
   onDevelopmentUpdate: (callback) => {
     const listener = (_event, available, restartRequired) => callback(available, restartRequired);

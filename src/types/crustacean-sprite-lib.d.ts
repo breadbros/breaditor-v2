@@ -3,3 +3,7 @@
 declare module 'crustacean-sprite-lib/webgl' {
   export * from 'crustacean-sprite-lib/dist/webgl';
 }
+
+declare module 'crustacean-sprite-lib/load' {
+  export * from 'crustacean-sprite-lib/dist/load';
+}

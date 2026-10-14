@@ -3,15 +3,6 @@ import React, {useEffect, useState} from 'react';
 // @ts-ignore
 import css from './DevelopmentUpdateToast.module.css';
 
-declare global {
-  interface Window {
-    electronAPI?: {
-      onDevelopmentUpdate?: (callback: (available: boolean, restartRequired?: boolean) => void) => () => void;
-      reloadDevelopment?: () => void;
-    };
-  }
-}
-
 export function DevelopmentUpdateToast() {
   const [update, setUpdate] = useState({available: false, restartRequired: false});
 

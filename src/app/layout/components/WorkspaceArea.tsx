@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import {Dockable, PanelState} from 'react-dockable-ts';
 import {DocumentInfo, WidgetInfo} from '../../../../types/global';
-import {Widget} from './Widget';
+import {PanelView} from './PanelView';
 import {DocumentView} from './DocumentView';
 
 
@@ -114,7 +114,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
           >
             {props.panels.map((panel) => {
               return (
-                <Widget id={panel.id} key={panel.id} title={panel.title} />
+                <PanelView id={panel.id} key={panel.id} title={panel.title} />
               );
             })}
           </Dockable>
