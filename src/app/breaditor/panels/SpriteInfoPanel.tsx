@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {loadSpriteDefinition, LoadedDefinition} from 'crustacean-sprite-lib/load';
 import type {SpriteDocument} from '../documents/SpriteDocument';
 import {spriteLoadRequest} from '../documents/spriteSource';
+import {useSpriteFileChanges} from '../documents/useSpriteFileChanges';
 
 // @ts-ignore
 import css from './SpriteInfoPanel.module.css';
@@ -10,6 +11,7 @@ export function SpriteInfoPanel({document: sprite}: {document: SpriteDocument}) 
   const [loaded, setLoaded] = useState<LoadedDefinition | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [folderError, setFolderError] = useState<string | null>(null);
+  const change = useSpriteFileChanges(sprite);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -27,7 +29,7 @@ export function SpriteInfoPanel({document: sprite}: {document: SpriteDocument}) 
     }
     void load();
     return () => abort.abort();
-  }, [sprite.filepath, sprite.crustacean_json, sprite.crustacean_image]);
+  }, [sprite.filepath, sprite.crustacean_json, sprite.crustacean_image, change.revision]);
 
   async function openImageFolder() {
     if (!loaded || !window.electronAPI?.showImageInFolder) return;

@@ -44,7 +44,7 @@ test('shows every property with a separate row for each complete animation', asy
   }
   expect(within(table).queryByRole('rowheader', {name: 'animations'})).not.toBeInTheDocument();
   expect(loadDefinition).toHaveBeenCalledWith('http://localhost/test.json', {
-    signal: expect.any(AbortSignal),
+    signal: expect.any(AbortSignal), fetch: expect.any(Function),
   });
 });
 
@@ -107,4 +107,21 @@ test('reloads inline definitions and image overrides without changing the filepa
   await waitFor(() => expect(loadDefinition).toHaveBeenCalledTimes(3));
   expect(loadDefinition.mock.calls[2][1].resolveImage('atlas.png', 'http://localhost/same.json'))
     .toBe('http://localhost/override.png');
+});
+
+test('refreshes properties on a JSON edit and stops watching on unmount', async () => {
+  let changed!: (kind: 'json' | 'image') => void;
+  const stop = jest.fn();
+  window.electronAPI!.watchSpriteFiles = jest.fn((_sources, callback) => { changed = callback; return stop; });
+  const {unmount} = render(<SpriteInfoPanel document={spriteMaker('Watched', 'file:///D:/sprite.json')} />);
+  await screen.findByRole('table');
+  expect(window.electronAPI!.watchSpriteFiles).toHaveBeenCalledWith({json: 'file:///D:/sprite.json', image: undefined}, expect.any(Function));
+  loadDefinition.mockResolvedValue({definition: {...definition, image: 'updated.png'}, imageUrl: 'file:///D:/updated.png'});
+  act(() => changed('json'));
+  expect(await screen.findByText('updated.png')).toBeInTheDocument();
+  expect(screen.queryByText('atlas.png')).not.toBeInTheDocument();
+  unmount();
+  expect(stop).toHaveBeenCalledTimes(1);
+  act(() => changed('json'));
+  expect(loadDefinition).toHaveBeenCalledTimes(2);
 });

@@ -6,6 +6,7 @@ const {
   OpenDialogOptions
 } = require('electron');
 const {fileURLToPath} = require('url');
+const {watchSpriteFiles} = require('./watchSpriteFiles');
 
 contextBridge.exposeInMainWorld('electronAPI', {
   appClose: () => {
@@ -23,6 +24,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   showImageInFolder: async (imageUrl) => {
     shell.showItemInFolder(fileURLToPath(imageUrl));
   },
+  watchSpriteFiles,
   onDevelopmentUpdate: (callback) => {
     const listener = (_event, available, restartRequired) => callback(available, restartRequired);
     ipcRenderer.on('dev-update', listener);

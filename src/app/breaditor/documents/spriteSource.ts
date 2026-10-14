@@ -3,12 +3,16 @@ import type {SpriteDocument} from './SpriteDocument';
 
 export function spriteLoadRequest(sprite: SpriteDocument, base: string, signal: AbortSignal) {
   const url = resolveSpriteUrl(sprite.filepath, base);
-  const options: LoadOptions = {signal};
+  const options: LoadOptions = {
+    signal,
+    fetch: (input, init) => fetch(input, {...init, cache: 'no-store'}),
+  };
   if (sprite.crustacean_json !== null) {
     const json = typeof sprite.crustacean_json === 'string'
       ? sprite.crustacean_json : JSON.stringify(sprite.crustacean_json);
+    const fetchFile = options.fetch!;
     options.fetch = (input, init) => String(input) === url
-      ? Promise.resolve(new Response(json)) : fetch(input, init);
+      ? Promise.resolve(new Response(json)) : fetchFile(input, init);
   }
   if (sprite.crustacean_image) {
     options.resolveImage = (_reference, definitionUrl) =>

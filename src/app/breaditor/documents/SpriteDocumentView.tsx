@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {SpritePlayer, PlayerSnapshot} from 'crustacean-sprite-lib';
 import {WebGLSpriteRenderer, WebGLSprite} from 'crustacean-sprite-lib/webgl';
 import type {SpriteDocument} from './SpriteDocument';
-import {spriteLoadRequest} from './spriteSource';
+import {spriteLiveLoadRequest, SpriteSourceCache} from './spriteLiveSource';
+import {useSpriteFileChanges} from './useSpriteFileChanges';
 
 // @ts-ignore
 import css from './SpriteDocumentView.module.css';
@@ -24,6 +25,10 @@ export function SpriteDocumentView({document: sprite}: {document: SpriteDocument
   const [error, setError] = useState<string | null>(null);
   const [restoring, setRestoring] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const sourceCache = useMemo<SpriteSourceCache>(() => ({}), [sprite.filepath, sprite.crustacean_json, sprite.crustacean_image]);
+  const [imageSource, setImageSource] = useState<{cache: SpriteSourceCache; url: string} | null>(null);
+  const change = useSpriteFileChanges(sprite, imageSource?.cache === sourceCache ? imageSource.url : undefined);
+  const selectionRef = useRef<{cache: SpriteSourceCache; key: string; paused: boolean} | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -135,15 +140,20 @@ export function SpriteDocumentView({document: sprite}: {document: SpriteDocument
       const gl = canvas.getContext('webgl2', {alpha: true, premultipliedAlpha: true});
       if (!gl) throw new Error('WebGL 2 is unavailable. Enable hardware acceleration and retry.');
       renderer = new WebGLSpriteRenderer(gl);
-      const {url, options} = spriteLoadRequest(sprite, document.baseURI, abort.signal);
+      const {url, options} = spriteLiveLoadRequest(sprite, document.baseURI, abort.signal,
+        sourceCache, change.kind === 'image', imageUrl => setImageSource({cache: sourceCache, url: imageUrl}));
       const loaded = await renderer.loadSprite(url, options);
       if (abort.signal.aborted) {
         loaded.dispose();
         return;
       }
       asset = loaded;
+      setImageSource({cache: sourceCache, url: loaded.imageUrl});
       const keys = Object.keys(asset.definition.animations);
-      const player = new SpritePlayer(asset.definition, {animation: sprite.animation ?? keys[0]});
+      const selection = selectionRef.current?.cache === sourceCache ? selectionRef.current : null;
+      const preferred = selection?.key ?? sprite.animation;
+      const player = new SpritePlayer(asset.definition, {animation: preferred && keys.includes(preferred) ? preferred : keys[0]});
+      if (selection?.paused) player.pause();
       previewRef.current = {player, resetClock, draw};
       setAnimations(keys);
       draw();
@@ -152,6 +162,8 @@ export function SpriteDocumentView({document: sprite}: {document: SpriteDocument
     void load().catch(fail);
 
     return () => {
+      const snapshot = previewRef.current?.player.snapshot();
+      if (snapshot) selectionRef.current = {cache: sourceCache, key: snapshot.key, paused: snapshot.status === 'paused'};
       abort.abort();
       if (request !== undefined) cancelAnimationFrame(request);
       observer.disconnect();
@@ -163,7 +175,7 @@ export function SpriteDocumentView({document: sprite}: {document: SpriteDocument
       asset?.dispose();
       renderer?.dispose();
     };
-  }, [sprite.filepath, sprite.crustacean_json, sprite.crustacean_image, sprite.animation, attempt]);
+  }, [sourceCache, sprite.animation, attempt, change.revision]);
 
   function changePlayer(action: (player: SpritePlayer) => void) {
     const preview = previewRef.current;
