@@ -4,6 +4,7 @@ import {WebGLSpriteRenderer, WebGLSprite} from 'crustacean-sprite-lib/webgl';
 import type {SpriteDocument} from './SpriteDocument';
 import {spriteLiveLoadRequest, SpriteSourceCache} from './spriteLiveSource';
 import {useSpriteFileChanges} from './useSpriteFileChanges';
+import {DocumentControls} from '../../layout/components/DocumentControls';
 
 // @ts-ignore
 import css from './SpriteDocumentView.module.css';
@@ -187,6 +188,7 @@ export function SpriteDocumentView({document: sprite}: {document: SpriteDocument
 
   return (
     <section id={sprite.info.id} className={css.container} aria-label={`${sprite.info.title} sprite preview`}>
+      <DocumentControls documentId={sprite.info.id}>
       <div className={css.controls}>
         <label>
           Animation
@@ -212,6 +214,7 @@ export function SpriteDocumentView({document: sprite}: {document: SpriteDocument
           </select>
         </label>
       </div>
+      </DocumentControls>
       <div ref={viewportRef} className={css.viewport}>
         <canvas ref={canvasRef} className={css.canvas} aria-label={`${sprite.info.title} sprite`} />
         {error ? <div className={css.message} role="alert">

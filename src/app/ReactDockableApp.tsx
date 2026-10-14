@@ -6,6 +6,7 @@ import {WindowProxy} from './layout/components/WindowProxy';
 import {MenuBar} from './layout/components/MenuBar';
 import {ToolBar} from './layout/components/ToolBar';
 import {PropertyBar} from './layout/components/PropertyBar';
+import {DocumentControlsProvider} from './layout/components/DocumentControls';
 import {StatusBar} from './layout/components/StatusBar';
 import {WorkspaceArea} from './layout/components/WorkspaceArea';
 import {DevelopmentUpdateToast} from './ui/DevelopmentUpdateToast';
@@ -249,8 +250,10 @@ function App() {
 
   _PanelState = panelState;
   _DocumentState = documentState;
+  const focusedDocument = activeDocument();
 
   return (
+    <DocumentControlsProvider documentId={focusedDocument?.info.type === 'SPRITE' ? focusedDocument.info.id : null}>
     <WindowProxy
       events={
         {
@@ -270,6 +273,7 @@ function App() {
         style={{
           display: 'flex',
           flexDirection: 'column',
+          height: '100vh',
           // Dark Theme
         }}
         data-testid="breaditor-browser-app"
@@ -287,11 +291,11 @@ function App() {
         <PropertyBar state={state.tools} dispatch={dispatch} view={{}} />
         <div
           style={{
-            flexGrow: 1,
+            flex: 1,
+            minHeight: 0,
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'row',
-            height: 'calc(100vh - 117px)',
           }}
         >
           <ToolBar selected={{}} dispatch={dispatch} />
@@ -322,6 +326,7 @@ function App() {
         <DevelopmentUpdateToast />
       </div>
     </WindowProxy>
+    </DocumentControlsProvider>
   );
 }
 

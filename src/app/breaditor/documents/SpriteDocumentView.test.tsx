@@ -1,14 +1,24 @@
 /** @jest-environment jsdom */
 import React from 'react';
-import {act, render, screen, waitFor} from '@testing-library/react';
+import {act, render, screen, waitFor, within} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import {validateCrusty, SpritePlayer} from 'crustacean-sprite-lib';
 import {WebGLSpriteRenderer} from 'crustacean-sprite-lib/webgl';
 import {spriteMaker} from './SpriteDocument';
 import {SpriteDocumentView} from './SpriteDocumentView';
+import {DocumentControlsProvider} from '../../layout/components/DocumentControls';
+import {PropertyBar} from '../../layout/components/PropertyBar';
+import {TOOLS} from '../tools/constants';
 
 jest.mock('crustacean-sprite-lib/webgl', () => ({WebGLSpriteRenderer: jest.fn()}));
+
+function SpriteWithToolbar({document}: React.ComponentProps<typeof SpriteDocumentView>) {
+  return <DocumentControlsProvider documentId={document.info.id}>
+    <PropertyBar state={{activeTool: TOOLS.Brush}} dispatch={jest.fn()} view={{}} />
+    <SpriteDocumentView document={document} />
+  </DocumentControlsProvider>;
+}
 
 const definition = validateCrusty({
   version: 1, image: 'atlas.png', dims: [8, 8], hitbox: [0, 0, 8, 8],
@@ -68,7 +78,7 @@ afterEach(() => {
 
 async function mount() {
   const sprite = spriteMaker('Test sprite', 'sprite.json');
-  const result = render(<SpriteDocumentView document={sprite} />);
+  const result = render(<SpriteWithToolbar document={sprite} />);
   await waitFor(() => expect(screen.getByRole('button', {name: 'Pause'})).toBeEnabled());
   return {sprite, ...result};
 }
@@ -94,6 +104,12 @@ test('loads the document and draws its selected animation centered at device res
     x: 160, y: 100, originX: 4, originY: 4, scaleX: 4, scaleY: 4,
   });
   expect(screen.getByLabelText('Animation')).toHaveValue('walk');
+  const toolbar = screen.getByRole('toolbar', {name: 'Sprite controls'});
+  expect(within(toolbar).getByLabelText('Animation')).toHaveValue('walk');
+  expect(within(toolbar).getByRole('button', {name: 'Pause'})).toBeEnabled();
+  expect(within(toolbar).getByRole('button', {name: 'Restart animation'})).toBeEnabled();
+  expect(within(toolbar).getByLabelText('Zoom')).toHaveValue('4');
+  expect(within(screen.getByLabelText('Test sprite sprite preview')).queryByRole('combobox')).not.toBeInTheDocument();
   act(() => { resize(); });
   expect(canvas.width).toBe(640);
 });
@@ -167,10 +183,10 @@ test('aborts loads and releases textures, observers, and the animation loop on u
 test('disposes a late load after switching documents instead of drawing stale data', async () => {
   let finish: (asset: any) => void = () => {};
   renderer.loadSprite.mockReturnValueOnce(new Promise(resolve => { finish = resolve; }));
-  const {rerender} = render(<SpriteDocumentView document={spriteMaker('Old sprite', 'old.json')} />);
+  const {rerender} = render(<SpriteWithToolbar document={spriteMaker('Old sprite', 'old.json')} />);
   const oldSignal = renderer.loadSprite.mock.calls[0][1].signal;
   const oldAsset = {...asset, dispose: jest.fn()};
-  rerender(<SpriteDocumentView document={spriteMaker('New sprite', 'new.json')} />);
+  rerender(<SpriteWithToolbar document={spriteMaker('New sprite', 'new.json')} />);
   await waitFor(() => expect(renderer.draw).toHaveBeenCalled());
   await act(async () => { finish(oldAsset); });
   expect(oldSignal.aborted).toBe(true);
@@ -180,7 +196,7 @@ test('disposes a late load after switching documents instead of drawing stale da
 
 test('shows a recoverable error when WebGL is unavailable', async () => {
   getContext.mockReturnValueOnce(null);
-  render(<SpriteDocumentView document={spriteMaker('Unavailable', 'sprite.json')} />);
+  render(<SpriteWithToolbar document={spriteMaker('Unavailable', 'sprite.json')} />);
   expect(await screen.findByRole('alert')).toHaveTextContent('WebGL 2 is unavailable');
   await userEvent.click(screen.getByRole('button', {name: 'Retry'}));
   await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
@@ -189,7 +205,7 @@ test('shows a recoverable error when WebGL is unavailable', async () => {
 
 test('surfaces malformed or missing sprite assets without leaving an animation loop running', async () => {
   renderer.loadSprite.mockRejectedValueOnce(new Error('Invalid sprite definition'));
-  render(<SpriteDocumentView document={spriteMaker('Broken', 'sprite.json')} />);
+  render(<SpriteWithToolbar document={spriteMaker('Broken', 'sprite.json')} />);
   expect(await screen.findByRole('alert')).toHaveTextContent('Invalid sprite definition');
   expect(frames.size).toBe(0);
   expect(renderer.draw).not.toHaveBeenCalled();
@@ -246,7 +262,7 @@ test('watches a missing image as soon as its reference resolves and recovers whe
     options.resolveImage('missing.png', 'file:///D:/sprites/definition.json');
     throw new Error('Missing image');
   });
-  render(<SpriteDocumentView document={spriteMaker('Missing', 'file:///D:/sprites/definition.json')} />);
+  render(<SpriteWithToolbar document={spriteMaker('Missing', 'file:///D:/sprites/definition.json')} />);
   expect(await screen.findByRole('alert')).toHaveTextContent('Missing image');
   expect(watches[watches.length - 1].sources.image).toBe('file:///D:/sprites/missing.png');
   act(() => watches[watches.length - 1].onChange('image'));

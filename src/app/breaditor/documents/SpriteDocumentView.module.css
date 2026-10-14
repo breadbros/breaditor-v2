@@ -12,9 +12,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 12px;
-  padding: 10px;
-  background: var(--secondary);
-  border-bottom: 1px solid var(--borderColor);
+  padding: 0 8px;
+  min-width: 0;
 }
 
 .controls label {
@@ -28,7 +27,8 @@
 }
 
 .container button,
-.container select {
+.controls button,
+.controls select {
   padding: 5px 8px;
   font: inherit;
   color: var(--text);
@@ -37,18 +37,21 @@
   border-radius: 3px;
 }
 
-.container button {
+.container button,
+.controls button {
   cursor: pointer;
 }
 
 .container button:disabled,
-.container select:disabled {
+.controls button:disabled,
+.controls select:disabled {
   opacity: 0.5;
   cursor: default;
 }
 
 .container button:focus-visible,
-.container select:focus-visible {
+.controls button:focus-visible,
+.controls select:focus-visible {
   outline: 2px solid var(--text);
   outline-offset: 2px;
 }

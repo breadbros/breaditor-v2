@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {ReactNode} from 'react';
 import {InputScalar} from '../../ui/widgets/InputScalar';
 import {InputButton} from '../../ui/widgets/InputButton';
 import {TOOLS} from '../../breaditor/tools/constants';
+import {DocumentControlsContext} from './DocumentControls';
 
 // @ts-ignore
 import css from './PropertyBar.module.css';
@@ -23,6 +24,12 @@ interface PropertyBarProps {
 }
 
 const PropertyBar: React.FC<PropertyBarProps> = (props) => {
+  const controls = useContext(DocumentControlsContext);
+
+  if (controls && controls.documentId !== null) {
+    return <div ref={controls.setElement} className={css.container} role="toolbar" aria-label="Sprite controls" />;
+  }
+
   function getProperties() {
     const {dispatch, state, view} = props;
     const {activeTool, brush} = state;
@@ -45,7 +52,7 @@ const PropertyBar: React.FC<PropertyBarProps> = (props) => {
     }
   }
 
-  return <div className={css.container}>{getProperties()}</div>;
+  return <div className={css.container} role="toolbar" aria-label="Tool properties">{getProperties()}</div>;
 };
 
 interface PropertyGroupProps {

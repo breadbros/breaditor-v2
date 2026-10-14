@@ -9,3 +9,9 @@
   /* margin: 2px; */
   /* border-radius: var(--windowRadius); */
 }
+
+.container[role="toolbar"] {
+  min-height: 48px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
