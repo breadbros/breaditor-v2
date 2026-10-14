@@ -43,12 +43,16 @@ beforeEach(() => {
   jest.doMock('electron', () => ({
     BrowserWindow,
     app: {on: (name: string, callback: (...args: any[]) => any) => {appHandlers[name] = callback;}, quit},
-    ipcMain: {on: (name: string, callback: (...args: any[]) => any) => {mainHandlers[name] = callback;}},
+    ipcMain: {
+      on: (name: string, callback: (...args: any[]) => any) => {mainHandlers[name] = callback;},
+      handle: (name: string, callback: (...args: any[]) => any) => {mainHandlers[name] = callback;},
+    },
     session: {defaultSession: {webRequest: {onHeadersReceived: jest.fn()}}},
     dialog: {showOpenDialog},
     contextBridge: {exposeInMainWorld: (_name: string, value: typeof api) => {api = value;}},
     ipcRenderer: {
       send: (channel: string, options: any) => mainHandlers[channel]({sender}, options),
+      invoke: (channel: string, options: any) => mainHandlers[channel]({sender}, options),
       on: (name: string, callback: (...args: any[]) => any) => {rendererHandlers[name] = callback;},
     },
   }));

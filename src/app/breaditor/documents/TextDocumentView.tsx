@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import type {editor} from 'monaco-editor/esm/vs/editor/editor.api';
 import type {TextDocument} from './TextDocument';
 import {loadMonaco} from './loadMonaco';
-import {getTextEditorSession, TextEditorSession} from './textEditorSession';
+import {getTextEditorSession, saveTextEditorSession, TextEditorSession} from './textEditorSession';
 // @ts-ignore
 import css from './TextDocumentView.module.css';
 
@@ -11,11 +11,15 @@ export function TextDocumentView({document: doc}: {document: TextDocument}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [currentSession, setCurrentSession] = useState<TextEditorSession | null>(null);
+  const [, refresh] = useState(0);
 
   useEffect(() => {
     let active = true;
     let view: editor.IStandaloneCodeEditor | undefined;
     let session: TextEditorSession | undefined;
+    let unsubscribe: (() => void) | undefined;
+    setCurrentSession(null);
     setLoading(true);
     setError(null);
     void (async () => {
@@ -32,6 +36,8 @@ export function TextDocumentView({document: doc}: {document: TextDocument}) {
         ariaLabel: `${doc.info.title} text editor`,
       });
       if (session.viewState) view.restoreViewState(session.viewState);
+      unsubscribe = session.subscribe(() => refresh(value => value + 1));
+      setCurrentSession(session);
       setLoading(false);
     })().catch(cause => {
       if (!active) return;
@@ -40,17 +46,41 @@ export function TextDocumentView({document: doc}: {document: TextDocument}) {
     });
     return () => {
       active = false;
+      unsubscribe?.();
       if (view && session) session.viewState = view.saveViewState();
       view?.dispose();
     };
   }, [doc, attempt]);
 
-  return <div className={css.container} aria-label={`${doc.info.title} Text Document`}>
+  function save(saveAs = false) {
+    if (currentSession) void saveTextEditorSession(doc, currentSession, saveAs);
+  }
+
+  const dirty = currentSession && doc.data !== currentSession.savedText;
+  return <div className={css.container} aria-label={`${doc.info.title} Text Document`}
+    onKeyDownCapture={event => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+        event.preventDefault();
+        event.stopPropagation();
+        save(event.shiftKey);
+      }
+    }}>
+    <div className={css.controls} role="toolbar" aria-label="Text controls">
+      <button type="button" disabled={!currentSession || currentSession.saving} onClick={() => save()}>Save</button>
+      <button type="button" disabled={!currentSession || currentSession.saving} onClick={() => save(true)}>Save As…</button>
+      <span className={css.filename} title={doc.filepath}>{doc.filepath || doc.name}</span>
+      {currentSession && <span role={dirty || currentSession.saving || currentSession.saveMessage ? 'status' : undefined}>
+        {currentSession.saving ? 'Saving…' : dirty ? 'Unsaved changes' : currentSession.saveMessage || 'No changes'}
+      </span>}
+    </div>
+    {currentSession?.saveError && <div className={css.saveError} role="alert">Could not save: {currentSession.saveError}</div>}
+    <div className={css.viewport}>
     <div className={css.editor} ref={host} />
     {loading && <div className={css.message} role="status">Loading text editor…</div>}
     {error && <div className={css.message} role="alert">
       <span>{error}</span>
       <button onClick={() => setAttempt(value => value + 1)}>Retry</button>
     </div>}
+    </div>
   </div>;
 }

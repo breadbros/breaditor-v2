@@ -1,4 +1,6 @@
 import React from 'react';
+import {activeDocument} from './DocumentManager';
+import {saveOpenTextDocument} from './documents/textEditorSession';
 
 function Logo() {
   return (
@@ -39,6 +41,7 @@ function getWidgetVisibilityOptions() {
 */
 
 function getMenu(dispatch: ({}: any) => void) {
+  const active = activeDocument();
   return [
     {
       name: (
@@ -76,6 +79,10 @@ function getMenu(dispatch: ({}: any) => void) {
                 thunkDispatch: dispatch,
               });
             },
+            ...(active?.info.type === 'TEXT' && 'encoding' in active ? {
+              Save: () => saveOpenTextDocument(active),
+              'Save As…': () => saveOpenTextDocument(active, true),
+            } : {}),
           },
         },
       ],

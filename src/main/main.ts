@@ -15,6 +15,7 @@ import { dialog } from "electron";
 */
 import path from "path";
 import {connectDevelopment} from './development';
+import {registerTextFileSaving} from './textFileSaving';
 
 const dotenv = require("dotenv").config();
 
@@ -148,6 +149,7 @@ function createWindow() {
 // });
 
 app.on("ready", async () => {
+  registerTextFileSaving();
   createWindow();
 
   app.on("activate", function () {

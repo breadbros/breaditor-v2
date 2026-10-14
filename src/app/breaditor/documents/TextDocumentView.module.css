@@ -1,9 +1,41 @@
 .container {
+  display: flex;
+  flex-direction: column;
   position: relative;
   flex: 1;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  color: var(--text);
+  background: var(--secondary);
+}
+
+.controls button {
+  padding: 5px 8px;
+  font: inherit;
+  color: var(--text);
+  background: var(--primary);
+  border: 1px solid var(--borderColor);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.controls button:disabled { opacity: 0.5; }
+.controls [role='status'] { white-space: nowrap; }
+.filename { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.saveError { padding: 6px 8px; color: var(--text); background: #6a2525; }
+
+.viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
 }
 
 .editor {
