@@ -336,7 +336,7 @@ function init() {
   const root = createRoot(domNode);
 
   addDocument(mapMaker('Map A'));
-  addDocument(textMaker('Text B'));
+  addDocument(textMaker('Text B', 'assets/lord-stan/lord_stan.json'));
   addDocument(spriteMaker('Sprite C'));
   addDocument(mapMaker('Map D'));
 

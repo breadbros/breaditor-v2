@@ -20,7 +20,8 @@
     "build-types": " TODO - ask DXM wtf to pass to tsc! ",
     "pre-test": "yarn node test-infrastructure/copyCssToJestDir.js",
     "test": "jest  --verbose --runInBand --detectOpenHandles --forceExit --bail=false",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "test:monaco": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/monaco.smoke.js"
   },
   "author": "",
   "license": "MIT",
@@ -30,6 +31,7 @@
     "emoji-dictionary": "^1.0.11",
     "fb-watchman": "^2.0.2",
     "is-electron": "^2.2.2",
+    "monaco-editor": "^0.57.0",
     "react": "18.2.0",
     "react-dockable-ts": "https://github.com/breadbros/react-dockable-ts2#v0.0.18",
     "react-dom": "18.2.0"
@@ -63,6 +65,8 @@
     "jest-css-modules-transform": "^4.4.2",
     "jest-environment-jsdom": "^29.4.3",
     "jsdom": "^21.1.0",
+    "postcss": "^8.5.30",
+    "postcss-nesting": "^14.0.3",
     "prettier": "^3.1.1",
     "react-devtools": "^4.27.2",
     "redux-devtools-extension": "^2.13.9",
