@@ -78,12 +78,13 @@ async function exercise(win, label) {
     const viewStatePreserved = view.getPosition().lineNumber === 5 && view.getPosition().column === 2 &&
       view.getScrollTop() === savedScrollTop;
     const textRoot = () => document.querySelector('[aria-label="Text B Text Document"]');
-    const status = () => textRoot().querySelector('[role="status"]')?.textContent;
+    const textControls = () => document.querySelector('[role="toolbar"][aria-label="Text controls"]');
+    const status = () => textControls()?.querySelector('[role="status"]')?.textContent;
     await wait(() => !status()?.includes('Loading text editor'));
     const savedText = text + '\n// saved by smoke\n';
     view.executeEdits('smoke-save', [{range: model.getFullModelRange(), text: savedText, forceMoveMarkers: true}]);
     await wait(() => status() === 'Unsaved changes');
-    [...textRoot().querySelectorAll('button')].find(button => button.textContent.startsWith('Save As')).click();
+    [...textControls().querySelectorAll('button')].find(button => button.textContent.startsWith('Save As')).click();
     await wait(() => status() === 'Saved');
     const secondSavedText = savedText + '// saved again\n';
     view.executeEdits('smoke-save', [{range: model.getFullModelRange(), text: secondSavedText, forceMoveMarkers: true}]);

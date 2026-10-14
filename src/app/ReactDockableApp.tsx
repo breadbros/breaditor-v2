@@ -253,7 +253,9 @@ function App() {
   const focusedDocument = activeDocument();
 
   return (
-    <DocumentControlsProvider documentId={focusedDocument?.info.type === 'SPRITE' ? focusedDocument.info.id : null}>
+    <DocumentControlsProvider
+      documentId={focusedDocument && ['SPRITE', 'TEXT'].includes(focusedDocument.info.type) ? focusedDocument.info.id : null}
+      label={focusedDocument?.info.type === 'TEXT' ? 'Text controls' : 'Sprite controls'}>
     <WindowProxy
       events={
         {

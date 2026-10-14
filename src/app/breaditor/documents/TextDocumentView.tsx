@@ -3,6 +3,7 @@ import type {editor} from 'monaco-editor/esm/vs/editor/editor.api';
 import type {TextDocument} from './TextDocument';
 import {loadMonaco} from './loadMonaco';
 import {getTextEditorSession, saveTextEditorSession, TextEditorSession} from './textEditorSession';
+import {DocumentControls} from '../../layout/components/DocumentControls';
 // @ts-ignore
 import css from './TextDocumentView.module.css';
 
@@ -65,7 +66,8 @@ export function TextDocumentView({document: doc}: {document: TextDocument}) {
         save(event.shiftKey);
       }
     }}>
-    <div className={css.controls} role="toolbar" aria-label="Text controls">
+    <DocumentControls documentId={doc.info.id}>
+    <div className={css.controls}>
       <button type="button" disabled={!currentSession || currentSession.saving} onClick={() => save()}>Save</button>
       <button type="button" disabled={!currentSession || currentSession.saving} onClick={() => save(true)}>Save As…</button>
       <span className={css.filename} title={doc.filepath}>{doc.filepath || doc.name}</span>
@@ -73,6 +75,7 @@ export function TextDocumentView({document: doc}: {document: TextDocument}) {
         {currentSession.saving ? 'Saving…' : dirty ? 'Unsaved changes' : currentSession.saveMessage || 'No changes'}
       </span>}
     </div>
+    </DocumentControls>
     {currentSession?.saveError && <div className={css.saveError} role="alert">Could not save: {currentSession.saveError}</div>}
     <div className={css.viewport}>
     <div className={css.editor} ref={host} />

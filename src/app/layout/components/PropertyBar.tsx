@@ -27,7 +27,7 @@ const PropertyBar: React.FC<PropertyBarProps> = (props) => {
   const controls = useContext(DocumentControlsContext);
 
   if (controls && controls.documentId !== null) {
-    return <div ref={controls.setElement} className={css.container} role="toolbar" aria-label="Sprite controls" />;
+    return <div ref={controls.setElement} className={css.container} role="toolbar" aria-label={controls.label} />;
   }
 
   function getProperties() {
