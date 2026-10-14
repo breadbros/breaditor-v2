@@ -3,6 +3,9 @@ const copyPlugin = require('esbuild-plugin-copy');
 const copyStaticFiles = require('esbuild-copy-static-files');
 const cssModulesPlugin = require('esbuild-css-modules-plugin');
 const child_process = require('child_process');
+const path = require('path');
+
+const spriteLibrary = path.join(__dirname, '../node_modules/crustacean-sprite-lib');
 
 console.log('CWD:', process.cwd());
 
@@ -92,6 +95,14 @@ const minify = false;
           src: 'src/app/index.html',
           dest: 'dist/app/index.html',
         }),
+        copyStaticFiles({
+          src: path.join(spriteLibrary, 'assets/lord-stan'),
+          dest: 'dist/app/assets/lord-stan',
+        }),
+        ...['ASSET-ATTRIBUTION.md', 'LICENSE'].map(file => copyStaticFiles({
+          src: path.join(spriteLibrary, file),
+          dest: path.join('dist/app/assets/lord-stan', file),
+        })),
         cssModulesPlugin(),
       ],
       // plugins: [

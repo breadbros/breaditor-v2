@@ -1,4 +1,5 @@
 import {DocumentInfo} from '../../../../types/global';
+import type {CrustyV1} from 'crustacean-sprite-lib';
 
 interface SpriteDocument {
   info: DocumentInfo;
@@ -6,14 +7,15 @@ interface SpriteDocument {
   filepath: string;
   format: string;
 
-  crustacean_json: {};
+  crustacean_json: CrustyV1 | string | null;
   crustacean_image: string;
+  animation?: string;
 
   name: string;
   data: any;
 }
 
-function spriteMaker(title: string): SpriteDocument {
+function spriteMaker(title: string, filepath = 'assets/lord-stan/lord_stan.json'): SpriteDocument {
   return {
     info: {
       id: '',
@@ -21,11 +23,12 @@ function spriteMaker(title: string): SpriteDocument {
       type: 'SPRITE',
     },
 
-    filepath: 'a_path.map',
-    format: 'VERY-FAKE-SPRITE',
+    filepath,
+    format: 'CRUSTY-V1',
 
-    crustacean_json: {},
-    crustacean_image: 'pretty.png',
+    crustacean_json: null,
+    crustacean_image: '',
+    animation: filepath === 'assets/lord-stan/lord_stan.json' ? 'valid_looping_1' : undefined,
 
     name: title,
     data: {},

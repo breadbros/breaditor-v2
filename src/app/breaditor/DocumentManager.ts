@@ -231,6 +231,7 @@ export {
   createInitialPanelInfoForDocumentType,
   createInitialDocumentInfoForLoadedDocuments,
   getDocuments,
+  getDocumentById,
   addDocument,
   removeDocument,
   getWidgetInfo,

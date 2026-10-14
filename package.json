@@ -25,6 +25,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "crustacean-sprite-lib": "git+ssh://git@github.com/mcgrue/crustacean-sprite-lib.git#main",
     "dotenv": "^16.0.1",
     "emoji-dictionary": "^1.0.11",
     "fb-watchman": "^2.0.2",

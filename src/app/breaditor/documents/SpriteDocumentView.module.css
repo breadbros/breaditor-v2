@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  color: var(--text);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px;
+  background: var(--secondary);
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.controls select {
+  max-width: 180px;
+}
+
+.container button,
+.container select {
+  padding: 5px 8px;
+  font: inherit;
+  color: var(--text);
+  background: var(--primary);
+  border: 1px solid var(--borderColor);
+  border-radius: 3px;
+}
+
+.container button {
+  cursor: pointer;
+}
+
+.container button:disabled,
+.container select:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.container button:focus-visible,
+.container select:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+.viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background-color: #292929;
+  background-image: conic-gradient(#333 25%, transparent 0 50%, #333 0 75%, transparent 0);
+  background-size: 24px 24px;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  background: var(--secondary);
+}
+
+.status {
+  padding: 6px 10px;
+  background: var(--secondary);
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}

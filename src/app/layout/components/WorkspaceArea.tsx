@@ -8,6 +8,7 @@ import React, {
 import {Dockable, PanelState} from 'react-dockable-ts';
 import {DocumentInfo, WidgetInfo} from '../../../../types/global';
 import {Widget} from './Widget';
+import {DocumentView} from './DocumentView';
 
 
 import {
@@ -88,7 +89,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
             themeClass={props.themeClass}
           >
             {props.documents.map((doc) => {
-              return <Widget key={doc.id} id={doc.id} title={doc.title} />;
+              return <DocumentView key={doc.id} id={doc.id} title={doc.title} />;
             })}
           </Dockable>
         </div>
