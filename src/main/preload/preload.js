@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFileDialog: (options /* OpenDialogOptions */) => {
     ipcRenderer.send('open-file-dialog', options);
   },
+  saveTextFile: (request) => ipcRenderer.invoke('save-text-file', request),
   showImageInFolder: async (imageUrl) => {
     shell.showItemInFolder(fileURLToPath(imageUrl));
   },

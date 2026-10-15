@@ -5,12 +5,12 @@ interface TextDocument {
 
   filepath: string;
   name: string;
-  data: any;
+  data?: string;
 
   encoding: string;
 }
 
-function textMaker(title: string): TextDocument {
+function textMaker(title: string, filepath = ''): TextDocument {
   return {
     info: {
       id: '',
@@ -18,10 +18,9 @@ function textMaker(title: string): TextDocument {
       type: 'TEXT',
     },
 
-    filepath: 'a_fake_file.txt',
+    filepath,
     name: title,
-    data: {},
-    encoding: 'LOL',
+    encoding: 'utf-8',
   };
 }
 

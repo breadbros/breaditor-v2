@@ -253,7 +253,9 @@ function App() {
   const focusedDocument = activeDocument();
 
   return (
-    <DocumentControlsProvider documentId={focusedDocument?.info.type === 'SPRITE' ? focusedDocument.info.id : null}>
+    <DocumentControlsProvider
+      documentId={focusedDocument && ['SPRITE', 'TEXT'].includes(focusedDocument.info.type) ? focusedDocument.info.id : null}
+      label={focusedDocument?.info.type === 'TEXT' ? 'Text controls' : 'Sprite controls'}>
     <WindowProxy
       events={
         {
@@ -336,7 +338,7 @@ function init() {
   const root = createRoot(domNode);
 
   addDocument(mapMaker('Map A'));
-  addDocument(textMaker('Text B'));
+  addDocument(textMaker('Text B', 'assets/lord-stan/lord_stan.json'));
   addDocument(spriteMaker('Sprite C'));
   addDocument(mapMaker('Map D'));
 

@@ -1,6 +1,7 @@
 import {MapDocument} from './documents/MapDocument';
 import {SpriteDocument} from './documents/SpriteDocument';
 import {TextDocument} from './documents/TextDocument';
+import {disposeTextEditorSession} from './documents/textEditorSession';
 import {updateStatusBar} from '../layout/components/StatusBar';
 import {DocumentInfo, WidgetInfo} from '../../../types/global.d';
 
@@ -152,6 +153,10 @@ function _removeDocumentById(id: string) {
   const newActiveObj = // store now while the index makes sense, make active after delete
     indexToBecomeActive === null ? null : _docs[indexToBecomeActive];
   const removedActiveDocument = _docs[indexToRemove] === _activeDocument;
+  const removedDocument = _docs[indexToRemove];
+  if (removedDocument.info.type === 'TEXT' && 'encoding' in removedDocument) {
+    disposeTextEditorSession(removedDocument);
+  }
 
   const oldSize = _docs.length;
   _docs = _docs.filter((obj) => obj.info.id !== id);
@@ -180,6 +185,9 @@ let _activeDocument: NullableBreaditorDocument = null;
 let _docs: BreaditorDocument[] = [];
 
 function _TEST_reset() {
+  _docs.forEach(doc => {
+    if (doc.info.type === 'TEXT' && 'encoding' in doc) disposeTextEditorSession(doc);
+  });
   _docs = [];
   _activeDocument = null;
 }

@@ -4,6 +4,8 @@ const copyStaticFiles = require('esbuild-copy-static-files');
 const cssModulesPlugin = require('esbuild-css-modules-plugin');
 const child_process = require('child_process');
 const path = require('path');
+const fs = require('fs');
+const postcss = require('postcss');
 
 const spriteLibrary = path.join(__dirname, '../node_modules/crustacean-sprite-lib');
 
@@ -76,6 +78,67 @@ const minify = false;
 
 (async () => {
   /// client translation
+  const monacoEntry = 'src/app/breaditor/documents/monacoRuntime.ts';
+  // Small build-test fixtures do not include the Text Document runtime.
+  if (fs.existsSync(monacoEntry)) {
+    const monacoRoot = path.join(__dirname, '../node_modules/monaco-editor');
+    try {
+      const {default: postcssNesting} = await import('postcss-nesting');
+      await esbuild.build({
+        entryPoints: [monacoEntry],
+        outfile: 'dist/app/monaco/monaco.js',
+        bundle: true,
+        platform: 'browser',
+        format: 'iife',
+        globalName: 'breaditorMonaco',
+        target: 'es2020',
+        minify: true,
+        sourcemap,
+        loader: {'.ttf': 'file'},
+        // loadMonaco supplies explicit worker URLs; Monaco's default
+        // import.meta worker factories are unused in this classic bundle.
+        banner: {js: 'var breaditorMonacoModuleUrl = document.currentScript.src;'},
+        define: {'import.meta.url': 'breaditorMonacoModuleUrl'},
+        plugins: [{
+          name: 'monaco-css-nesting',
+          setup(build) {
+            // Use the physical ESM entry so the runtime and this project's
+            // older TypeScript resolver agree on Monaco's declarations.
+            build.onResolve({filter: /^monaco-editor\/esm\/vs\/index$/}, () => ({
+              path: path.join(monacoRoot, 'esm/vs/index.js'),
+            }));
+            // Electron 23's Chromium predates native CSS nesting.
+            build.onLoad({filter: /\.css$/}, async ({path: filename}) => ({
+              contents: (await postcss([postcssNesting()]).process(
+                await fs.promises.readFile(filename, 'utf8'), {from: filename},
+              )).css,
+              loader: 'css',
+              resolveDir: path.dirname(filename),
+            }));
+          },
+        }],
+      });
+      await esbuild.build({
+        entryPoints: Object.fromEntries([
+          ['editor', 'editor/editor.worker.js'],
+          ['json', 'language/json/json.worker.js'],
+          ['ts', 'language/typescript/ts.worker.js'],
+          ['css', 'language/css/css.worker.js'],
+          ['html', 'language/html/html.worker.js'],
+        ].map(([name, source]) => [`${name}.worker`, path.join(monacoRoot, 'esm/vs', source)])),
+        outdir: 'dist/app/monaco',
+        target: 'es2020',
+        bundle: true,
+        platform: 'browser',
+        format: 'iife',
+        minify: true,
+        sourcemap,
+      });
+    } catch (error) {
+      console.error('Monaco build failed:', error.message);
+      process.exit(2);
+    }
+  }
   const result = await esbuild
     .build({
       tsconfig: 'tsconfig.json',
