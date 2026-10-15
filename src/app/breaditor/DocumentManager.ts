@@ -1,7 +1,8 @@
-import {MapDocument} from './documents/MapDocument';
+import {MapDocument, isMapDocument} from './documents/MapDocument';
 import {SpriteDocument} from './documents/SpriteDocument';
 import {TextDocument} from './documents/TextDocument';
 import {disposeTextEditorSession} from './documents/textEditorSession';
+import {disposeMapEditorSession, getMapEditorSession} from './documents/mapEditorSession';
 import {updateStatusBar} from '../layout/components/StatusBar';
 import {DocumentInfo, WidgetInfo} from '../../../types/global.d';
 
@@ -89,7 +90,7 @@ type DocTypeMap = _DocTypeMap & {
 
 // @ts-ignore WHY THIS NEEDS TO BE IGNORED, I DONT UNDERSTAND
 const ValidPanelsForDocumentType: DocTypeMap = {
-  MAP: ['Layers', 'Info', 'Entities', 'Zones', 'Screenview'],
+  MAP: ['Layers', 'Info', 'Entities', 'Zones', 'Screenview', 'Tileset'],
   SPRITE: ['Info', 'Palette'],
   TEXT: ['Todo'],
 };
@@ -154,6 +155,11 @@ function _removeDocumentById(id: string) {
     indexToBecomeActive === null ? null : _docs[indexToBecomeActive];
   const removedActiveDocument = _docs[indexToRemove] === _activeDocument;
   const removedDocument = _docs[indexToRemove];
+  if (isMapDocument(removedDocument)) {
+    const session = getMapEditorSession(removedDocument);
+    if (session.dirty && !window.confirm('Discard unsaved map edits and close this document?')) return;
+    disposeMapEditorSession(removedDocument);
+  }
   if (removedDocument.info.type === 'TEXT' && 'encoding' in removedDocument) {
     disposeTextEditorSession(removedDocument);
   }
@@ -186,6 +192,7 @@ let _docs: BreaditorDocument[] = [];
 
 function _TEST_reset() {
   _docs.forEach(doc => {
+    if (isMapDocument(doc)) disposeMapEditorSession(doc);
     if (doc.info.type === 'TEXT' && 'encoding' in doc) disposeTextEditorSession(doc);
   });
   _docs = [];

@@ -1,0 +1,50 @@
+{
+  "animations": {
+    "Idle Down": [ "T10000 0", "Looping"],
+    "Idle Up": [ "T10000 7", "Looping"],
+    "Idle Right": [ "T10000 14", "Looping"],
+    "Idle Left": [ "T10000 21", "Looping"],
+
+    "Walk Down": [ "T10 1 2 3 4 5 6", "Looping" ],
+    "Walk Up": [ "T10 8 9 10 11 12 13", "Looping" ],
+    "Walk Right": [ "T10 15 16 17 18 19 20", "Looping" ],
+    "Walk Left": [ "T10 22 23 24 25 26 27", "Looping" ],
+    
+    "Gloves Punch RH": [ "T1000 28", "Looping"],
+    "Gloves Punch LH": [ "T1000 29", "Looping"],
+    
+    "Gloves Idle Down": [ "T1000 30", "Looping"],
+    "Gloves Idle Up": [ "T1000 31", "Looping"],
+    "Gloves Idle Right": [ "T1000 32", "Looping"],
+    "Gloves Idle Left": [ "T1000 33", "Looping"],
+    "Normal Idle Down": [ "T1000 0", "Looping"],
+    "Normal Idle Up": [ "T1000 7", "Looping"],
+    "Normal Idle Right": [ "T1000 14", "Looping"],
+    "Normal Idle Left": [ "T1000 21", "Looping"]
+  },
+  "_V3_LEGACY": {
+    "signature": 5392451,
+    "version": 5,
+    "bitsPerPixel": 24,
+    "flags": 0,
+    "transparentColor": 16711935,
+    "formatName": "v3chr",
+    "customScriptsIgnored": 0,
+    "compression": 1
+  },
+  "dims": [
+    16,
+    32
+  ],
+  "hitbox": [
+    0,
+    16,
+    16,
+    16
+  ],
+  "frames": 34,
+  "image": "Sugar Ray - Bald.png",
+  "inner_pad": 0,
+  "outer_pad": 0,
+  "per_row": 7
+}

@@ -21,11 +21,13 @@
     "pre-test": "yarn node test-infrastructure/copyCssToJestDir.js",
     "test": "jest  --verbose --runInBand --detectOpenHandles --forceExit --bail=false",
     "test-watch": "jest --watch",
-    "test:monaco": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/monaco.smoke.js"
+    "test:monaco": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/monaco.smoke.js",
+    "test:map": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/map.smoke.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "crustacean-map-lib": "file:../crustacean-map-lib",
     "crustacean-sprite-lib": "git+https://github.com/mcgrue/crustacean-sprite-lib.git#main",
     "dotenv": "^16.0.1",
     "emoji-dictionary": "^1.0.11",

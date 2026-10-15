@@ -1,0 +1,18 @@
+{
+    "animations": {
+        "Sealed": [ "T100 0", "Looping" ],
+        "Open": [ "T100 1", "Looping" ],
+        "Unlocked": [ "T15 2 3 4 5", "Looping" ]
+    },
+    "dims": [
+        16, 
+        16
+    ], 
+    "hitbox": [0,0,16,16],
+    "hitbox_is_solid": false,
+    "frames": 6, 
+    "image": "Green Chest.png", 
+    "inner_pad": 0, 
+    "outer_pad": 0, 
+    "per_row": 6
+}

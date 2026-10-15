@@ -28,6 +28,8 @@
     ],
     "baseUrl": "./src",
     "paths": {
+      "crustacean-sprite-lib": ["../node_modules/crustacean-sprite-lib/dist/mod"],
+      "crustacean-sprite-lib/*": ["../node_modules/crustacean-sprite-lib/dist/*"],
       "shared/*": [
         "shared/*"
       ],

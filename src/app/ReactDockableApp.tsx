@@ -15,13 +15,15 @@ import {getMenu} from './breaditor/menu';
 import {
   activeDocument,
   addDocument,
+  focusDocument,
   getWidgetInfo,
   getDocumentInfo,
   createInitialDocumentInfoForLoadedDocuments,
   createInitialPanelInfoForDocumentType,
 } from './breaditor/DocumentManager';
 
-import {mapMaker} from './breaditor/documents/MapDocument';
+import {mapMaker, isMapDocument} from './breaditor/documents/MapDocument';
+import {saveOpenMapDocument} from './breaditor/documents/mapEditorSession';
 import {textMaker} from './breaditor/documents/TextDocument';
 import {spriteMaker} from './breaditor/documents/SpriteDocument';
 // import {TOOLS} from './breaditor/tools/constants';
@@ -230,6 +232,18 @@ function App() {
   appDispatch = dispatch;
 
   useEffect(() => {
+    const shortcut = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || !(event.ctrlKey || event.metaKey)) return;
+      const current = activeDocument(), key = event.key.toLowerCase();
+      if (key === 'o') {event.preventDefault(); dispatch({type: 'DOC_OPEN_EXISTING', thunkDispatch: dispatch});}
+      else if (key === 'n') {event.preventDefault(); const doc = mapMaker('Untitled Map'); addDocument(doc); focusDocument(doc.info.id);}
+      else if (key === 's' && isMapDocument(current)) {event.preventDefault(); (document.activeElement as HTMLElement | null)?.blur(); saveOpenMapDocument(current, event.shiftKey);}
+    };
+    window.addEventListener('keydown', shortcut);
+    return () => window.removeEventListener('keydown', shortcut);
+  }, []);
+
+  useEffect(() => {
     if (state.app.isPanelsOn !== undefined) setOnOrOff(state.app.isPanelsOn);
   }, [state.app.isPanelsOn]);
 
@@ -254,8 +268,8 @@ function App() {
 
   return (
     <DocumentControlsProvider
-      documentId={focusedDocument && ['SPRITE', 'TEXT'].includes(focusedDocument.info.type) ? focusedDocument.info.id : null}
-      label={focusedDocument?.info.type === 'TEXT' ? 'Text controls' : 'Sprite controls'}>
+      documentId={focusedDocument?.info.id ?? null}
+      label={focusedDocument?.info.type === 'MAP' ? 'Map controls' : focusedDocument?.info.type === 'TEXT' ? 'Text controls' : 'Sprite controls'}>
     <WindowProxy
       events={
         {
@@ -337,13 +351,22 @@ function init() {
 
   const root = createRoot(domNode);
 
-  addDocument(mapMaker('Map A'));
+  addDocument(mapMaker('Map A', 'assets/sully/maps/json/farmsville.map.json', 'assets/sully/', true));
   addDocument(textMaker('Text B', 'assets/lord-stan/lord_stan.json'));
   addDocument(spriteMaker('Sprite C'));
   addDocument(mapMaker('Map D'));
 
   /// MAIN<->RENDERER handlers
   domNode.addEventListener('OPEN_FILE_SUCCESS', (event:any) => {
+    const filepath = event.detail.filePath;
+    if (/\.map\.json$/i.test(filepath)) {
+      const title = filepath.replace(/\\/g, '/').split('/').pop()!.replace(/\.map\.json$/i, '');
+      const map = mapMaker(title, filepath);
+      addDocument(map);
+      focusDocument(map.info.id);
+      doAppDispatch({type: 'DOC_OPEN_FILE_CANCELLED', thunkDispatch: doAppDispatch});
+      return;
+    }
     doAppDispatch({
       type: 'DOC_OPEN_FILE_FOUND',
       thunkDispatch: doAppDispatch,

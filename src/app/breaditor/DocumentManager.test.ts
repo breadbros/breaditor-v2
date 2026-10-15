@@ -191,6 +191,7 @@ test('verify initial panel info for maps', () => {
     {id: 'PanelEntities', title: 'Entities Panel'},
     {id: 'PanelZones', title: 'Zones Panel'},
     {id: 'PanelScreenview', title: 'Screenview Panel'},
+    {id: 'PanelTileset', title: 'Tileset Panel'},
   ];
 
   expect(mapPanels).toEqual(expected);

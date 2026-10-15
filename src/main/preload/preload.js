@@ -7,6 +7,7 @@ const {
 } = require('electron');
 const {fileURLToPath} = require('url');
 const {watchSpriteFiles} = require('./watchSpriteFiles');
+const {watchMapFiles} = require('./watchMapFiles');
 
 contextBridge.exposeInMainWorld('electronAPI', {
   appClose: () => {
@@ -26,6 +27,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     shell.showItemInFolder(fileURLToPath(imageUrl));
   },
   watchSpriteFiles,
+  watchMapFiles,
+  mapFileHashes: (urls) => ipcRenderer.invoke('map-file-hashes', urls),
+  saveMapFiles: (request) => ipcRenderer.invoke('save-map-files', request),
+  saveMapImage: (request) => ipcRenderer.invoke('save-map-image', request),
   onDevelopmentUpdate: (callback) => {
     const listener = (_event, available, restartRequired) => callback(available, restartRequired);
     ipcRenderer.on('dev-update', listener);

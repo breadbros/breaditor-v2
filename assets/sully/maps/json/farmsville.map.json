@@ -1,0 +1,3647 @@
+{
+  "notes": [
+    {
+      "x": "933",
+      "y": "1365",
+      "text": "Farmsville community college"
+    },
+    {
+      "x": "736",
+      "y": "1377",
+      "text": "Church of Vecna ???"
+    },
+    {
+      "x": "1056",
+      "y": "948",
+      "text": "Veggiesmith"
+    },
+    {
+      "x": "1348",
+      "y": "1315",
+      "text": "Item Store"
+    },
+    {
+      "x": "1762",
+      "y": "1397",
+      "text": "Inn"
+    },
+    {
+      "x": "1799",
+      "y": "1143",
+      "text": "Weapons"
+    },
+    {
+      "x": "1680",
+      "y": "989",
+      "text": "Dexter's Home"
+    },
+    {
+      "x": "1595",
+      "y": "758",
+      "text": "Fashion Studio"
+    },
+    {
+      "x": "1679",
+      "y": "382",
+      "text": "Lookout Point"
+    },
+    {
+      "x": "924",
+      "y": "433",
+      "text": "VECNA"
+    }
+  ],
+  "name": "Bumsville: City of Bums",
+  "tallentitylayer": "Fishing",
+  "vsp": {
+    "default": "farmsville.vsp.json",
+    "obstructions": "farmsville.obsvsp.json"
+  },
+  "music": "",
+  "renderstring": "2,1,3,E,6,4,5,R",
+  "initscript": "start",
+  "starting_coordinates": [
+    0,
+    0
+  ],
+  "layers": [
+    {
+      "name": "Background",
+      "parallax": {
+        "X": 1,
+        "Y": 1
+      },
+      "dimensions": {
+        "X": 150,
+        "Y": 250
+      },
+      "alpha": 1,
+      "vsp": "default",
+      "MAPED_HIDDEN": false,
+      "offset": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "name": "Back Parallax",
+      "parallax": {
+        "X": 0.5,
+        "Y": 0.8
+      },
+      "dimensions": {
+        "X": 150,
+        "Y": 250
+      },
+      "alpha": 1,
+      "vsp": "default",
+      "MAPED_HIDDEN": false,
+      "maped_HIDE_ENTS": false
+    },
+    {
+      "name": "Background Extra",
+      "parallax": {
+        "X": 1,
+        "Y": 1
+      },
+      "dimensions": {
+        "X": 150,
+        "Y": 250
+      },
+      "alpha": 1,
+      "vsp": "default",
+      "MAPED_HIDDEN": false,
+      "offset": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "name": "Foreground",
+      "parallax": {
+        "X": 1,
+        "Y": 1
+      },
+      "dimensions": {
+        "X": 150,
+        "Y": 250
+      },
+      "alpha": 1,
+      "vsp": "default",
+      "MAPED_HIDDEN": false,
+      "offset": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "name": "Fishing",
+      "parallax": {
+        "X": 1,
+        "Y": 1
+      },
+      "dimensions": {
+        "X": 150,
+        "Y": 250
+      },
+      "alpha": 1,
+      "vsp": "default",
+      "MAPED_HIDDEN": true
+    },
+    {
+      "name": "Hilltop",
+      "alpha": 1,
+      "dimensions": {
+        "X": 1,
+        "Y": 1
+      },
+      "parallax": {
+        "X": 1,
+        "Y": 1
+      },
+      "vsp": "default",
+      "MAPED_HIDDEN": false,
+      "offset": {
+        "X": 0,
+        "Y": 0
+      }
+    }
+  ],
+  "zones": [
+    {
+      "name": "NULL_ZONE",
+      "activation_script": "",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Bridge Switch -- Under Entities",
+      "activation_script": "bridgeswitch_under",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Bridge Switch -- Over Entities",
+      "activation_script": "bridgeswitch_over",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into Pharmacy",
+      "activation_script": "ItemEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of Pharmacy",
+      "activation_script": "ItemExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into Weapon",
+      "activation_script": "WeaponEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of Weapon",
+      "activation_script": "WeaponExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into Smith",
+      "activation_script": "SmithEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of Smith",
+      "activation_script": "SmithExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into Dexter's House",
+      "activation_script": "HouseEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of Dexter's House",
+      "activation_script": "HouseExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into Inn",
+      "activation_script": "InnEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of Inn",
+      "activation_script": "InnExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - To Inn Upstairs",
+      "activation_script": "InnUpstair",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - To Inn Downstairs",
+      "activation_script": "InnDownstair",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into University",
+      "activation_script": "SchoolEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of University",
+      "activation_script": "SchoolExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into Church",
+      "activation_script": "ChurchEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of Church",
+      "activation_script": "ChurchExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Into Studio",
+      "activation_script": "StudioEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Warp - Out of Studio",
+      "activation_script": "StudioExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Map Change - To Overworld",
+      "activation_script": "east_entrance",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Check - Vecna Statue",
+      "activation_script": "Idol",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Well",
+      "activation_script": "well",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Jukebox Left",
+      "activation_script": "Jukebox_Left",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Jukebox Right",
+      "activation_script": "Jukebox_Right",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Little Daddy Bruce",
+      "activation_script": "little_daddy_bruce",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Item Shop",
+      "activation_script": "item_shop",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Weapon Shop",
+      "activation_script": "weapon_shop",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Principal",
+      "activation_script": "principal",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Priest Talk",
+      "activation_script": "priest",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Church Stairs",
+      "activation_script": "ChurchStairs",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Uni Basement",
+      "activation_script": "UniBasementEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Uni Top Floor",
+      "activation_script": "UniUpstairsEnter",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Uni, from Basement",
+      "activation_script": "UniBasementExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Warp - Uni from Top Floor",
+      "activation_script": "UniUpstairsExit",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Teacher",
+      "activation_script": "teacher",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - White Magic Shop",
+      "activation_script": "white_magic_shop",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Black Magic Shop",
+      "activation_script": "black_magic_shop",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Innkeeper",
+      "activation_script": "innkeeper",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Check - Sleeping Dexter",
+      "activation_script": "sleeping_dexter",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "_not_used_",
+      "activation_script": "",
+      "activation_chance": "0",
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "Ascend Zealot Hill",
+      "activation_script": "ascend_zealot_hill",
+      "activation_chance": "1",
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Descend Zealot Hill",
+      "activation_script": "descend_zealot_hill",
+      "activation_chance": "1",
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Open Canal Underpass",
+      "activation_script": "open_canal_underpass",
+      "activation_chance": "1",
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Open Canal Overpass",
+      "activation_script": "open_canal_overpass",
+      "activation_chance": "1",
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "_not_used_",
+      "activation_script": "",
+      "activation_chance": "0",
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "_not_used_",
+      "activation_script": "",
+      "activation_chance": "0",
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "_not_used_",
+      "activation_script": "",
+      "activation_chance": "0",
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "_not_used_",
+      "activation_script": "",
+      "activation_chance": "0",
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "canal_chest_a",
+      "activation_script": "canal_chest_a",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "canal_chest_b",
+      "activation_script": "canal_chest_b",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "_UNUSED_",
+      "activation_script": "",
+      "activation_chance": "1",
+      "can_by_adjacent_activated": false,
+      "can_by_same_tile_activated": false
+    },
+    {
+      "name": "secret_chest_front",
+      "activation_script": "secret_chest_front",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "meet Dex",
+      "activation_script": "meetDex",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "stan-d",
+      "activation_script": "stan_d",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "lookout_point_sign",
+      "activation_script": "lookout_point_sign",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "east entrance sign",
+      "activation_script": "east_entrance_sign",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "_not_used_",
+      "activation_script": "",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": false
+    },
+    {
+      "name": "West Entrance Sign",
+      "activation_script": "west_entrance_sign",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "west_exit",
+      "activation_script": "west_entrance",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Thaco Bell",
+      "activation_script": "thaco_bell",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "farmsville_intro",
+      "activation_script": "farmsville_intro",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "Gelatin Ranch",
+      "activation_script": "gelatin_farm",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "chest_whatever",
+      "activation_script": "chest_whatever",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "chest_c",
+      "activation_script": "chest_c",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "lookout_point",
+      "activation_script": "lookout_point",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "lookout_point_reset",
+      "activation_script": "lookout_point_reset",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "no_freebies",
+      "activation_script": "no_freebies",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "red_chest_university_1",
+      "activation_script": "red_chest_university_1",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "learning_1",
+      "activation_script": "Learn_1",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "learning_2",
+      "activation_script": "Learn_2",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "learning_3",
+      "activation_script": "Learn_3",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "learning_4",
+      "activation_script": "Learn_4",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "learning_5",
+      "activation_script": "Learn_5",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "learning_6",
+      "activation_script": "Learn_6",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "learning_7",
+      "activation_script": "Learn_7",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "NO_WALK_HERE_WANDERERS",
+      "activation_script": "",
+      "activation_chance": 0,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "blue_chest_behind_blacksmith",
+      "activation_script": "blue_chest_behind_blacksmith",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "red_chest_behind_thaco_bell",
+      "activation_script": "red_chest_behind_thaco_bell",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "secret_tunnel_east",
+      "activation_script": "secret_tunnel_east",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "secret_tunnel_west",
+      "activation_script": "secret_tunnel_west",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "secret_tunnel_chest",
+      "activation_script": "secret_tunnel_chest",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "dorkupine_intro",
+      "activation_script": "dorkupine_intro",
+      "activation_chance": 1,
+      "can_by_adjacent_activated": true
+    },
+    {
+      "name": "GenericBookshelf",
+      "activation_script": "GenericBookshelf",
+      "activation_chance": "0",
+      "can_by_adjacent_activated": true,
+      "can_by_same_tile_activated": false
+    }
+  ],
+  "entities": [
+    {
+      "name": "Villager A",
+      "filename": "chrs/NPC/common/Old Guy Orange.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 104,
+        "ty": 36,
+        "px": 1664,
+        "py": 576
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "Ent0",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "713c2f80-be9b-4b50-b29d-e7dededf08e3",
+      "INDEX": 0
+    },
+    {
+      "name": "Villager B",
+      "filename": "chrs/NPC/common/Dress Lady Blue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 80,
+        "ty": 87,
+        "px": 1280,
+        "py": 1392
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Zone",
+        "delay": 75
+      },
+      "activation_script": "Ent1",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "e4d77da0-8299-4991-a136-3d8e372be8ca",
+      "INDEX": 1
+    },
+    {
+      "name": "Zealot U",
+      "filename": "chrs/NPC/common/Knight Purple.json",
+      "location": {
+        "layer": "Hilltop",
+        "tx": 58,
+        "ty": 24,
+        "px": 928,
+        "py": 384
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": true,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "L1R1D1U2D1R1L1B"
+      },
+      "activation_script": "Zealot1",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "75635c0b-cc5f-4b39-ae3d-de6b8adb2df8",
+      "INDEX": 2
+    },
+    {
+      "name": "Villager D",
+      "filename": "chrs/NPC/common/Tourist Hat Orange.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 46,
+        "ty": 91,
+        "px": 736,
+        "py": 1456
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Zone",
+        "delay": 50
+      },
+      "activation_script": "Ent3",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "c03f00eb-06fb-4472-8157-28be134bd363",
+      "INDEX": 3
+    },
+    {
+      "name": "Villager E",
+      "filename": "chrs/NPC/common/Dress Lady Yellow.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 87,
+        "ty": 64,
+        "px": 1392,
+        "py": 1024
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "Ent4",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "78ee2f31-5e1e-451a-aa4d-7866c5455cbc",
+      "INDEX": 4
+    },
+    {
+      "name": "Villager F a",
+      "filename": "chrs/NPC/common/Commoner Guy Pink.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 1747,
+        "py": 1253
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Zone",
+        "delay": 80
+      },
+      "activation_script": "Ent5",
+      "animation": "Idle Left",
+      "uuid": "9957722a-96d1-42cd-9dcf-caee0622d04c",
+      "MAPED_USEDEFAULT": false,
+      "INDEX": 5
+    },
+    {
+      "name": "Villager G",
+      "filename": "chrs/NPC/common/Adventurer DarkBlue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 63,
+        "ty": 44,
+        "px": 1008,
+        "py": 704
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Zone",
+        "delay": 115
+      },
+      "activation_script": "Ent6",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "3ee22938-9928-4559-84ea-0e1f9af922e9",
+      "INDEX": 6
+    },
+    {
+      "name": "Villager H",
+      "filename": "chrs/NPC/common/Commoner Lady Red.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 98,
+        "ty": 52,
+        "px": 1568,
+        "py": 832
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 175,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "L4U9R14D9L10B"
+      },
+      "activation_script": "Ent7",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "0c2cbfbb-d69e-42ee-80c8-92fd71314c62",
+      "INDEX": 7
+    },
+    {
+      "name": "Villager I",
+      "filename": "chrs/NPC/common/Commoner Lady Violet.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 108,
+        "ty": 95,
+        "px": 1728,
+        "py": 1520
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": true,
+      "speed": 100,
+      "wander": {
+        "mode": "Zone",
+        "delay": 200
+      },
+      "activation_script": "Ent8",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "b7bfa83e-d499-4699-b1bb-a711f5d1d0a5",
+      "INDEX": 8
+    },
+    {
+      "name": "Villager J",
+      "filename": "chrs/NPC/common/Dress Lady Pink.json",
+      "location": {
+        "tx": 53,
+        "ty": 69,
+        "layer": "Entity Layer (E)",
+        "px": 848,
+        "py": 1104
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Zone",
+        "delay": 50
+      },
+      "activation_script": "Ent9",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "8d0fdbf4-dab0-463e-be54-2470de022c16",
+      "INDEX": 9
+    },
+    {
+      "name": "Villager K",
+      "filename": "chrs/NPC/common/Commoner Lady Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 96,
+        "ty": 53,
+        "px": 1536,
+        "py": 848
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "Ent27",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "d3f192e5-f87d-4874-b2d3-d64f60503a3e",
+      "INDEX": 10
+    },
+    {
+      "name": "Zealot R",
+      "filename": "chrs/NPC/common/Old Guy Purple.json",
+      "location": {
+        "layer": "Hilltop",
+        "tx": 60,
+        "ty": 26,
+        "px": 960,
+        "py": 416
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": true,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "U1D1L1R2L1D1U1B"
+      },
+      "activation_script": "Zealot2",
+      "animation": "Idle Down",
+      "uuid": "9cd868e0-aec2-476f-a882-b87b4d8fbdf7",
+      "MAPED_USEDEFAULT": false,
+      "INDEX": 11
+    },
+    {
+      "name": "Zealot D",
+      "filename": "chrs/NPC/common/Commoner Guy Blue.json",
+      "location": {
+        "layer": "Hilltop",
+        "tx": 58,
+        "ty": 28,
+        "px": 928,
+        "py": 448
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": true,
+      "is_an_obstruction": true,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "R1L1U1D2U1L1R1B"
+      },
+      "activation_script": "Zealot3",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "63514f6a-3c26-41f7-923e-ec587e17dae3",
+      "INDEX": 12
+    },
+    {
+      "name": "Zealot L",
+      "filename": "chrs/NPC/common/Commoner Lady Red.json",
+      "location": {
+        "layer": "Hilltop",
+        "tx": 56,
+        "ty": 26,
+        "px": 896,
+        "py": 416
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": true,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "D1U1R1L2R1U1D1B"
+      },
+      "activation_script": "Zealot4",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "e11a3dd5-04dc-407b-9cf0-6b2e6892adfe",
+      "INDEX": 13
+    },
+    {
+      "name": "Person A",
+      "filename": "chrs/NPC/common/Tourist Sunglasses Buzzed.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 59,
+        "ty": 196,
+        "px": 944,
+        "py": 3136
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": true,
+      "is_an_obstruction": true,
+      "autofaces": true,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "person_a",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "d3b4c2a3-4f36-4ec1-8ccf-5d9203dedf86",
+      "INDEX": 14
+    },
+    {
+      "name": "Person B",
+      "filename": "chrs/NPC/common/Dress Lady Blue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 60,
+        "ty": 196,
+        "px": 960,
+        "py": 3136
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": true,
+      "is_an_obstruction": true,
+      "autofaces": true,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "person_b",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "11480993-024c-461d-bc9e-8a3b7ba4d8ce",
+      "INDEX": 15
+    },
+    {
+      "name": "Person C",
+      "filename": "chrs/NPC/common/Tourist Sunglasses Pixie.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 15,
+        "ty": 200,
+        "px": 240,
+        "py": 3200
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "person_c",
+      "animation": "Idle Right",
+      "uuid": "c6f5317b-3651-4fb2-986c-fe07b3eb3cec",
+      "INDEX": 16,
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "Dexter's Dad",
+      "filename": "chrs/NPC/unique/Dexters Dad.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 51,
+        "ty": 166,
+        "px": 816,
+        "py": 2656
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "Dexters_Dad",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "f59a0e26-60e2-4517-8b30-28c4dba32e4b",
+      "INDEX": 17
+    },
+    {
+      "name": "Dexter's Mom",
+      "filename": "chrs/NPC/unique/Dexters Mom.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 49,
+        "ty": 165,
+        "px": 784,
+        "py": 2640
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "Dexters_Mom",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "78309e88-8862-4168-a1b5-0ec6e99bf35b",
+      "INDEX": 18
+    },
+    {
+      "name": "Student A",
+      "filename": "chrs/NPC/common/Commoner Guy Blue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 2000,
+        "py": 2732
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_a",
+      "animation": "Idle Up",
+      "uuid": "169e7e23-dba7-4ccb-b94b-4337fc7b3c6d",
+      "INDEX": 19
+    },
+    {
+      "name": "Student B",
+      "filename": "chrs/NPC/common/Commoner Lady Violet.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 2064,
+        "py": 2700
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_b",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "10299e2a-e30b-41ee-a876-824c984c31bb",
+      "INDEX": 20
+    },
+    {
+      "name": "Student C",
+      "filename": "chrs/NPC/common/Commoner Lady Red.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 1936,
+        "py": 2732
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_c",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "d60d43a9-7120-4fe3-99be-cf31d1b8a642",
+      "INDEX": 21
+    },
+    {
+      "name": "Student D",
+      "filename": "chrs/NPC/common/Commoner Guy Pink.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 1872,
+        "py": 2700
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_d",
+      "animation": "Idle Up",
+      "uuid": "098457eb-0b06-4ec4-8892-a13691e263b2",
+      "INDEX": 22,
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "Student E",
+      "filename": "chrs/NPC/common/Dress Lady Yellow.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 2112,
+        "py": 2764
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_e",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "a886e4d3-de86-447a-8bb6-9ed46e6497ee",
+      "INDEX": 23
+    },
+    {
+      "name": "Student F",
+      "filename": "chrs/NPC/common/Commoner Lady Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 2176,
+        "py": 2764
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_f",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "80a466ff-f49c-4ede-8271-ba1d6df4955e",
+      "INDEX": 24
+    },
+    {
+      "name": "Little Daddy Bruce",
+      "filename": "chrs/NPC/common/Commoner Guy Pink.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 1552,
+        "py": 2552
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "4ff68432-a0f1-43a3-8613-872e746f78f4",
+      "INDEX": 25
+    },
+    {
+      "name": "Fashion Babe",
+      "filename": "chrs/NPC/common/Commoner Lady Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 98,
+        "ty": 164,
+        "px": 1568,
+        "py": 2624
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "fashion_babe",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "602eb91e-1c72-46cc-84f8-bedcc6aeb6e3",
+      "INDEX": 26
+    },
+    {
+      "name": "Hair Guy",
+      "filename": "chrs/NPC/common/Commoner Guy Blue.json",
+      "location": {
+        "tx": 89,
+        "ty": 159,
+        "layer": "Entity Layer (E)",
+        "px": 1424,
+        "py": 2544
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "hair_stylist",
+      "animation": "Idle Down",
+      "uuid": "37fbe021-9ace-40f3-b5fa-e381f5040fb8"
+    },
+    {
+      "name": "Hair Colorist",
+      "filename": "chrs/NPC/common/Dress Lady Pink.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 92,
+        "ty": 159,
+        "px": 1472,
+        "py": 2544
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "hair_colorist",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "9483b622-826c-44ea-8205-42a6af592e5e",
+      "INDEX": 28
+    },
+    {
+      "name": "Clothes Guy",
+      "filename": "chrs/NPC/common/Old Guy Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 85,
+        "ty": 159,
+        "px": 1360,
+        "py": 2544
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "clothes_guy",
+      "animation": "Idle Down",
+      "uuid": "8b4c806b-6b8c-475c-9ad2-28254041edea",
+      "MAPED_USEDEFAULT": false,
+      "INDEX": 29
+    },
+    {
+      "name": "Music Man",
+      "filename": "chrs/NPC/common/Commoner Guy White.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 84,
+        "ty": 166,
+        "px": 1344,
+        "py": 2656
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "music_man",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "6a3b576c-005c-4407-b60a-e69f23d1d6f4",
+      "INDEX": 30
+    },
+    {
+      "name": "Archivist",
+      "filename": "chrs/NPC/common/Old Guy Orange.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 127,
+        "ty": 223,
+        "px": 2032,
+        "py": 3568
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Rectangle",
+        "delay": 100,
+        "bounds": {
+          "upper_left": {
+            "X": 119,
+            "Y": 217
+          },
+          "lower_right": {
+            "X": 137,
+            "Y": 225
+          }
+        }
+      },
+      "activation_script": "Archivist",
+      "animation": "Idle Right",
+      "uuid": "6e7af6c4-3416-4a1b-a4a3-55ecac08aaaf",
+      "INDEX": 31
+    },
+    {
+      "name": "Churchy A",
+      "filename": "chrs/NPC/common/Old Guy Purple.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 12,
+        "ty": 227,
+        "px": 192,
+        "py": 3632
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "ChurchA",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "88b19e15-9ab6-4141-9917-3e2d107c150a",
+      "INDEX": 32
+    },
+    {
+      "name": "Churchy B",
+      "filename": "chrs/NPC/common/Old Guy Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 19,
+        "ty": 223,
+        "px": 304,
+        "py": 3568
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "ChurchB",
+      "animation": "Idle Up",
+      "uuid": "947b592a-a702-439b-8ed0-7af31ad8bcba",
+      "INDEX": 33,
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "Churchy C",
+      "filename": "chrs/NPC/common/Dress Lady Blue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 13,
+        "ty": 221,
+        "px": 208,
+        "py": 3536
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "ChurchC",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "10106876-1c55-4ab7-8edb-00e045a899e2",
+      "INDEX": 34
+    },
+    {
+      "name": "Churchy D",
+      "filename": "chrs/NPC/common/Dress Lady Yellow.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 16,
+        "ty": 231,
+        "px": 256,
+        "py": 3696
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "ChurchD",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "7fb6eed9-7b6c-42ba-9fee-886bedcbef4d",
+      "INDEX": 35
+    },
+    {
+      "name": "Churchy E",
+      "filename": "chrs/NPC/common/Commoner Guy Blue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 19,
+        "ty": 233,
+        "px": 304,
+        "py": 3728
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "ChurchE",
+      "animation": "Idle Left",
+      "uuid": "66ead24a-c1ba-4f40-8585-65c0248ef2bf",
+      "INDEX": 36,
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "Student G",
+      "filename": "chrs/NPC/common/Dress Lady Blue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 86,
+        "ty": 217,
+        "px": 1376,
+        "py": 3472
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": true,
+      "is_an_obstruction": true,
+      "autofaces": true,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_g",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "fcef6c8c-ecbf-447c-86c6-3b70200e0d0d",
+      "INDEX": 37
+    },
+    {
+      "name": "Student H",
+      "filename": "chrs/NPC/common/Adventurer Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 96,
+        "ty": 220,
+        "px": 1536,
+        "py": 3520
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_h",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "68cb1a98-3ab8-44d1-9f32-a514eb7e595a",
+      "INDEX": 38
+    },
+    {
+      "name": "Student I",
+      "filename": "chrs/NPC/common/Dress Lady Pink.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 125,
+        "ty": 211,
+        "px": 2000,
+        "py": 3376
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_i",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "fdc67408-f399-4bf5-95e3-f8f7327720e8",
+      "INDEX": 39
+    },
+    {
+      "name": "Student J",
+      "filename": "chrs/NPC/common/Commoner Guy White.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 131,
+        "ty": 206,
+        "px": 2096,
+        "py": 3296
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "student_j",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "f4bff385-9032-4618-884a-0d24c1d95cd4",
+      "INDEX": 40
+    },
+    {
+      "name": "teacher_melee",
+      "filename": "chrs/NPC/unique/Kadan.json",
+      "location": {
+        "tx": 127,
+        "ty": 165,
+        "layer": "Entity Layer (E)",
+        "px": 2032,
+        "py": 2640
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "teacher_melee",
+      "animation": "Idle Down",
+      "uuid": "6b995013-7981-4e19-8717-4c29859ffab4",
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "teacher_science",
+      "filename": "chrs/NPC/unique/Science Teacher.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 119,
+        "ty": 165,
+        "px": 1904,
+        "py": 2640
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "teacher_science",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "d29543b0-83ad-4183-9a3f-a4f59e664adf",
+      "INDEX": 42
+    },
+    {
+      "name": "teacher_magic",
+      "filename": "chrs/NPC/unique/Vorn.json",
+      "location": {
+        "tx": 135,
+        "ty": 169,
+        "layer": "Entity Layer (E)",
+        "px": 2160,
+        "py": 2704
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "teacher_magic",
+      "animation": "Idle Down",
+      "uuid": "dd22f5e4-79fb-4ac2-a608-0585674575b0",
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "Veggiesmith",
+      "filename": "chrs/NPC/common/Knight Red.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 113,
+        "ty": 136,
+        "px": 1808,
+        "py": 2176
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 50,
+      "wander": {
+        "mode": "Zone",
+        "delay": 200
+      },
+      "activation_script": "veggiesmith",
+      "animation": "Idle Right",
+      "uuid": "1f899259-cb6d-4c4e-a099-ec31b54b4968",
+      "INDEX": 44,
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "d1",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 108,
+        "ty": 89,
+        "px": 1728,
+        "py": 1424
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "54f27ac5-7f7a-463a-ae05-9ffe4ca3cdaf",
+      "INDEX": 45
+    },
+    {
+      "name": "d2",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 112,
+        "ty": 74,
+        "px": 1792,
+        "py": 1184
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "26c846b4-d6d7-44b8-87f9-c1957d5a7ceb",
+      "INDEX": 46
+    },
+    {
+      "name": "d3",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 106,
+        "ty": 64,
+        "px": 1696,
+        "py": 1024
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "ffc7a606-6bf6-44b2-8bf8-6577a7890fef",
+      "INDEX": 47
+    },
+    {
+      "name": "d4",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 85,
+        "ty": 84,
+        "px": 1360,
+        "py": 1344
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "933f5dec-eb0d-49af-8f06-c4b4bd5706a0",
+      "INDEX": 48
+    },
+    {
+      "name": "d5",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 101,
+        "ty": 49,
+        "px": 1616,
+        "py": 784
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "153c71c6-36c2-43be-b795-8807bb49b803",
+      "INDEX": 49
+    },
+    {
+      "name": "d6",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 67,
+        "ty": 61,
+        "px": 1072,
+        "py": 976
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "981580ab-c9d4-4929-b10a-3de5cc2bd5c4",
+      "INDEX": 50
+    },
+    {
+      "name": "d7",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 61,
+        "ty": 87,
+        "px": 976,
+        "py": 1392
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "cb278943-4973-4cd8-9af1-cc098b0019d7",
+      "INDEX": 51
+    },
+    {
+      "name": "d8",
+      "filename": "chrs/objects/doors/Single Church Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 48,
+        "ty": 88,
+        "px": 768,
+        "py": 1408
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "a3b9b298-0634-4755-aff4-c4f31b1ca3b2",
+      "INDEX": 52
+    },
+    {
+      "name": "d9",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 109,
+        "ty": 89,
+        "px": 1744,
+        "py": 1424
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "cc3a1afb-83f5-42bc-bb3d-9f8d2dab98d9",
+      "INDEX": 53
+    },
+    {
+      "name": "d10",
+      "filename": "chrs/objects/doors/Single Wooden Door.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 62,
+        "ty": 87,
+        "px": 992,
+        "py": 1392
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "INDEX": 54,
+      "uuid": "e5c9e210-cdb4-4ec6-b2da-84539a06ee26"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 120,
+        "ty": 75,
+        "layer": "Entity Layer (E)",
+        "px": 1920,
+        "py": 1200
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "3d2fcb78-d3b1-40a7-a5c2-74b27dea5252"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 111,
+        "ty": 48,
+        "layer": "Entity Layer (E)",
+        "px": 1776,
+        "py": 768
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "c5c80625-3559-4af1-9c4c-2a99ce1a8560"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 120,
+        "ty": 90,
+        "layer": "Entity Layer (E)",
+        "px": 1920,
+        "py": 1440
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "d3f19c2b-e419-461c-9e37-88b6e68bc9e5"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 87,
+        "ty": 44,
+        "layer": "Entity Layer (E)",
+        "px": 1392,
+        "py": 704
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "4688f75f-ca0e-466a-bd0e-491caeda1f9f"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 66,
+        "ty": 39,
+        "layer": "Entity Layer (E)",
+        "px": 1056,
+        "py": 624
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "56a23bc0-77ca-4aff-8f53-3e594e90ecb4"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 49,
+        "ty": 31,
+        "layer": "Entity Layer (E)",
+        "px": 784,
+        "py": 496
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "adf5455c-b2ac-47fc-970c-9e6b3fd4a031"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 92,
+        "ty": 94,
+        "layer": "Entity Layer (E)",
+        "px": 1472,
+        "py": 1504
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "abef9b6c-0804-463f-a149-30fca2908ac8"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 47,
+        "ty": 59,
+        "layer": "Entity Layer (E)",
+        "px": 752,
+        "py": 944
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "e31ea8a9-f2e6-43f9-83f0-7c0724f2c2c6"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 111,
+        "ty": 60,
+        "layer": "Entity Layer (E)",
+        "px": 1776,
+        "py": 960
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "00b73f42-1870-4e84-b9d7-15873ab78f3e"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 94,
+        "ty": 34,
+        "layer": "Entity Layer (E)",
+        "px": 1504,
+        "py": 544
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "7927565f-be20-47ca-a4bc-3890a08cfd54"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 70,
+        "ty": 43,
+        "layer": "Entity Layer (E)",
+        "px": 1120,
+        "py": 688
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "48f4bb64-b3ec-4060-b95d-03c0d2af8c43"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 56,
+        "ty": 61,
+        "layer": "Entity Layer (E)",
+        "px": 896,
+        "py": 976
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "3cc20aeb-47c6-4648-bb02-5e76b87efaba"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 43,
+        "ty": 51,
+        "layer": "Entity Layer (E)",
+        "px": 688,
+        "py": 816
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "b174071d-9f68-4338-955f-fa4c3dde44df"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 32,
+        "ty": 75,
+        "layer": "Entity Layer (E)",
+        "px": 512,
+        "py": 1200
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "2a8ab517-453c-4051-a82b-c642dd1c3d32"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 122,
+        "ty": 64,
+        "px": 1952,
+        "py": 1024,
+        "layer": "Entity Layer (E)"
+      },
+      "uuid": "838d2648-21b0-4f28-b5dd-403627599c5a"
+    },
+    {
+      "name": "stan-d",
+      "filename": "chrs/objects/stands/StanCo.json",
+      "location": {
+        "tx": 92,
+        "ty": 73,
+        "layer": "Entity Layer (E)",
+        "px": 1472,
+        "py": 1168
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "783cfbbd-0ba0-4eae-8655-02c7e4491339"
+    },
+    {
+      "name": "dexter",
+      "filename": "chrs/PC/Dexter.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "3fcf6d23-c283-4f6d-a956-d4c608207a6f"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 65,
+        "ty": 29,
+        "layer": "Entity Layer (E)",
+        "px": 1040,
+        "py": 464
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "2ee1095e-960b-4a3b-84f2-76a9b11b77d1"
+    },
+    {
+      "name": "Thaco Bell",
+      "filename": "chrs/objects/stands/Thaco Bell.json",
+      "location": {
+        "tx": 32,
+        "ty": 85,
+        "layer": "Entity Layer (E)",
+        "px": 512,
+        "py": 1360
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "MAPED_USEDEFAULT": false,
+      "animation": "STATIC",
+      "uuid": "8e77bde6-5357-4ab4-913e-49aa83074ffc"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 26,
+        "ty": 85,
+        "layer": "Entity Layer (E)",
+        "px": 416,
+        "py": 1360
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "31f60b5d-fb48-44af-8edf-1e902d609ef4"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 72,
+        "ty": 60,
+        "px": 1152,
+        "py": 960,
+        "layer": "Entity Layer (E)"
+      },
+      "uuid": "44da57e7-70bf-470b-a033-03ccda067e59"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 31,
+        "ty": 81,
+        "layer": "Entity Layer (E)",
+        "px": 496,
+        "py": 1296
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "03385848-3198-4240-b907-e8281cab0864"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 22,
+        "ty": 86,
+        "layer": "Entity Layer (E)",
+        "px": 352,
+        "py": 1376
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "09a1fdea-35c3-4322-9b24-f1b77662fbc1"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 24,
+        "ty": 81,
+        "layer": "Entity Layer (E)",
+        "px": 384,
+        "py": 1296
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "751fc540-3210-42a8-a91e-ca60b2b6a216"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 18,
+        "ty": 85,
+        "layer": "Entity Layer (E)",
+        "px": 288,
+        "py": 1360
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "acf6cb0f-1e7a-4ba5-9121-d3490dff375a"
+    },
+    {
+      "name": "West Greeter",
+      "filename": "chrs/NPC/common/Commoner Guy Blue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 35,
+        "ty": 89,
+        "px": 560,
+        "py": 1424
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "west_greeter",
+      "animation": "Idle Left",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "fedbdb1a-e472-4122-9db9-58b9718048a0",
+      "INDEX": 80
+    },
+    {
+      "name": "Jelly (Ranched)",
+      "filename": "chrs/monsters/Jelly.json",
+      "location": {
+        "tx": 110,
+        "ty": 62,
+        "layer": "Entity Layer (E)",
+        "px": 1760,
+        "py": 992
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "Z0W100Z1W100B"
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "cd437d58-bfae-4110-8ce9-0f47fb648b70"
+    },
+    {
+      "name": "Jelly (Ranched)",
+      "filename": "chrs/monsters/Jelly.json",
+      "location": {
+        "tx": 112,
+        "ty": 62,
+        "layer": "Entity Layer (E)",
+        "px": 1792,
+        "py": 992
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "Z1W100Z0W100B"
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "04c79fd6-d677-4e70-9fc3-571de076fadf"
+    },
+    {
+      "name": "Jelly (Ranched)",
+      "filename": "chrs/monsters/Jelly.json",
+      "location": {
+        "tx": 111,
+        "ty": 63,
+        "layer": "Entity Layer (E)",
+        "px": 1776,
+        "py": 1008
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": "Z0W100Z1W100B"
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "54d16f51-c822-42d7-8a21-52a3dfdeee28"
+    },
+    {
+      "name": "",
+      "filename": "chrs/seafood/Sully.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "e314d95e-2e1b-47da-a4a0-6c01403e1d7d",
+      "INDEX": 84
+    },
+    {
+      "name": "",
+      "filename": "chrs/seafood/Crab.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "e5532e49-9dee-4fcf-aee4-3c35172b114e",
+      "INDEX": 85
+    },
+    {
+      "name": "",
+      "filename": "chrs/seafood/Crab.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "9c7855b1-1775-4e2c-b877-682c4d072a5f",
+      "INDEX": 86
+    },
+    {
+      "name": "",
+      "filename": "chrs/seafood/Crab.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "fb37767e-2dc3-4abb-b319-c33d51e701b8",
+      "INDEX": 87
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 126,
+        "ty": 90,
+        "layer": "Entity Layer (E)",
+        "px": 2016,
+        "py": 1440
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "620eb488-b3ef-4d7d-b60c-68e17886d7bb"
+    },
+    {
+      "name": "tree",
+      "filename": "chrs/objects/trees/Oak.json",
+      "location": {
+        "tx": 132,
+        "ty": 91,
+        "layer": "Entity Layer (E)",
+        "px": 2112,
+        "py": 1456
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "uuid": "04a91e0c-fcad-4b8e-82a1-19904f812f30"
+    },
+    {
+      "name": "Sugar Ray",
+      "filename": "chrs/NPC/unique/Sugar Ray - Bald.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 88,
+        "ty": 160,
+        "px": 1408,
+        "py": 2560
+      },
+      "facing": "Right",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": true,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "sugar_ray",
+      "animation": "Idle Right",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "d59a0926-134b-4a08-a728-3929ec47a28d",
+      "INDEX": 90
+    },
+    {
+      "name": "Learning Student 1",
+      "filename": "chrs/NPC/common/Knight Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 121,
+        "ty": 219,
+        "px": 1936,
+        "py": 3504
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Zone",
+        "delay": 100
+      },
+      "activation_script": "Learn_8",
+      "animation": "Idle Down",
+      "uuid": "6d22380d-c1e8-4607-9cc8-94246fff67cb",
+      "INDEX": 91,
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "Learning Student 2",
+      "filename": "chrs/NPC/common/Adventurer DarkBlue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 137,
+        "ty": 219,
+        "px": 2192,
+        "py": 3504
+      },
+      "facing": "Left",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Zone",
+        "delay": 100
+      },
+      "activation_script": "Learn_9",
+      "animation": "Idle Left",
+      "uuid": "ad2de4cf-eee9-4acb-9e92-4824c28d7660",
+      "INDEX": 92,
+      "MAPED_USEDEFAULT": false
+    },
+    {
+      "name": "Learning Student 3",
+      "filename": "chrs/NPC/common/Adventurer LightBlue.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 132,
+        "ty": 219,
+        "px": 2112,
+        "py": 3504
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Zone",
+        "delay": 100
+      },
+      "activation_script": "Learn_10",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "665da82c-866b-47ad-865c-56bcb45deebe",
+      "INDEX": 93
+    },
+    {
+      "name": "Learning Student 4",
+      "filename": "chrs/NPC/common/Adventurer Green.json",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": 131,
+        "ty": 224,
+        "px": 2096,
+        "py": 3584
+      },
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 40,
+      "wander": {
+        "mode": "Zone",
+        "delay": 100
+      },
+      "activation_script": "Learn_11",
+      "animation": "Idle Up",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "d2e04b09-7dd0-41a1-9146-f3c136abe291",
+      "INDEX": 94
+    },
+    {
+      "name": "",
+      "filename": "chrs/monsters/Dorkupine Lab.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "labrat_1",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "f69b628c-5c26-4f17-af7b-cf6286054953",
+      "INDEX": 95
+    },
+    {
+      "name": "",
+      "filename": "chrs/monsters/Dorkupine Lab.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "labrat_2",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "18f4e670-effb-43a6-8424-cbb51f1e3dbc",
+      "INDEX": 96
+    },
+    {
+      "name": "",
+      "filename": "chrs/monsters/Dorkupine Lab.json",
+      "location": {
+        "tx": 0,
+        "ty": 0,
+        "layer": "Entity Layer (E)",
+        "px": 0,
+        "py": 0
+      },
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "labrat_3",
+      "animation": "Idle Down",
+      "MAPED_USEDEFAULT": false,
+      "uuid": "530d8c52-91cc-4404-bb21-83060b57bd0f",
+      "INDEX": 97
+    },
+    {
+      "name": "Mt. Jujube",
+      "filename": "maps/components/farmsville/mt-jujube.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 72,
+        "ty": 14,
+        "px": 1152,
+        "py": 226,
+        "layer": "Back Parallax"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "c6a9e374-77d2-4e7c-8222-f5649087a8a1"
+    },
+    {
+      "name": "Well",
+      "filename": "maps/components/farmsville/well.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 88,
+        "ty": 60,
+        "px": 1408,
+        "py": 960,
+        "layer": "Entity Layer (E)"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "7b6f398e-de40-4e4a-8d23-98383d310082"
+    },
+    {
+      "name": "Exterior BG",
+      "filename": "maps/components/farmsville/farmsville-bottom.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 13,
+        "ty": 22,
+        "px": 208,
+        "py": 352,
+        "layer": "Background"
+      },
+      "MAPED_USEDEFAULT": false,
+      "INDEX": 100,
+      "uuid": "3e069d54-ebe5-4f87-bb7d-e2e5a370da3a"
+    },
+    {
+      "name": "Exterior FG",
+      "filename": "maps/components/farmsville/farmsville-top.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 13,
+        "ty": 22,
+        "px": 208,
+        "py": 352,
+        "layer": "Foreground"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "94b4effc-1de5-4b82-99c1-c64af146ecf6"
+    },
+    {
+      "name": "Long Bridge BG",
+      "filename": "maps/components/farmsville/long-bridge-back.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 62,
+        "ty": 63,
+        "px": 992,
+        "py": 1008,
+        "layer": "Background"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "bdc72b96-11df-46a9-95b4-ce7961ae3799"
+    },
+    {
+      "name": "Long Bridge FG",
+      "filename": "maps/components/farmsville/long-bridge-front.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 61,
+        "ty": 66,
+        "px": 976,
+        "py": 1058,
+        "layer": "Foreground"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "56e3e3ed-6e60-4f1e-8d4a-dc6951764d5b"
+    },
+    {
+      "name": "Statue Bridge",
+      "filename": "maps/components/farmsville/statue-bridge.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": 58,
+        "ty": 33,
+        "px": 924,
+        "py": 576,
+        "layer": "Background"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "1f2d19c6-78fe-4cce-83f4-1ec786fffdcf"
+    },
+    {
+      "name": "Waterfall NW",
+      "filename": "maps/components/farmsville/waterfall-shimmer.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 53,
+        "ty": 50,
+        "px": 850,
+        "py": 797,
+        "layer": "Entity Layer (E)"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "ae437bea-3578-4384-b695-83f49989ba50"
+    },
+    {
+      "name": "Waterfall NE",
+      "filename": "maps/components/farmsville/waterfall-shimmer.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 75,
+        "ty": 50,
+        "px": 1203,
+        "py": 799,
+        "layer": "Entity Layer (E)"
+      },
+      "uuid": "73484c78-7529-487c-8426-9769d6ddcd54"
+    },
+    {
+      "name": "Waterfall SE",
+      "filename": "maps/components/farmsville/waterfall-shimmer.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 75,
+        "ty": 97,
+        "px": 1203,
+        "py": 1550,
+        "layer": "Entity Layer (E)"
+      },
+      "uuid": "cab1a496-68d4-4dae-9bad-036a519957d0"
+    },
+    {
+      "name": "Waterfall SW",
+      "filename": "maps/components/farmsville/waterfall-shimmer.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 41,
+        "ty": 95,
+        "px": 658,
+        "py": 1518,
+        "layer": "Entity Layer (E)"
+      },
+      "uuid": "29179c98-f83f-4903-ace7-19afe55a8fa5"
+    },
+    {
+      "name": "Waterfall Splash NW",
+      "filename": "maps/components/farmsville/waterfall-splash-narrow.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 53,
+        "ty": 50,
+        "px": 850,
+        "py": 845,
+        "layer": "Entity Layer (E)"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "9b11814a-1b6b-4470-a6d2-94192fc7b21b"
+    },
+    {
+      "name": "Waterfall Splash NE",
+      "filename": "maps/components/farmsville/waterfall-splash-narrow.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 75,
+        "ty": 50,
+        "px": 1203,
+        "py": 875,
+        "layer": "Entity Layer (E)"
+      },
+      "uuid": "34d69daa-897e-4a42-b2f5-42f481479f26"
+    },
+    {
+      "name": "Waterfall Splash SE",
+      "filename": "maps/components/farmsville/waterfall-splash.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 75,
+        "ty": 97,
+        "px": 1203,
+        "py": 1593,
+        "layer": "Entity Layer (E)"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "46e14f34-b4d8-42c2-b56d-387a82493e47"
+    },
+    {
+      "name": "Waterfall Splash SW",
+      "filename": "maps/components/farmsville/waterfall-splash.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Forward",
+      "location": {
+        "tx": 41,
+        "ty": 95,
+        "px": 658,
+        "py": 1593,
+        "layer": "Entity Layer (E)"
+      },
+      "uuid": "2b683fa0-5211-4696-b929-1a948f1bbf1b",
+      "INDEX": 112
+    },
+    {
+      "name": "Secret Path Cover",
+      "filename": "maps/components/farmsville/farmsville-secret-path.json",
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 0,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "STATIC",
+      "location": {
+        "tx": null,
+        "ty": null,
+        "px": 842,
+        "py": 416,
+        "layer": "Hilltop"
+      },
+      "MAPED_USEDEFAULT": false,
+      "uuid": "4fb9253c-0eb9-4fa4-ac7e-1511e4af68dc",
+      "INDEX": 113
+    },
+    {
+      "name": "Fashion Coconut",
+      "uuid": "eaeb8dc8-53e9-48b2-98fb-bb9f35a8180b",
+      "filename": "chrs/objects/Coconut.json",
+      "facing": "Down",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "",
+      "animation": "Shadow",
+      "location": {
+        "layer": "Entity Layer (E)",
+        "tx": null,
+        "ty": null,
+        "px": 1578,
+        "py": 2521
+      },
+      "MAPED_USEDEFAULT": false,
+      "INDEX": 114
+    },
+    {
+      "name": "Green Chest",
+      "uuid": "5e4b5615-d9f6-435b-83fa-2203b2e2319b",
+      "filename": "chrs/objects/Green Chest.json",
+      "facing": "Up",
+      "pays_attention_to_obstructions": false,
+      "is_an_obstruction": false,
+      "autofaces": false,
+      "speed": 100,
+      "wander": {
+        "mode": "Scripted",
+        "delay": 0,
+        "initial_movestring": ""
+      },
+      "activation_script": "canal_chest_green",
+      "animation": "Sealed",
+      "location": {
+        "tx": 60,
+        "ty": 36,
+        "px": 960,
+        "py": 576,
+        "layer": "Entity Layer (E)"
+      },
+      "MAPED_USEDEFAULT": false,
+      "INDEX": 115
+    }
+  ],
+  "MAPED_ENTLAYER_VISIBLE": true,
+  "MAPED_ZONELAYER_VISIBLE": true,
+  "MAPED_OBSLAYER_VISIBLE": false,
+  "MAPED_GLOBAL_ENTITY_BOUNDS_DRAWING_HEX": "#00000000",
+  "MAPED_GLOBAL_ENTITY_BOUNDS_DRAWING": {
+    "R": 0,
+    "G": 0,
+    "B": 0,
+    "A": 0
+  },
+  "MAPED_GLOBAL_ENTITY_HITBOX_BOUNDS_DRAWING_HEX": "#00000000",
+  "MAPED_GLOBAL_ENTITY_HITBOX_BOUNDS_DRAWING": {
+    "R": 0,
+    "G": 0,
+    "B": 0,
+    "A": 0
+  },
+  "MAPED_GLOBAL_ENTITY_TALLREDRAW_BOUNDS_DRAWING_HEX": "#00000000",
+  "MAPED_GLOBAL_ENTITY_TALLREDRAW_BOUNDS_DRAWING": {
+    "R": 0,
+    "G": 0,
+    "B": 0,
+    "A": 0
+  }
+}

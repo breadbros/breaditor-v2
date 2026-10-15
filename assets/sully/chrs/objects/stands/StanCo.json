@@ -1,0 +1,16 @@
+{
+    "animations": {
+        "STATIC": [ "T10000 0", "Looping" ]
+    },
+    "dims": [
+        64, 
+        62
+    ], 
+    "hitbox": [0,38,64,24],
+    "hitbox_is_solid": false,
+    "frames": 1, 
+    "image": "StanCo.png", 
+    "inner_pad": 0, 
+    "outer_pad": 0, 
+    "per_row": 1
+}
