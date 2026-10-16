@@ -81,6 +81,11 @@ Validate with `yarn test`, `yarn tsc --noEmit`, `yarn test:map`, and
 and canopy pixels against the real WebGL renderer; expected PNG previews are
 generated from those authored pixels, not from renderer captures. Linux CI runs
 the fixtures with software graphics under Xvfb and retains failure captures.
+`yarn test:map-layers` checks the production Layers panel with native drag events,
+rendered pixel changes, visibility controls, undo/redo, and Save As data preservation.
+The Layers stack is foreground first: drag rows or use their arrows to change draw
+order. Row eyes control art and layer entities independently; the `Tall` badge marks
+the tall-entity redraw layer. Zones and obstruction overlay eyes remain separate.
 `yarn verify:clean` copies the current source into an isolated retained directory
 and verifies a fresh frozen install, types, production build, assets, and tests
 without sibling projects or an existing dependency cache.

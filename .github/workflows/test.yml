@@ -50,6 +50,10 @@ jobs:
         env:
           MAP_VISUAL_OUTPUT: ${{ runner.temp }}/map-visual
         run: xvfb-run -a yarn test:map-visual
+      - name: Check layer controls and native dragging
+        env:
+          MAP_VISUAL_OUTPUT: ${{ runner.temp }}/map-visual
+        run: xvfb-run -a yarn test:map-layers
       - name: Retain visual failure captures
         if: failure()
         uses: actions/upload-artifact@v4

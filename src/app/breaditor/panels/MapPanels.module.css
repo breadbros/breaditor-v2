@@ -17,3 +17,27 @@
 .tileSelection {position: absolute; pointer-events: none; box-sizing: border-box; border: 2px solid #a9dcff; background: #71b7ff44;}
 .panel fieldset {border: 1px solid #59616c; margin: 10px 0; padding: 7px;}
 .panel textarea {width: 100%; box-sizing: border-box; color: inherit; background: #181c22; font: 11px monospace;}
+.layerOverlays {display: flex; flex-direction: column; gap: 3px; padding-bottom: 6px; border-bottom: 1px solid #424b56;}
+.layerOverlayRow {display: flex; align-items: center; gap: 5px; min-height: 28px;}
+.layerOverlayRow > button[role="option"] {flex: 1; text-align: left;}
+.layerOverlayChild {padding-left: 16px;}
+.layerHint {font-size: 11px; color: #aebbc8; margin: 7px 0;}
+.layerStack {display: flex; flex-direction: column; gap: 3px; max-height: 390px; overflow: auto; margin-bottom: 8px;}
+.layerRow {display: grid; grid-template-columns: 12px 27px 27px minmax(65px, 1fr) 23px; align-items: center; gap: 3px; padding: 3px 2px; border: 1px solid #424b56; border-radius: 3px; background: #292e35;}
+.layerRow:has([aria-selected="true"]) {border-color: #73baff;}
+.layerRow.layerDrop {border-color: #aad8ff; box-shadow: inset 0 2px #aad8ff;}
+.layerGrip {cursor: grab; color: #a2afbc; font-size: 20px; user-select: none;}
+.layerRow:active .layerGrip {cursor: grabbing;}
+.panel .layerEye {position: relative; display: flex; justify-content: center; align-items: center; padding: 4px; width: 27px; height: 27px; flex-shrink: 0; color: #dce8f2;}
+.panel .layerEyeClosed {color: #98a2ad; background: #252a31;}
+.layerEyeClosed::after {content: ''; position: absolute; width: 21px; height: 2px; background: currentColor; transform: rotate(-45deg); box-shadow: 0 1px #252a31;}
+.entityEyeMark {position: absolute; right: 1px; bottom: 0; font: bold 9px system-ui; background: #343b43; padding: 0 1px;}
+.layerControlSpacer {width: 27px;}
+.panel .layerName {min-width: 0; text-align: left; padding: 3px 5px; color: inherit; overflow-wrap: anywhere;}
+.layerNameText {display: inline;}
+.layerName[aria-selected="true"], .layerOverlayRow [aria-selected="true"] {background: #28649a; border-color: #73baff;}
+.layerBadge {display: inline-block; margin-left: 5px; padding: 0 3px; border-radius: 2px; background: #5c4620; color: #ffe0a1; font: bold 10px system-ui;}
+.layerMeta {display: block; color: #b2bdca; font-size: 10px; margin-top: 2px;}
+.layerMove {display: flex; flex-direction: column; gap: 2px;}
+.panel .layerMove button {padding: 0; line-height: 17px; width: 23px; text-align: center;}
+.layerOmitted {grid-column: 4 / 6; color: #b2bdca; font-size: 10px;}
