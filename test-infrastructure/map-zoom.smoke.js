@@ -46,7 +46,8 @@ if (!process.versions.electron) {
     }, label);
     await settle();
   }
-  async function zoom(url) {return browser(url => JSON.parse(localStorage.getItem('breaditor.mapZoom.v1.' + url)), url);}
+  async function viewport(url) {return browser(url => JSON.parse(localStorage.getItem('breaditor.mapViewport.v1.' + url)), url);}
+  async function zoom(url) {return (await viewport(url)).zoom;}
   async function wheel() {
     const point = await browser(() => {const rect = document.querySelector('[aria-label="Map viewport"]').getBoundingClientRect(); return {x: Math.round(rect.x + rect.width / 2), y: Math.round(rect.y + rect.height / 2)};});
     win.webContents.sendInputEvent({type: 'mouseWheel', ...point, deltaX: 0, deltaY: -100});
@@ -85,23 +86,30 @@ if (!process.versions.electron) {
       await button('100%'); await expectZoom(sourceUrl, 1);
       await wheel(); await wheel();
       const source = await zoom(sourceUrl); assert.notStrictEqual(source, 1, 'Wheel must change zoom');
+      const sourceViewport = await viewport(sourceUrl);
       await expectZoom(sourceUrl, source);
       await button('Save As');
       await waitFor(() => document.querySelector('[data-testid="map-status"]').textContent.includes('Map saved'), 'Save As completed');
       await expectZoom(copyUrl, source);
+      assert.deepStrictEqual(await viewport(copyUrl), sourceViewport, 'Save As did not copy the viewport position');
       await button('Fit');
       assert.notStrictEqual(await zoom(copyUrl), source, 'Fit must replace saved zoom');
       await button('100%'); await wheel();
       const copy = await zoom(copyUrl); assert.notStrictEqual(copy, source, 'Maps need different zooms');
+      const copyViewport = await viewport(copyUrl);
       await expectZoom(copyUrl, copy);
       assert.strictEqual(await zoom(sourceUrl), source, 'Copy zoom changed source preference');
-      fs.writeFileSync(expectedPath, JSON.stringify({source, copy}, null, 2));
+      fs.writeFileSync(expectedPath, JSON.stringify({source, copy, sourceViewport, copyViewport}, null, 2));
       await reload(); await expectZoom(sourceUrl, source);
+      assert.deepStrictEqual(await viewport(sourceUrl), sourceViewport);
       await openCopy(); await expectZoom(copyUrl, copy);
+      assert.deepStrictEqual(await viewport(copyUrl), copyViewport);
     } else {
       const expected = JSON.parse(fs.readFileSync(expectedPath));
       await expectZoom(sourceUrl, expected.source);
+      assert.deepStrictEqual(await viewport(sourceUrl), expected.sourceViewport);
       await openCopy(); await expectZoom(copyUrl, expected.copy);
+      assert.deepStrictEqual(await viewport(copyUrl), expected.copyViewport);
     }
     assert.deepStrictEqual(errors, []);
     // Let the compositor present the freshly mounted document before capture.

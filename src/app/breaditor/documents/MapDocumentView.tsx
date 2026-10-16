@@ -77,7 +77,11 @@ export function MapDocumentView({document: doc}: {document: MapDocument}) {
       const ratio = window.devicePixelRatio || 1;
       canvas.width = Math.max(1, Math.round(viewport.clientWidth * ratio));
       canvas.height = Math.max(1, Math.round(viewport.clientHeight * ratio));
-      if (!session.fitted && viewport.clientWidth > 0 && viewport.clientHeight > 0) fit(false, session.initialZoom ?? undefined);
+      if (!session.fitted && viewport.clientWidth > 0 && viewport.clientHeight > 0) {
+        if (session.initialViewport) {
+          session.fitted = true; session.notify();
+        } else fit(false, session.initialZoom ?? undefined);
+      }
     }
     function fail(error: unknown) {if (!abort.signal.aborted) {setGraphicsError(error instanceof Error ? error.message : String(error)); setReady(false);}}
     function tick(time: number) {
