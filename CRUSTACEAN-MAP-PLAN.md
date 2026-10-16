@@ -45,7 +45,7 @@ All decisions resolved during planning:
 
 ## Implementation status
 
-Implemented with three parallel agents. No publishing or source-game modifications performed.
+Implemented with three parallel agents. Subsequent dependency publication and CI are recorded in `DEPENDENCY-PACKAGING-PLAN.md`. No source-game modifications performed.
 
 - Farmsville dependency closure is bundled byte-for-byte and verified in production output.
 - Standalone library, WebGL preview/navigation, typed map sessions, all six map panels, editing commands, undo/redo, persistence, exports, format extension and source watching are implemented.
@@ -62,6 +62,6 @@ Validation completed:
 - The full UI smoke also passed at device scale factor 2; PNG output retained native dimensions. Existing Monaco file/HTTP smoke passed.
 - Narrow existing-test edits were limited to the approved map placeholder, startup sample path, map panel routing and added Tileset panel expectation.
 
-Human acceptance remains separate: review Farmsville's bridges, waterfalls, parallax and tree-canopy occlusion against the game/donor. The Oak legacy atlas padding discrepancy is retained and reported as a diagnostic rather than rewriting the asset.
+Human acceptance: the user reported "verified" on 2026-10-16 after the Farmsville visual-parity and legacy save/load checklist in `MAP-PARITY-PLAN.md`. No discrepancies were reported. The Oak legacy atlas padding remains preserved and reported as a diagnostic rather than rewriting the asset. Human acceptance is separate from automated validation.
 
 The initial sibling dependency is superseded by the immutable Git dependency and CI work in `DEPENDENCY-PACKAGING-PLAN.md`. Retained transaction stages/backups/journals are intentionally not removed automatically.

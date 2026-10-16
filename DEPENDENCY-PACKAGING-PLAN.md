@@ -28,4 +28,4 @@ Library CI: https://github.com/mcgrue/crustacean-map-lib/actions/runs/3884828287
 
 The first Breaditor CI run exposed a Yarn 1 cache extraction race between the existing dockable Git dependency's nested prepare install and the outer install. CI and clean validation now serialize outer package fetches with `--network-concurrency 1`.
 
-Retained standalone evidence: `C:\Users\benmc\AppData\Local\Temp\breaditor-clean-install-Yld4wX`; visual evidence: `C:\Users\benmc\AppData\Local\Temp\breaditor-map-visual-stYDe7`. Retained validation directories will not be deleted automatically. Historical Sully visual parity still requires human review; the authored fixtures assert rendering behavior rather than game screenshots.
+Retained standalone evidence: `C:\Users\benmc\AppData\Local\Temp\breaditor-clean-install-Yld4wX`; visual evidence: `C:\Users\benmc\AppData\Local\Temp\breaditor-map-visual-stYDe7`. Retained validation directories will not be deleted automatically. The user reported historical Sully verification on 2026-10-16; see `MAP-PARITY-PLAN.md`. The authored fixtures independently assert rendering behavior rather than game screenshots.
