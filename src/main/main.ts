@@ -28,6 +28,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     frame: false, // no title bar
     webPreferences: {
+      additionalArguments: app.isPackaged ? [] : ['--breaditor-development'],
       contextIsolation: true,
       nodeIntegration: true,
       preload: path.join(__dirname, "../app/", "preload.js"), // for all those main/renderer bridge things

@@ -10,6 +10,7 @@ const {watchSpriteFiles} = require('./watchSpriteFiles');
 const {watchMapFiles} = require('./watchMapFiles');
 
 contextBridge.exposeInMainWorld('electronAPI', {
+  isDevelopment: process.argv.includes('--breaditor-development'),
   appClose: () => {
     ipcRenderer.send('app-close');
   },
