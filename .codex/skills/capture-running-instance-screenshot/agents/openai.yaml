@@ -1,0 +1,3 @@
+interface:
+  display_name: "Capture Running Instance Screenshot"
+  short_description: "Show the currently running app instance"
