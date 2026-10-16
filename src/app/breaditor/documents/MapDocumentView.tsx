@@ -4,6 +4,7 @@ import {WebGLMapRenderer} from 'crustacean-map-lib/webgl';
 import type {MapDocument} from './MapDocument';
 import {editableMap, useMapEditorSession, setMapClipboard} from './mapEditorSession';
 import {resolveSpriteUrl} from './spriteSource';
+import {MIN_MAP_ZOOM, MAX_MAP_ZOOM} from './mapZoomStorage';
 import {copySelection, cutSelection, pasteSelection, getLayerGrid, paintTiles, stampTiles, fillTiles, readTile, moveEntity, removeEntity, createEntity, addLayer, sullyTileCode, MapTool} from './mapEditing';
 import {MapPanel, MapToolbar} from '../panels/MapPanels';
 import {DocumentControls} from '../../layout/components/DocumentControls';
@@ -60,10 +61,10 @@ export function MapDocumentView({document: doc}: {document: MapDocument}) {
   const space = useRef(false), pointer = useRef<{id: number; mode: string; x: number; y: number; cx: number; cy: number; tx: number; ty: number; lastX: number; lastY: number; entity?: string; ex?: number; ey?: number; button: number} | null>(null);
   const smart = useRef(false);
 
-  function fit(reset = false) {
+  function fit(reset = false, initialZoom?: number) {
     if (!session.asset || !viewportRef.current) return;
     const area = bounds(session.asset), viewport = viewportRef.current;
-    const zoom = reset ? 1 : Math.min(16, Math.max(0.0625, Math.min((viewport.clientWidth - 24) / Math.max(1, area.width), (viewport.clientHeight - 24) / Math.max(1, area.height))));
+    const zoom = initialZoom ?? (reset ? 1 : Math.min(MAX_MAP_ZOOM, Math.max(MIN_MAP_ZOOM, Math.min((viewport.clientWidth - 24) / Math.max(1, area.width), (viewport.clientHeight - 24) / Math.max(1, area.height)))));
     session.camera = {x: area.x - (viewport.clientWidth / zoom - area.width) / 2, y: area.y - (viewport.clientHeight / zoom - area.height) / 2, zoom};
     session.fitted = true; session.notify();
   }
@@ -76,7 +77,7 @@ export function MapDocumentView({document: doc}: {document: MapDocument}) {
       const ratio = window.devicePixelRatio || 1;
       canvas.width = Math.max(1, Math.round(viewport.clientWidth * ratio));
       canvas.height = Math.max(1, Math.round(viewport.clientHeight * ratio));
-      if (!session.fitted && viewport.clientWidth > 0 && viewport.clientHeight > 0) fit();
+      if (!session.fitted && viewport.clientWidth > 0 && viewport.clientHeight > 0) fit(false, session.initialZoom ?? undefined);
     }
     function fail(error: unknown) {if (!abort.signal.aborted) {setGraphicsError(error instanceof Error ? error.message : String(error)); setReady(false);}}
     function tick(time: number) {
@@ -268,7 +269,7 @@ export function MapDocumentView({document: doc}: {document: MapDocument}) {
     {session.conflict && <div className={css.conflict} role="alert">Source files changed; unsaved edits are retained.<button onClick={() => {if (window.confirm('Discard unsaved edits and reload the changed files?')) void session.reload(true);}}>Reload from disk</button><button onClick={() => void session.save(true)}>Save As</button></div>}
     <div ref={viewportRef} className={css.viewport} tabIndex={0} aria-label="Map viewport" onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={() => {session.cancelGesture(); pointer.current = null;}} onContextMenu={event => event.preventDefault()}
       onKeyDown={keyDown} onKeyUp={event => {if (event.code === 'Space') space.current = false;}}
-      onWheel={event => {event.preventDefault(); const p = position(event), zoom = Math.min(16, Math.max(0.0625, session.camera.zoom * (event.deltaY < 0 ? 1.25 : 0.8))); session.camera = {x: p.worldX - p.x / zoom, y: p.worldY - p.y / zoom, zoom}; session.notify();}}>
+      onWheel={event => {event.preventDefault(); const p = position(event), zoom = Math.min(MAX_MAP_ZOOM, Math.max(MIN_MAP_ZOOM, session.camera.zoom * (event.deltaY < 0 ? 1.25 : 0.8))); session.camera = {x: p.worldX - p.x / zoom, y: p.worldY - p.y / zoom, zoom}; session.notify();}}>
       <canvas ref={canvasRef} className={css.canvas} aria-label={`${doc.info.title} map`} />
       <svg className={css.overlay}>
         {session.view.grid && gridWidth >= 4 && gridHeight >= 4 && <><defs><pattern id={`grid-${doc.info.id}`} width={gridWidth} height={gridHeight} patternUnits="userSpaceOnUse" x={gridX} y={gridY}><path d={`M ${gridWidth} 0 L 0 0 0 ${gridHeight}`} fill="none" stroke="#ffffff44" strokeWidth={0.5} /></pattern></defs><rect width="100%" height="100%" fill={`url(#grid-${doc.info.id})`} /></>}
