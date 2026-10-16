@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {createEmptyMap, loadMap, serializeMap, MapAsset, MapCamera} from 'crustacean-map-lib';
 import type {MapDocument} from './MapDocument';
 import {resolveSpriteUrl} from './spriteSource';
+import {loadMapZoom, loadMapViewport, saveMapViewport} from './mapZoomStorage';
 import type {MapEditableAsset, MapRect, MapTool, TileClipboard} from './mapEditing';
 
 export interface MapViewOptions {
@@ -17,7 +18,8 @@ export interface MapEditorSession {
   selectedLayer: string; selectedEntity?: string; tool: MapTool; primaryTile: number; secondaryTile: number;
   selection: MapRect | null; clipboard: TileClipboard | null; superLayers: string[];
   stamp: {width: number; height: number; tiles: number[]} | null;
-  camera: MapCamera; fitted: boolean; paused: boolean; timeMs: number; view: MapViewOptions;
+  camera: MapCamera; initialZoom: number | null; initialViewport: MapCamera | null;
+  fitted: boolean; paused: boolean; timeMs: number; view: MapViewOptions;
   history: HistoryEntry[]; redoHistory: HistoryEntry[];
   hashes: Record<string, string | null>; saved: string; disposed: boolean;
   subscribe(listener: () => void): () => void;
@@ -54,16 +56,31 @@ export function getMapEditorSession(doc: MapDocument): MapEditorSession {
   const existing = sessions.get(doc);
   if (existing) return existing.session;
   const entry: Entry = {session: undefined as unknown as MapEditorSession, subscribers: new Set()};
+  const initialViewport = loadMapViewport(doc.filepath);
+  const initialZoom = initialViewport?.zoom ?? loadMapZoom(doc.filepath);
+  let lastViewport = initialViewport, lastViewportPath = doc.filepath;
   const session: MapEditorSession = {
     document: doc, asset: doc.filepath ? null : prepare(createEmptyMap()), error: null, message: '',
     loading: !!doc.filepath, saving: false, dirty: false, conflict: false, revision: 0, imageRevision: 0,
     selectedLayer: 'E', tool: 'pan', primaryTile: 0, secondaryTile: 0, selection: null, clipboard, superLayers: [], stamp: null,
-    camera: {x: 0, y: 0, zoom: 1}, fitted: false, paused: false, timeMs: 0,
+    camera: initialViewport ? {...initialViewport} : {x: 0, y: 0, zoom: initialZoom ?? 1},
+    initialZoom, initialViewport, fitted: false, paused: false, timeMs: 0,
     view: {showObstructions: false, showZones: false, showEntities: true, showBounds: false, showHitboxes: false, showCanopies: false, grid: false,
       screenview: {enabled: false, x: 0, y: 0, width: 320, height: 240, opacity: 0.5}},
     history: [], redoHistory: [], hashes: {}, saved: '', disposed: false,
     subscribe(listener) {entry.subscribers.add(listener); return () => {entry.subscribers.delete(listener);};},
-    notify() {if (!session.disposed) entry.subscribers.forEach(listener => listener());},
+    notify() {
+      if (session.disposed) return;
+      // Loading notifications must not replace the saved viewport. Save As
+      // carries the current position and zoom to its new file.
+      const camera = session.camera;
+      if (session.fitted && (!lastViewport || camera.x !== lastViewport.x || camera.y !== lastViewport.y ||
+        camera.zoom !== lastViewport.zoom || doc.filepath !== lastViewportPath)) {
+        saveMapViewport(doc.filepath, camera);
+        lastViewport = {...camera}; lastViewportPath = doc.filepath;
+      }
+      entry.subscribers.forEach(listener => listener());
+    },
     edit(label, mutate) {
       if (!session.asset || session.loading) return;
       const before = entry.gesture?.before ?? snapshot(session.asset);

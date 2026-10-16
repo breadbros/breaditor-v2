@@ -136,6 +136,13 @@ function getMenu(dispatch: ({}: any) => void) {
         },
       ],
     },
+    ...(window.electronAPI?.isDevelopment === true ? [{
+      name: 'Dev',
+      actions: [{
+        type: 'actions',
+        actions: {'Reload Window': () => window.location.reload()},
+      }],
+    }] : []),
     /*
     {
       name: 'Edit',
