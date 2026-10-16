@@ -17,7 +17,8 @@ jobs:
           node-version: 22.x
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        # Yarn 1's nested Git prepare install otherwise races the outer cache writes.
+        run: yarn install --frozen-lockfile --network-concurrency 1
 
       - name: Type check
         run: yarn tsc --noEmit
@@ -40,7 +41,7 @@ jobs:
           cache: yarn
           node-version: 22.x
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --network-concurrency 1
       - name: Install Electron runtime libraries
         run: |
           sudo apt-get update

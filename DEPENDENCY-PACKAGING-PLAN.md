@@ -26,4 +26,6 @@ Breaditor passed isolated validation on Node 22.23.3 with a fresh dependency cac
 
 Library CI: https://github.com/mcgrue/crustacean-map-lib/actions/runs/38848282878
 
+The first Breaditor CI run exposed a Yarn 1 cache extraction race between the existing dockable Git dependency's nested prepare install and the outer install. CI and clean validation now serialize outer package fetches with `--network-concurrency 1`.
+
 Retained standalone evidence: `C:\Users\benmc\AppData\Local\Temp\breaditor-clean-install-Yld4wX`; visual evidence: `C:\Users\benmc\AppData\Local\Temp\breaditor-map-visual-stYDe7`. Retained validation directories will not be deleted automatically. Historical Sully visual parity still requires human review; the authored fixtures assert rendering behavior rather than game screenshots.

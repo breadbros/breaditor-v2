@@ -1,6 +1,6 @@
 # Startup
 1. Install Node 22+ and Yarn 1.x.
-2. Run `yarn install --frozen-lockfile`. Both Crustacean libraries use public HTTPS
+2. Run `yarn install --frozen-lockfile --network-concurrency 1`. Both Crustacean libraries use public HTTPS
    Git URLs pinned to immutable commits, with generated JavaScript and declarations
    already included. Sibling checkouts, SSH keys, and library build hooks are unnecessary.
 3. setup a `.env` file and add `BREADITOR_DEV_MODE=true` maybe. And then the following:

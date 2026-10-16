@@ -52,7 +52,9 @@ try {
   environment[`GIT_CONFIG_VALUE_${gitConfigCount}`] = 'never';
   environment.GIT_CONFIG_COUNT = String(gitConfigCount + 1);
   const invoke = args => run(process.execPath, [yarn, ...args], checkout, {env: environment});
-  invoke(['install', '--frozen-lockfile', '--non-interactive', '--cache-folder', path.join(output, 'yarn-cache')]);
+  // The existing dockable Git dependency prepares with a nested Yarn install.
+  // Serialize outer fetches so both installs cannot extract the same cache entry.
+  invoke(['install', '--frozen-lockfile', '--non-interactive', '--network-concurrency', '1', '--cache-folder', path.join(output, 'yarn-cache')]);
   if (!lock.equals(fs.readFileSync(path.join(checkout, 'yarn.lock')))) throw new Error('Frozen installation changed yarn.lock.');
   invoke(['tsc', '--noEmit']);
   invoke(['pre-build']);
