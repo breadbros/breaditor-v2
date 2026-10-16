@@ -8,7 +8,7 @@ import {DocumentInfo, WidgetInfo} from '../../../types/global.d';
 
 import {
   updateDocumentManagerState,
-  createPanelStateForWidgetInfoList,
+  createPanelStateForDocumentType,
   getDocumentState,
 } from '../ReactDockableApp';
 
@@ -223,9 +223,7 @@ function focusDocument(id: string) {
 
     updateDocumentManagerState(
       getDocumentState(),
-      createPanelStateForWidgetInfoList(
-        createInitialPanelInfoForDocumentType(_activeDocument.info.type),
-      ),
+      createPanelStateForDocumentType(_activeDocument.info.type),
     );
   }
 }
