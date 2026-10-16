@@ -1,5 +1,6 @@
 import React from 'react';
-import {activeDocument, addDocument, focusDocument} from './DocumentManager';
+import {activeDocument, addDocument, focusDocument, getWidgetInfo} from './DocumentManager';
+import {createPanelStateForDocumentType, togglePanel} from '../ReactDockableApp';
 import {saveOpenTextDocument} from './documents/textEditorSession';
 import {saveOpenMapDocument, recentMapFiles} from './documents/mapEditorSession';
 import {mapMaker, isMapDocument} from './documents/MapDocument';
@@ -44,6 +45,7 @@ function getWidgetVisibilityOptions() {
 
 function getMenu(dispatch: ({}: any) => void) {
   const active = activeDocument();
+  const openPanels = active ? createPanelStateForDocumentType(active.info.type).flatMap(panel => panel.windows.flatMap(win => win.widgets)) : [];
   return [
     {
       name: (
@@ -98,6 +100,12 @@ function getMenu(dispatch: ({}: any) => void) {
           },
         },
       ],
+    },
+    {
+      name: 'Panels',
+      actions: [{type: 'bools', options: Object.fromEntries(getWidgetInfo().map(panel => [panel.title, {
+        value: openPanels.includes(panel.id), function: () => togglePanel(panel.id),
+      }]))}],
     },
     {
       name: 'Test',

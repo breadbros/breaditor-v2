@@ -1,11 +1,12 @@
 import React, {
   useState,
-  // useRef,
+  useRef,
   //useEffect,
   Dispatch,
   SetStateAction,
 } from 'react';
-import {Dockable, PanelState} from 'react-dockable-ts';
+import {Dockable} from 'react-dockable-ts';
+import {PanelState, loadPanelLayout, savePanelLayout} from '../panelLayoutStorage';
 import {DocumentInfo, WidgetInfo} from '../../../../types/global';
 import {PanelView} from './PanelView';
 import {DocumentView} from './DocumentView';
@@ -13,6 +14,7 @@ import {DocumentView} from './DocumentView';
 
 import {
   focusDocument,
+  activeDocument,
 } from '../../breaditor/DocumentManager';
 
 // @ts-ignore
@@ -20,6 +22,8 @@ import css from './WorkspaceArea.module.css';
 //import {dispatch} from '../../state-management/in-memory/dispatch';
 
 interface WorkspaceAreaProps {
+  panelsetType?: string | null;
+  panelsEnabled?: boolean;
   style: any;
   initialPanelState: PanelState[];
   setPanelState: Dispatch<SetStateAction<PanelState[]>>;
@@ -33,33 +37,46 @@ interface WorkspaceAreaProps {
   dispatch: ({}: any) => void;
 }
 const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
-  const [layoutState, setLayoutState] = useState<PanelState[]>([
-    {
-      windows: [
-        {
-          selected: 0,
-          widgets: ['documents-container'],
-          hideTabs: true,
-        },
-      ],
-    },
-    {
-      windows: [
-        {
-          selected: 0,
-          widgets: ['panels-container'],
-          hideTabs: true,
-        },
-      ],
-    },
-  ]);
+  // Dockable reports DOM measurements on mount, before the document toolbar's
+  // portal has settled. Only user interactions should replace saved dimensions.
+  const interacted = useRef(false);
+  const [layoutState, setLayoutState] = useState<PanelState[]>(() => {
+    const fallback = [
+      {
+        windows: [
+          {
+            selected: 0,
+            widgets: ['documents-container'],
+            hideTabs: true,
+          },
+        ],
+      },
+      {
+        windows: [
+          {
+            selected: 0,
+            widgets: ['panels-container'],
+            hideTabs: true,
+          },
+        ],
+      },
+    ];
+    return props.panelsetType ? loadPanelLayout(props.panelsetType, 'workspace', ['documents-container', 'panels-container'], fallback) : fallback;
+  });
 
   return (
-    <div style={props.style}>
+    <div style={props.style}
+      onPointerDownCapture={() => {interacted.current = true;}}
+      onMouseDownCapture={() => {interacted.current = true;}}
+      onKeyDownCapture={() => {interacted.current = true;}}>
       <Dockable
         initialState={layoutState}
         onUpdate={(state) => {
+          if (!interacted.current) return;
           setLayoutState(state);
+          if (props.panelsetType && props.panelsEnabled && activeDocument()?.info.type === props.panelsetType) {
+            savePanelLayout(props.panelsetType, 'workspace', ['documents-container', 'panels-container'], state);
+          }
         }}
         spacing={3}
         testId="breaditor-browser-workspacearea"
@@ -79,6 +96,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
           <Dockable
             initialState={props.initialDocumentsState}
             onUpdate={(state) => {
+              if (!interacted.current) return;
               props.setDocumentState(state);
             }}
             onActive={(id) => {
@@ -107,6 +125,7 @@ const WorkspaceArea: React.FC<WorkspaceAreaProps> = (props) => {
           <Dockable
             initialState={props.initialPanelState}
             onUpdate={(state) => {
+              if (!interacted.current) return;
               props.setPanelState(state);
             }}
             spacing={3}
