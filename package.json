@@ -25,6 +25,7 @@
     "test:map": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/map.smoke.js",
     "test:map-layers": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/map-layers.smoke.js --no-sandbox",
     "test:map-visual": "electron test-infrastructure/map-visual.smoke.js --no-sandbox",
+    "test:panels": "node build-infrastructure/esbuild.js --quiet && node test-infrastructure/panel-layout.smoke.js",
     "verify:clean": "node build-infrastructure/verify-clean-install.js"
   },
   "author": "",

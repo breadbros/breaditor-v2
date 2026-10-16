@@ -1,6 +1,7 @@
 import React, {useState, useReducer, useEffect} from 'react';
 import {createRoot} from 'react-dom/client';
-import {PanelState} from 'react-dockable-ts';
+import {PanelState, loadPanelLayout, savePanelLayout} from './layout/panelLayoutStorage';
+import type {DocumentType} from './breaditor/DocumentManager';
 
 import {WindowProxy} from './layout/components/WindowProxy';
 import {MenuBar} from './layout/components/MenuBar';
@@ -45,9 +46,35 @@ function createInitialPanelState(): PanelState[] {
 
   const ad = activeDocument();
   if (!ad) return [];
-  return createPanelStateForWidgetInfoList(
-    createInitialPanelInfoForDocumentType(ad.info.type),
-  );
+  return createPanelStateForDocumentType(ad.info.type);
+}
+
+function createPanelStateForDocumentType(type: DocumentType): PanelState[] {
+  const info = createInitialPanelInfoForDocumentType(type);
+  return loadPanelLayout(type, 'panels', info.map(panel => panel.id), createPanelStateForWidgetInfoList(info));
+}
+
+function saveCurrentPanelState(type: DocumentType, panels: PanelState[]) {
+  savePanelLayout(type, 'panels', createInitialPanelInfoForDocumentType(type).map(panel => panel.id), panels);
+}
+
+function togglePanel(id: string) {
+  const current = activeDocument();
+  if (!current) return;
+  const panels = createPanelStateForDocumentType(current.info.type);
+  const isOpen = panels.some(panel => panel.windows.some(win => win.widgets.includes(id)));
+  const next = isOpen
+    ? panels.map(panel => ({
+      ...panel,
+      windows: panel.windows.map(win => {
+        const selected = win.widgets[win.selected];
+        const widgets = win.widgets.filter(widget => widget !== id);
+        return {...win, widgets, selected: Math.max(0, widgets.indexOf(selected))};
+      }).filter(win => win.widgets.length),
+    })).filter(panel => panel.windows.length)
+    : [...panels, {windows: [{selected: 0, widgets: [id]}]}];
+  saveCurrentPanelState(current.info.type, next);
+  if (docLoaded) updateDocumentManagerState(getDocumentState(), next);
 }
 
 function createInitialDocumentState(): PanelState[] {
@@ -157,7 +184,6 @@ let _setDocPanelState: any;
 let _PanelState: any;
 let _DocumentState: any;
 
-let _CachedValidPanelState: any = null;
 let _CachedValidDocumentState: any = null;
 
 function setOnOrOff(onOrOff: boolean) {
@@ -167,14 +193,12 @@ function setOnOrOff(onOrOff: boolean) {
   docLoaded = onOrOff;
 
   if (onOrOff) {
-    if (_CachedValidPanelState == null) {
-      _CachedValidPanelState = createInitialPanelState();
+    if (_CachedValidDocumentState == null) {
       _CachedValidDocumentState = createInitialDocumentState();
     }
-    newPanelState = _CachedValidPanelState;
+    newPanelState = createInitialPanelState();
     newDocState = _CachedValidDocumentState;
   } else {
-    _CachedValidPanelState = _PanelState;
     _CachedValidDocumentState = _DocumentState;
     newPanelState = [];
     newDocState = [];
@@ -191,6 +215,8 @@ function updateDocumentManagerState(
     console.warn("_setPanelState not yet initialized; was the app mounted correctly before calling for a focused document?");
     return;
   }
+  _PanelState = panelState;
+  _DocumentState = documentState;
   _setPanelState(panelState);
   _setDocPanelState(documentState);
 }
@@ -316,7 +342,9 @@ function App() {
         >
           <ToolBar selected={{}} dispatch={dispatch} />
           <WorkspaceArea
-            key={'main_workspace'}
+            key={`main_workspace:${focusedDocument?.info.type ?? 'none'}`}
+            panelsetType={focusedDocument?.info.type ?? null}
+            panelsEnabled={docLoaded}
             dispatch={dispatch}
             style={{
               flexGrow: 1,
@@ -327,9 +355,19 @@ function App() {
               padding: 1,
             }}
             initialPanelState={panelState}
-            setPanelState={setPanelState}
+            setPanelState={(next) => {
+              if (!docLoaded || activeDocument()?.info.type !== focusedDocument?.info.type) return;
+              const panels = typeof next === 'function' ? next(_PanelState) : next;
+              _PanelState = panels;
+              if (focusedDocument) saveCurrentPanelState(focusedDocument.info.type, panels);
+              setPanelState(panels);
+            }}
             initialDocumentsState={documentState}
-            setDocumentState={setDocumentState}
+            setDocumentState={(next) => {
+              const documents = typeof next === 'function' ? next(_DocumentState) : next;
+              _DocumentState = documents;
+              setDocumentState(documents);
+            }}
             documents={getCurrentDocuments()}
             panels={getCurrentPanels()}
             themeClass={'nullTheme'}
@@ -387,7 +425,6 @@ function init() {
   });
 
   docLoaded = true;
-  _CachedValidPanelState = null;
   _CachedValidDocumentState = null;
   root.render(<App />);
   return root;
@@ -397,6 +434,8 @@ export {
   App,
   createPanelStateForDocumentInfoList,
   createPanelStateForWidgetInfoList,
+  createPanelStateForDocumentType,
+  togglePanel,
   getCurrentPanels,
   init,
   setOnOrOff,
