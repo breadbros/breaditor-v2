@@ -1,9 +1,8 @@
 # Startup
-1. install Node 22+ and yarn (the sprite library requires SSH access to its GitHub repository)
-2. Keep the sibling `../crustacean-map-lib` checkout beside this project. Run
-   `npm install` and `npm run build` there, then `yarn` here. The local map package
-   is deliberately not published yet. After rebuilding it, use `yarn install --force`
-   here to refresh its installed copy.
+1. Install Node 22+ and Yarn 1.x.
+2. Run `yarn install --frozen-lockfile`. Both Crustacean libraries use public HTTPS
+   Git URLs pinned to immutable commits, with generated JavaScript and declarations
+   already included. Sibling checkouts, SSH keys, and library build hooks are unnecessary.
 3. setup a `.env` file and add `BREADITOR_DEV_MODE=true` maybe. And then the following:
 ```
 MAIN_WINDOW_X=
@@ -77,8 +76,16 @@ binds one tileset; obstruction masks combine independently of overlay visibility
 Extended maps require a new save destination and are not supported by the existing
 Sully runtime. Game scripts remain references and do not execute in the editor.
 
-Validate with `yarn test`, `yarn tsc --noEmit`, `yarn test:map`, and the sibling
-library's `npm test`. Verify packaged sample hashes with
+Validate with `yarn test`, `yarn tsc --noEmit`, `yarn test:map`, and
+`yarn test:map-visual`. Visual fixtures compare hand-authored bridge, waterfall,
+and canopy pixels against the real WebGL renderer; expected PNG previews are
+generated from those authored pixels, not from renderer captures. Linux CI runs
+the fixtures with software graphics under Xvfb and retains failure captures.
+`yarn verify:clean` copies the current source into an isolated retained directory
+and verifies a fresh frozen install, types, production build, assets, and tests
+without sibling projects or an existing dependency cache.
+The standalone map library has its own build-freshness, tests, and installed-package
+consumer checks. Verify packaged sample hashes with
 `node build-infrastructure/sully-assets.js --verify dist/app/assets/sully`.
 The implementation roadmap and resolved decisions are in `CRUSTACEAN-MAP-PLAN.md`.
 

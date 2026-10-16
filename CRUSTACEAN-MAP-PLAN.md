@@ -64,4 +64,4 @@ Validation completed:
 
 Human acceptance remains separate: review Farmsville's bridges, waterfalls, parallax and tree-canopy occlusion against the game/donor. The Oak legacy atlas padding discrepancy is retained and reported as a diagnostic rather than rewriting the asset.
 
-The sibling library is a local dependency and is not published. Retained transaction stages/backups/journals are intentionally not removed automatically.
+The initial sibling dependency is superseded by the immutable Git dependency and CI work in `DEPENDENCY-PACKAGING-PLAN.md`. Retained transaction stages/backups/journals are intentionally not removed automatically.
