@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {MapEditableAsset, MapTool, addLayer, renameLayer, removeLayer, reorderLayer, resizeLayer, resizeMapGrid, setMapTileSize, createEntity, cloneEntity, removeEntity, moveEntity, createZone, updateZone, upgradeMap, addObstructionLayer, removeObstructionLayer, getLayerGrid, mapTileSize, activationScriptName, sullyEntityCode, sullyZoneCode} from '../documents/mapEditing';
+import {MapEditableAsset, MapTool, addLayer, renameLayer, removeLayer, resizeLayer, resizeMapGrid, setMapTileSize, createEntity, cloneEntity, removeEntity, moveEntity, createZone, updateZone, upgradeMap, addObstructionLayer, removeObstructionLayer, getLayerGrid, mapTileSize, activationScriptName, sullyEntityCode, sullyZoneCode} from '../documents/mapEditing';
+import {MapLayerStack} from './MapLayerStack';
 // @ts-ignore
 import css from './MapPanels.module.css';
 
@@ -45,13 +46,8 @@ function LayersPanel(props: MapPanelProps) {
   const edit = (label: string, mutate: (asset: MapEditableAsset) => void) => onEdit(label, mutate);
   const [convert, setConvert] = useState(false);
   return <>
-    <div className={css.list} role="listbox" aria-label="Map layers">
-      {asset.map.layers.map((item, index) => <button key={index} role="option" aria-selected={selected === index} onClick={() => onSelectLayer(String(index))}>{index + 1}. {item.name}{item.MAPED_HIDDEN ? ' (hidden)' : ''}</button>)}
-      <button role="option" aria-selected={selectedLayer === 'E'} onClick={() => onSelectLayer('E')}>Entities</button>
-      <button role="option" aria-selected={selectedLayer === 'Z'} onClick={() => onSelectLayer('Z')}>Zones</button>
-      {asset.map.format_version === 2 ? (asset.map.obstruction_layers ?? []).map(item => <button key={item.id} role="option" aria-selected={selectedLayer === `O:${item.id}`} onClick={() => onSelectLayer(`O:${item.id}`)}>{item.name}</button>) : <button role="option" aria-selected={selectedLayer === 'O:legacy'} onClick={() => onSelectLayer('O:legacy')}>Obstructions</button>}
-    </div>
-    <div className={css.actions}><button onClick={() => edit('Add layer', draft => {onSelectLayer(String(addLayer(draft)));})}>Add art layer</button><button disabled={selected < 0} onClick={() => edit('Remove layer', draft => {removeLayer(draft, selected); onSelectLayer('0');})}>Remove layer</button><button disabled={selected <= 0} onClick={() => edit('Move layer', draft => {reorderLayer(draft, selected, selected - 1); onSelectLayer(String(selected - 1));})}>Up</button><button disabled={selected < 0 || selected >= asset.map.layers.length - 1} onClick={() => edit('Move layer', draft => {reorderLayer(draft, selected, selected + 1); onSelectLayer(String(selected + 1));})}>Down</button></div>
+    <MapLayerStack {...props} />
+    <div className={css.actions}><button onClick={() => edit('Add layer', draft => {onSelectLayer(String(addLayer(draft)));})}>Add art layer</button><button disabled={selected < 0} onClick={() => edit('Remove layer', draft => {removeLayer(draft, selected); onSelectLayer('0');})}>Remove layer</button></div>
     {layer && <>
       <Field label="Layer name" value={layer.name} onChange={value => edit('Rename layer', draft => renameLayer(draft, selected, value))} />
       <Options label="Art tileset" value={layer.vsp} options={Object.keys(asset.map.vsp).map(key => [key, key])} onChange={value => edit('Assign tileset', draft => {draft.map.layers[selected].vsp = value;})} />
@@ -64,6 +60,7 @@ function LayersPanel(props: MapPanelProps) {
       <Field label="Layer opacity" number min={0} max={1} value={layer.alpha} onChange={value => edit('Layer opacity', draft => {draft.map.layers[selected].alpha = Number(value);})} />
       <Check label="Layer visible" checked={!layer.MAPED_HIDDEN} onChange={value => edit('Layer visibility', draft => {draft.map.layers[selected].MAPED_HIDDEN = !value;})} />
       <Check label="Layer entities visible" checked={!layer.maped_HIDE_ENTS} onChange={value => edit('Layer entity visibility', draft => {draft.map.layers[selected].maped_HIDE_ENTS = !value;})} />
+      <Check label="Redraw tall entities here" checked={asset.map.tallentitylayer === layer.name || (asset.map.tallentitylayer as unknown) === selected} onChange={value => edit('Tall entity redraw layer', draft => {draft.map.tallentitylayer = value ? layer.name : '';})} />
     </>}
     {obstruction && <>
       <Field label="Obstruction name" value={obstruction.name} onChange={value => edit('Rename obstruction layer', draft => {draft.map.obstruction_layers!.find(item => item.id === obstruction.id)!.name = value;})} />
