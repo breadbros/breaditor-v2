@@ -1,6 +1,8 @@
 import React from 'react';
-import {activeDocument} from './DocumentManager';
+import {activeDocument, addDocument, focusDocument} from './DocumentManager';
 import {saveOpenTextDocument} from './documents/textEditorSession';
+import {saveOpenMapDocument, recentMapFiles} from './documents/mapEditorSession';
+import {mapMaker, isMapDocument} from './documents/MapDocument';
 
 function Logo() {
   return (
@@ -73,6 +75,7 @@ function getMenu(dispatch: ({}: any) => void) {
         {
           type: 'actions',
           actions: {
+            'New Map': () => {const doc = mapMaker('Untitled Map'); addDocument(doc); focusDocument(doc.info.id);},
             'Open Document': () => {
               dispatch({
                 type: 'DOC_OPEN_EXISTING',
@@ -83,6 +86,15 @@ function getMenu(dispatch: ({}: any) => void) {
               Save: () => saveOpenTextDocument(active),
               'Save As…': () => saveOpenTextDocument(active, true),
             } : {}),
+            ...(isMapDocument(active) ? {
+              Save: () => saveOpenMapDocument(active),
+              'Save Map As': () => saveOpenMapDocument(active, true),
+              'Export Map Project': () => saveOpenMapDocument(active, true, true),
+            } : {}),
+            ...Object.fromEntries(recentMapFiles().map((url, index) => [`Recent ${index + 1}: ${decodeURIComponent(url.split('/').pop() || url)}`, () => {
+              const doc = mapMaker(decodeURIComponent(url.split('/').pop() || 'Map').replace(/\.map\.json$/i, ''), url);
+              addDocument(doc); focusDocument(doc.info.id);
+            }])),
           },
         },
       ],

@@ -1,0 +1,38 @@
+{
+  "animations": {
+    "Idle Down": [ "T10000 1", "Looping"],
+    "Idle Up": [ "T10000 6", "Looping"],
+    "Idle Right": [ "T10000 2", "Looping"],
+    "Idle Left": [ "T10000 0", "Looping"],
+
+    "Walk Down": [ "T5 0 1 2 3 4 5 6 7", "Looping"],
+    "Walk Up": [ "T5 0 1 2 3 4 5 6 7", "Looping"],
+    "Walk Right": [ "T5 0 1 2 3 4 5 6 7", "Looping"],
+    "Walk Left": [ "T5 0 1 2 3 4 5 6 7", "Looping"]
+  },
+  "_V3_LEGACY": {
+    "signature": 5392451,
+    "version": 5,
+    "bitsPerPixel": 24,
+    "flags": 0,
+    "transparentColor": 16711935,
+    "formatName": "v3chr",
+    "customScriptsIgnored": 0,
+    "compression": 1
+  },
+  "dims": [
+    16,
+    32
+  ],
+  "hitbox": [
+    0,
+    23,
+    15,
+    10
+  ],
+  "frames": 12,
+  "image": "Sully.png",
+  "inner_pad": 0,
+  "outer_pad": 0,
+  "per_row": 8
+}

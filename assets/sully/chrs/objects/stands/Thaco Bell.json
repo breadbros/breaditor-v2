@@ -1,0 +1,16 @@
+{
+    "animations": {
+        "STATIC": [ "T10000 0", "Looping" ]
+    },
+    "dims": [
+        128, 
+        96
+    ], 
+    "hitbox": [5,69,120,26],
+    "hitbox_is_solid": false,
+    "frames": 1, 
+    "image": "Thaco Bell.png", 
+    "inner_pad": 0, 
+    "outer_pad": 0, 
+    "per_row": 1
+}

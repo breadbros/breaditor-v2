@@ -8,13 +8,11 @@ interface MapDocument {
   data: any;
 
   format: string;
-
-  crustacean_bulk_data: {};
-  crustacean_user_data: {};
-  crustacean_image: string;
+  contentRoot?: string;
+  bundled?: boolean;
 }
 
-function mapMaker(title: string): MapDocument {
+function mapMaker(title: string, filepath: string | number = '', contentRoot?: string | string[], bundled = false): MapDocument {
   return {
     info: {
       id: '',
@@ -22,17 +20,18 @@ function mapMaker(title: string): MapDocument {
       type: 'MAP',
     },
 
-    filepath: 'a_path.map',
+    filepath: typeof filepath === 'string' ? filepath : '',
     name: title,
     data: {},
 
-    format: 'VERY-FAKE',
-
-    crustacean_bulk_data: {},
-    crustacean_user_data: {},
-    crustacean_image: 'pretty.png',
+    format: 'CRUSTACEAN-MAP',
+    contentRoot: typeof contentRoot === 'string' ? contentRoot : undefined,
+    bundled,
   };
 }
 
 export type {MapDocument};
-export {mapMaker};
+function isMapDocument(doc: {info: DocumentInfo} | null | undefined): doc is MapDocument {
+  return doc?.info.type === 'MAP';
+}
+export {mapMaker, isMapDocument};

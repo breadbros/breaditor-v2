@@ -25,6 +25,7 @@ test('startup mounts the seeded documents and active-document panels without ear
 
   expect(getDocuments().map(doc => doc.info.type)).toEqual(['MAP', 'TEXT', 'SPRITE', 'MAP']);
   expect(activeDocument()!.info.title).toBe('Map A');
+  expect(activeDocument()!.filepath).toBe('assets/sully/maps/json/farmsville.map.json');
   const workspace = screen.getByTestId('breaditor-browser-workspacearea');
   expect(workspace).toHaveTextContent('Map A Document');
   expect(workspace).toHaveTextContent('Text B Document');

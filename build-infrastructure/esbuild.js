@@ -162,6 +162,10 @@ const minify = false;
           src: path.join(spriteLibrary, 'assets/lord-stan'),
           dest: 'dist/app/assets/lord-stan',
         }),
+        ...(fs.existsSync('src/app/breaditor/documents/MapDocumentView.tsx') ? [copyStaticFiles({
+          src: 'assets/sully',
+          dest: 'dist/app/assets/sully',
+        })] : []),
         ...['ASSET-ATTRIBUTION.md', 'LICENSE'].map(file => copyStaticFiles({
           src: path.join(spriteLibrary, file),
           dest: path.join('dist/app/assets/lord-stan', file),

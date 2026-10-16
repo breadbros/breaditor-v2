@@ -11,6 +11,9 @@ jest.mock('../../breaditor/DocumentManager', () => ({activeDocument: jest.fn()})
 jest.mock('../../breaditor/panels/SpriteInfoPanel', () => ({
   SpriteInfoPanel: ({document}: any) => <section aria-label={document.filepath} />,
 }));
+jest.mock('../../breaditor/documents/MapDocumentView', () => ({
+  MapDocumentPanel: ({document, id, title}: any) => <section id={id} aria-label={`${document.info.title} map panel`}>{title}</section>,
+}));
 
 test('shows sprite info for the active document and follows document switching', () => {
   (activeDocument as jest.Mock).mockReturnValue(spriteMaker('First', 'first.json'));
@@ -22,10 +25,11 @@ test('shows sprite info for the active document and follows document switching',
   expect(screen.queryByLabelText('first.json')).not.toBeInTheDocument();
 });
 
-test.each([null, mapMaker('Map')])('preserves the existing info panel without an active sprite', document => {
+test.each([null, mapMaker('Map')])('renders an info panel for an empty workspace or map', document => {
   (activeDocument as jest.Mock).mockReturnValue(document);
   render(<PanelView id="PanelInfo" title="Info Panel" />);
   expect(screen.getByText('Info Panel')).toHaveAttribute('id', 'PanelInfo');
+  if (document) expect(screen.getByLabelText('Map map panel')).toBeInTheDocument();
 });
 
 test('preserves other panels for sprite documents', () => {

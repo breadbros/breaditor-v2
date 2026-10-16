@@ -1,0 +1,19 @@
+{
+    "animations": {
+        "STATIC": [ "T10000 0", "Looping" ]
+    },
+    "dims": [
+        156, 
+        180
+    ], 
+    "hitbox": [63,142,16,16],
+    "hitbox_is_solid": false,
+	"regions": {
+		"Tall_Redraw": [0, 0, 156, 138]
+	},
+    "frames": 1, 
+    "image": "Oak.png", 
+    "inner_pad": 1, 
+    "outer_pad": 1, 
+    "per_row": 1
+}

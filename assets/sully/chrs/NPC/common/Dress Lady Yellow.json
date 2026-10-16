@@ -1,0 +1,38 @@
+{
+  "animations": {
+    "Idle Down": [ "T10000 0", "Looping"],
+    "Idle Up": [ "T10000 7", "Looping"],
+    "Idle Right": [ "T10000 14", "Looping"],
+    "Idle Left": [ "T10000 21", "Looping"],
+
+    "Walk Down": [ "T10 1 2 3 4 5 6", "Looping" ],
+    "Walk Up": [ "T10 8 9 10 11 12 13", "Looping" ],
+    "Walk Right": [ "T10 15 16 17 18 19 20", "Looping" ],
+    "Walk Left": [ "T10 22 23 24 25 26 27", "Looping" ]
+  },
+  "_V3_LEGACY": {
+    "signature": 5392451,
+    "version": 5,
+    "bitsPerPixel": 24,
+    "flags": 0,
+    "transparentColor": 16711935,
+    "formatName": "v3chr",
+    "customScriptsIgnored": 0,
+    "compression": 1
+  },
+  "dims": [
+    16,
+    32
+  ],
+  "hitbox": [
+    0,
+    16,
+    16,
+    16
+  ],
+  "frames": 28,
+  "image": "Dress Lady Yellow.png",
+  "inner_pad": 0,
+  "outer_pad": 0,
+  "per_row": 7
+}

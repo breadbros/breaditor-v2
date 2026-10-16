@@ -1,0 +1,38 @@
+{
+  "animations": {
+    "Idle Down": [ "T10000 0", "Looping"],
+    "Idle Up": [ "T10000 0", "Looping"],
+    "Idle Right": [ "T10000 0", "Looping"],
+    "Idle Left": [ "T10000 0", "Looping"],
+
+    "Walk Down": [ "T15 0 1 0 2  3 4 3 5  6 7 6 8  9", "Looping"],
+    "Walk Up": [ "T15 0 1 0 2  3 4 3 5  6 7 6 8  9", "Looping"],
+    "Walk Right": [ "T15 0 1 0 2  3 4 3 5  6 7 6 8  9", "Looping"],
+    "Walk Left": [ "T15 0 1 0 2  3 4 3 5  6 7 6 8  9", "Looping"]
+  },
+  "_V3_LEGACY": {
+    "signature": 5392451,
+    "version": 5,
+    "bitsPerPixel": 24,
+    "flags": 0,
+    "transparentColor": 16711935,
+    "formatName": "v3chr",
+    "customScriptsIgnored": 0,
+    "compression": 1
+  },
+  "dims": [
+    28,
+    18
+  ],
+  "hitbox": [
+    6,
+    10,
+    15,
+    10
+  ],
+  "frames": 56,
+  "image": "Crab.png",
+  "inner_pad": 0,
+  "outer_pad": 0,
+  "per_row": 5
+}

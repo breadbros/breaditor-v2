@@ -1,0 +1,17 @@
+{
+	"tilesize": {
+		"width": 16,
+		"height": 16
+	},
+	"tiles_per_row": 20,
+	"source_image": "farmsville.tiles.png",
+  "animations": [
+    {
+      "name": "",
+      "start": 961,
+      "end": 964,
+      "delay": 15,
+      "mode": 0
+    }
+  ]
+}

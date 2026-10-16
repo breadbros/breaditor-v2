@@ -1,6 +1,8 @@
 # Startup
-1. install Node 22+ and yarn (the sprite library requires SSH access to its GitHub repository)
-2. `yarn`
+1. Install Node 22+ and Yarn 1.x.
+2. Run `yarn install --frozen-lockfile --network-concurrency 1`. Both Crustacean libraries use public HTTPS
+   Git URLs pinned to immutable commits, with generated JavaScript and declarations
+   already included. Sibling checkouts, SSH keys, and library build hooks are unnecessary.
 3. setup a `.env` file and add `BREADITOR_DEV_MODE=true` maybe. And then the following:
 ```
 MAIN_WINDOW_X=
@@ -33,6 +35,59 @@ Sprite documents load Crusty JSON from `filepath` and resolve the atlas relative
 to it; `crustacean_json` and `crustacean_image` can override the definition and
 atlas. `spriteMaker(title, filepath)` creates a preview for another definition.
 Artwork attribution and the library license ship with the sample assets.
+
+## Crustacean maps
+
+**Map A** opens the bundled Farmsville map, including all referenced scenery,
+characters, tilesets and images. **Map D** is an independent empty map. Open other
+`.map.json` files with File → Open Document; New Map and recent maps are in File.
+Farmsville asset provenance and SHA-256 hashes are in `assets/sully`.
+
+Map controls provide pan, cursor-anchored zoom, fit, animation pause, brush/stamps,
+fill, selection, eyedroppers, entity dragging, clipboard, undo/redo and export.
+The dockable Layers, Tileset, Entities, Zones, Info and Screenview panels edit
+map properties and overlays. Drag a rectangle in the tile palette to select a
+stamp. Import a tileset definition in Tileset before painting an empty map.
+Alt-drag entities to snap to the map grid.
+
+Shortcuts while the viewport is focused: Space/middle button pan, B brush,
+G fill, M select, I eyedropper, Shift+I smart eyedropper, V/E entity drag,
+Z zones, O obstructions, 1–9 art layer, X swap tiles. Ctrl+Z/Shift+Ctrl+Z undo/redo,
+Ctrl+C/X/V clipboard, Shift+Ctrl+X/V multilayer cut/paste, Ctrl+A select all,
+Ctrl+0 reset, Escape cancel. Ctrl+N/O/S and Shift+Ctrl+S create/open/save/save as.
+Normal text editing shortcuts remain available in fields.
+
+Save writes the map/data pair; the bundled demo first asks for Save As. Save As
+rebases dependency references. Export project copies all dependencies into an
+adjacent `.assets` directory. Export PNG renders the full map at its native size.
+Writes retain `.breaditor-stage-*`, `.breaditor-backup-*` and recovery journals;
+failed transactions restore existing files where possible and report recovery
+paths. No recovery files are removed automatically.
+
+Local definitions and images are watched. Clean JSON changes reload the map;
+image changes refresh pixels; dirty JSON conflicts retain edits and offer Reload
+or Save As. Incomplete external saves retain the last good scene. View settings,
+camera and document edits survive switching tabs.
+
+Legacy maps retain their existing representation and unknown fields, including
+unused tile arrays. Explicit conversion in Layers enables `format_version: 2`,
+map grid dimensions/tile size and multiple named obstruction layers. Each layer
+binds one tileset; obstruction masks combine independently of overlay visibility.
+Extended maps require a new save destination and are not supported by the existing
+Sully runtime. Game scripts remain references and do not execute in the editor.
+
+Validate with `yarn test`, `yarn tsc --noEmit`, `yarn test:map`, and
+`yarn test:map-visual`. Visual fixtures compare hand-authored bridge, waterfall,
+and canopy pixels against the real WebGL renderer; expected PNG previews are
+generated from those authored pixels, not from renderer captures. Linux CI runs
+the fixtures with software graphics under Xvfb and retains failure captures.
+`yarn verify:clean` copies the current source into an isolated retained directory
+and verifies a fresh frozen install, types, production build, assets, and tests
+without sibling projects or an existing dependency cache.
+The standalone map library has its own build-freshness, tests, and installed-package
+consumer checks. Verify packaged sample hashes with
+`node build-infrastructure/sully-assets.js --verify dist/app/assets/sully`.
+The implementation roadmap and resolved decisions are in `CRUSTACEAN-MAP-PLAN.md`.
 
 
 

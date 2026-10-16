@@ -16,6 +16,8 @@ import { dialog } from "electron";
 import path from "path";
 import {connectDevelopment} from './development';
 import {registerTextFileSaving} from './textFileSaving';
+import {registerMapFileSaving} from './mapFileSaving';
+import {registerUnsavedMapGuard} from './mapUnsavedChanges';
 
 const dotenv = require("dotenv").config();
 
@@ -33,6 +35,7 @@ function createWindow() {
     },
   });
   mainWindow.setMenu(null); // No system menu.
+  registerUnsavedMapGuard(mainWindow);
   mainWindow.loadFile("dist/app/index.html"); // cwd is wherever you called `electron start` from.
 
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
@@ -150,6 +153,7 @@ function createWindow() {
 
 app.on("ready", async () => {
   registerTextFileSaving();
+  registerMapFileSaving();
   createWindow();
 
   app.on("activate", function () {

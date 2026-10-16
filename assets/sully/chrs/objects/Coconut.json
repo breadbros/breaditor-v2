@@ -1,0 +1,16 @@
+{
+    "animations": {
+        "No Shadow": [ "T1000 0", "Looping" ],
+        "Shadow": [ "T1000 1", "Looping" ]
+    },
+    "dims": [
+        16, 
+        16
+    ], 
+    "hitbox": [0,0,16,16],
+    "frames": 2,
+    "image": "Coconut.png", 
+    "inner_pad": 0, 
+    "outer_pad": 0, 
+    "per_row": 2
+}

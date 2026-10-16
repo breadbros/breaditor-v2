@@ -1,6 +1,8 @@
 on: ['push', 'pull_request']
 
 name: Test
+permissions:
+  contents: read
 jobs:
   build:
     name: Test
@@ -15,7 +17,8 @@ jobs:
           node-version: 22.x
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        # Yarn 1's nested Git prepare install otherwise races the outer cache writes.
+        run: yarn install --frozen-lockfile --network-concurrency 1
 
       - name: Type check
         run: yarn tsc --noEmit
@@ -27,3 +30,30 @@ jobs:
         run: |
           yarn pre-test
           yarn test
+
+  map-visual:
+    name: Map visual fixtures
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          cache: yarn
+          node-version: 22.x
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --network-concurrency 1
+      - name: Install Electron runtime libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgtk-3-0 libnss3 libasound2 libgbm1
+      - name: Compare deterministic map fixtures
+        env:
+          MAP_VISUAL_OUTPUT: ${{ runner.temp }}/map-visual
+        run: xvfb-run -a yarn test:map-visual
+      - name: Retain visual failure captures
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map-visual-failure
+          path: ${{ runner.temp }}/map-visual
+          if-no-files-found: ignore

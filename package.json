@@ -21,12 +21,16 @@
     "pre-test": "yarn node test-infrastructure/copyCssToJestDir.js",
     "test": "jest  --verbose --runInBand --detectOpenHandles --forceExit --bail=false",
     "test-watch": "jest --watch",
-    "test:monaco": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/monaco.smoke.js"
+    "test:monaco": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/monaco.smoke.js",
+    "test:map": "node build-infrastructure/esbuild.js --quiet && electron test-infrastructure/map.smoke.js",
+    "test:map-visual": "electron test-infrastructure/map-visual.smoke.js --no-sandbox",
+    "verify:clean": "node build-infrastructure/verify-clean-install.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "crustacean-sprite-lib": "git+https://github.com/mcgrue/crustacean-sprite-lib.git#main",
+    "crustacean-map-lib": "git+https://github.com/mcgrue/crustacean-map-lib.git#75aab6a197fb2297adf74dd285c6b93677accd4a",
+    "crustacean-sprite-lib": "git+https://github.com/mcgrue/crustacean-sprite-lib.git#1b14fe8fa436f70a7cc8673ac6d39f92c3d746fc",
     "dotenv": "^16.0.1",
     "emoji-dictionary": "^1.0.11",
     "fb-watchman": "^2.0.2",

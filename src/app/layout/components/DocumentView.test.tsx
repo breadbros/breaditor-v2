@@ -14,6 +14,9 @@ jest.mock('../../breaditor/documents/SpriteDocumentView', () => ({
 jest.mock('../../breaditor/documents/TextDocumentView', () => ({
   TextDocumentView: ({document}: any) => <div aria-label={document.filepath} />,
 }));
+jest.mock('../../breaditor/documents/MapDocumentView', () => ({
+  MapDocumentView: ({document}: any) => <canvas id={document.info.id} aria-label={`${document.info.title} map`} />,
+}));
 
 beforeEach(() => _TEST_reset());
 afterEach(() => _TEST_reset());
@@ -28,11 +31,11 @@ test('looks up each sprite document by id rather than rendering the active docum
   expect(screen.queryByLabelText('first.json')).not.toBeInTheDocument();
 });
 
-test('preserves the existing view for map documents', () => {
+test('renders the requested map document', () => {
   const document = mapMaker('Other');
   addDocument(document);
   render(<DocumentView id={document.info.id} title="Other Document" />);
-  expect(screen.getByText('Other Document')).toHaveAttribute('id', document.info.id);
+  expect(screen.getByLabelText('Other map')).toHaveAttribute('id', document.info.id);
 });
 
 test('renders the requested Text Document source', () => {

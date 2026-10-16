@@ -1,0 +1,13 @@
+{
+    "animations": {
+        "Forward": [ "T10 0 1 2 3", "Looping" ],
+        "Backward": [ "T10 3 2 1 0", "Looping" ]
+    },
+    "dims": [ 26, 22 ], 
+    "hitbox": [0,0,26,22],
+    "frames": 4, 
+    "image": "waterfall-shimmer.png", 
+    "inner_pad": 0, 
+    "outer_pad": 0, 
+    "per_row": 1
+}

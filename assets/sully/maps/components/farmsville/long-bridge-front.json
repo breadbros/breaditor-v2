@@ -1,0 +1,12 @@
+{
+    "animations": {
+        "STATIC": [ "T10000 0", "BackAndForth" ]
+    },
+    "dims": [ 304, 14 ], 
+    "hitbox": [0,0,0,0],
+    "frames": 1, 
+    "image": "long-bridge-front.png", 
+    "inner_pad": 0, 
+    "outer_pad": 0, 
+    "per_row": 1
+}

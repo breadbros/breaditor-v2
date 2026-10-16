@@ -1,0 +1,19 @@
+.panel {height: 100%; overflow: auto; padding: 10px; box-sizing: border-box; color: #ddd; font: 12px system-ui, sans-serif; background: #23272d;}
+.panel button, .panel input, .panel select, .toolbar button {font: inherit; color: inherit; background: #343b43; border: 1px solid #59616c; border-radius: 3px; padding: 4px 6px;}
+.panel button:disabled, .toolbar button:disabled {opacity: .4;}
+.panel button {cursor: pointer;}
+.panel pre {white-space: pre-wrap; overflow-wrap: anywhere;}
+.field {display: grid; grid-template-columns: minmax(90px, 1fr) minmax(80px, 1.4fr); align-items: center; gap: 8px; margin: 7px 0;}
+.field input, .field select {min-width: 0; width: 100%; box-sizing: border-box;}
+.check {display: flex; align-items: center; gap: 6px; margin: 7px 0;}
+.list {display: flex; flex-direction: column; max-height: 230px; overflow: auto; gap: 3px; margin-bottom: 8px;}
+.list button {text-align: left;}
+.list button[aria-selected="true"], .toolbar button[aria-pressed="true"] {background: #28649a; border-color: #73baff;}
+.actions, .toolbar {display: flex; gap: 5px; flex-wrap: wrap; margin: 7px 0;}
+.toolbar {font: 12px system-ui, sans-serif; color: #eee; align-items: center;}
+.tileset {max-height: 480px; overflow: auto; border: 1px solid #59616c; background: repeating-conic-gradient(#222 0% 25%, #444 0% 50%) 0 0/16px 16px;}
+.tileset img {display: block; cursor: crosshair;}
+.paletteSurface {position: relative; width: max-content; touch-action: none;}
+.tileSelection {position: absolute; pointer-events: none; box-sizing: border-box; border: 2px solid #a9dcff; background: #71b7ff44;}
+.panel fieldset {border: 1px solid #59616c; margin: 10px 0; padding: 7px;}
+.panel textarea {width: 100%; box-sizing: border-box; color: inherit; background: #181c22; font: 11px monospace;}
